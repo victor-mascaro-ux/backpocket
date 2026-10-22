@@ -1420,8 +1420,8 @@ function render() {
   renderSheet();
 }
 const VIEW_IN = { 'home>camera': 'zoom', 'camera>review': 'fwd', 'home>review': 'fwd', 'review>home': 'back', 'home>done': 'pop', 'done>home': 'back' };
-// the same receipt as the favicon
-const LOGO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 4.5h9v15l-2.25-1.5-2.25 1.5-2.25-1.5-2.25 1.5z"/><path d="M10 9h4M10 12.5h2.5"/></svg>';
+// a receipt tucked into a pocket: the app's name, drawn
+const LOGO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3.5h8v6"/><path d="M10.5 6.5h3"/><path d="M4 9.5h16v5.2a7 7 0 0 1-4.6 6.6L12 22.5l-3.4-1.2A7 7 0 0 1 4 14.7z"/><path d="M7.5 12.5h9" stroke-dasharray="1.6 2"/></svg>';
 function appHead() {
   return `<header class="app-head">
       <div class="app-brand"><span class="logo">${LOGO}</span><span class="name">Backpocket</span></div>
