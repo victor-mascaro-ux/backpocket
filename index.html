@@ -111,19 +111,16 @@ body{overflow:auto;background:var(--navy)}
 .c-title .w{display:inline-block}
 .c-title em{font-style:normal;color:var(--neon);padding-bottom:.08em;background-image:linear-gradient(var(--gold),var(--gold)),repeating-linear-gradient(90deg,var(--navy-line-2) 0 calc(10% - 3px),transparent calc(10% - 3px) 10%);background-repeat:no-repeat;background-position:0 96%,0 96%;background-size:0% .09em,100% .09em;-webkit-box-decoration-break:clone;box-decoration-break:clone;animation:xpfill 1.4s var(--ease-out) 1.1s forwards}
 @keyframes xpfill{to{background-size:100% .09em,100% .09em}}
-/* the problem: one number, then what it means */
-.c-problem{margin:0 0 28px}
-.c-problem .c-label{margin:0 0 14px}
+/* the problem: a gold card next to the blue solution card; one number, then what it means */
+.c-problem{margin:0 0 14px;padding:24px 24px 22px;border-radius:22px;background:linear-gradient(160deg,#2A2511,var(--navy-2) 62%);border:1px solid #5A4A1D;box-shadow:0 0 44px -12px rgba(255,200,61,.3)}
+.c-problem .c-label{display:flex;align-items:center;gap:8px;margin:0 0 14px;color:var(--gold)}
+.c-problem .c-label svg.i{width:16px;height:16px}
 .c-stat{display:flex;align-items:flex-start;gap:18px}
-.c-num{flex:none;margin:0;font:700 clamp(58px,2.4rem + 2.4vw,84px)/.86 var(--f-display);letter-spacing:-.045em;color:var(--neon);font-variation-settings:"opsz" 96}
+/* the stat backs the title up, so it stays clearly smaller than it */
+.c-num{flex:none;margin:2px 0 0;font:650 clamp(38px,1.3rem + 1.3vw,48px)/.9 var(--f-display);letter-spacing:-.035em;color:var(--ice);font-variation-settings:"opsz" 96}
 .c-stat-txt{margin:2px 0 0;font:650 clamp(19px,.95rem + .5vw,23px)/1.28 var(--f-display);letter-spacing:-.015em;color:var(--ice)}
 .c-stat-sub{display:block;margin-top:8px;font:400 16px/1.5 var(--f-body);letter-spacing:0;color:var(--ice-2)}
-.c-people{display:flex;gap:4px;margin:18px 0 12px}
-.c-people i{display:grid;color:var(--navy-line-2)}
-.c-people i.on{color:var(--neon)}
-.c-people svg.i{width:26px;height:26px;stroke-width:1.7}
-.c-people i.on svg{fill:currentColor}
-.c-source{margin:0;font-size:13px;color:var(--ice-muted)}
+.c-source{margin:16px 0 0;font-size:13px;color:var(--ice-muted)}
 /* cards with the portfolio's spotlight and border light that follow the pointer */
 .c-spot{position:relative;isolation:isolate;--sx:50%;--sy:50%}
 .c-spot::before,.c-spot::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .35s}
@@ -131,7 +128,7 @@ body{overflow:auto;background:var(--navy)}
 .c-spot::after{z-index:1;padding:1.5px;background:radial-gradient(260px circle at var(--sx) var(--sy),var(--neon),transparent 70%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
 .c-spot:hover::before,.c-spot:hover::after{opacity:1}
 /* the solution is the highlight of the page */
-.c-solution{margin:0 0 14px;padding:24px 24px 26px;border-radius:22px;background:linear-gradient(160deg,#15295F,var(--navy-2) 62%);border:1px solid #2B4887;box-shadow:0 0 44px -10px rgba(79,195,247,.4)}
+.c-solution{margin:0 0 44px;padding:24px 24px 26px;border-radius:22px;background:linear-gradient(160deg,#15295F,var(--navy-2) 62%);border:1px solid #2B4887;box-shadow:0 0 44px -10px rgba(79,195,247,.4)}
 .c-solution .c-label{display:flex;align-items:center;gap:8px;margin:0 0 12px;color:var(--neon)}
 .c-solution .c-label svg.i{width:16px;height:16px}
 .c-why{margin:0;font:600 clamp(20px,1rem + .6vw,25px)/1.36 var(--f-display);letter-spacing:-.015em;color:var(--ice-2)}
@@ -157,6 +154,8 @@ body{overflow:auto;background:var(--navy)}
 .c-n{flex:none;display:inline-grid;place-items:center;min-width:30px;height:24px;margin-top:-1px;border-radius:7px;background:var(--neon-soft);border:1px solid rgba(79,195,247,.45);color:var(--neon);font:700 12px/1 var(--f-mono)}
 .c-cta{padding:22px;border-radius:22px;background:var(--navy-2);border:1px solid var(--navy-line)}
 .c-cta p{margin:0 0 14px;font:650 21px/1.25 var(--f-display);letter-spacing:-.015em}
+.c-cta-q{display:flex;align-items:center;gap:10px}
+.c-cta-q svg.i{width:24px;height:24px;color:var(--neon)}
 .c-cta .row{display:flex;flex-wrap:wrap;gap:10px}
 .c-cta .g-btn{width:auto;flex:1 1 180px}
 @media (min-width:1240px){
@@ -237,7 +236,6 @@ body{overflow:auto;background:var(--navy)}
 .boot .c-eyebrow::before{animation:spinIn .8s var(--ease-pop) .2s backwards}
 .boot .c-title .w{animation:wordUp .95s var(--ease-out) backwards;animation-delay:calc(.12s + var(--wi,0) * 55ms)}
 .boot .concept>:nth-child(n+3){animation:rise .8s var(--ease-out) backwards;animation-delay:calc(.35s + var(--i,0) * 80ms)}
-.boot .c-people i.on{animation:light .5s var(--ease-pop) backwards;animation-delay:calc(.9s + var(--pi,0) * 90ms)}
 /* the steps bar when the task changes (--age keeps it smooth across re-renders) */
 .g-compact.swap{animation:glow 1s var(--ease-out) var(--age,0s)}
 .g-compact.swap .g-step{animation:pop .5s var(--ease-pop) var(--age,0s) backwards}
@@ -256,7 +254,6 @@ body{overflow:auto;background:var(--navy)}
 @keyframes wordUp{from{opacity:0;transform:translateY(.5em) rotate(3deg);filter:blur(8px)}}
 @keyframes spinIn{from{transform:rotate(-135deg) scale(.3)}}
 @keyframes deal{from{opacity:0;transform:translate3d(40px,50px,0) rotate(9deg) scale(.92)}}
-@keyframes light{from{color:var(--navy-line-2);transform:scale(.6)}}
 @keyframes swapin{from{opacity:0;transform:translateY(8px)}}
 @keyframes glow{from{border-color:var(--neon);box-shadow:0 0 0 0 rgba(79,195,247,.45)}to{box-shadow:0 0 0 12px rgba(79,195,247,0)}}
 @keyframes drop{from{opacity:0;transform:translateY(-8px)}}
@@ -424,6 +421,15 @@ button.li-row:active{transform:scale(.985)}
 .input:focus,.select:focus{border-color:var(--focus);outline:3px solid rgba(36,87,214,.25);outline-offset:0}
 .select{appearance:none;-webkit-appearance:none;padding-right:40px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2316191C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
 .money{position:relative}
+/* date: our calendar icon on the left like the $ on the total; the whole field opens the picker */
+.datefield{position:relative}
+.datefield svg.i{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--muted);pointer-events:none}
+.datefield .input{padding-left:42px;cursor:pointer}
+.datefield .input::-webkit-calendar-picker-indicator{position:absolute;inset:0;width:auto;height:auto;margin:0;opacity:0;cursor:pointer}
+.date-ph{position:absolute;left:43px;top:50%;transform:translateY(-50%);color:#8C9096;pointer-events:none;display:none}
+.datefield.empty .date-ph{display:block}
+.datefield.empty .input:not(:focus)::-webkit-datetime-edit{color:transparent}
+.datefield.empty .input:focus ~ .date-ph{display:none}
 .money .cur{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
 .money .input{padding-left:30px}
 @keyframes shimmer{to{background-position:-200% 0}}
@@ -441,6 +447,10 @@ button.li-row:active{transform:scale(.985)}
 .field-note{display:flex;align-items:flex-start;gap:6px;margin:8px 0 0;color:var(--brand-ink);font-size:14px;font-weight:600}
 .field-note svg.i{width:16px;height:16px;margin-top:3px}
 .field-note.over{color:var(--flag-ink)}
+.flag-box.no-chips p{margin:0}
+.add-guest{display:inline-flex;align-items:center;gap:6px;margin-top:10px;color:var(--brand-ink);text-decoration:none;font-size:15px}
+.add-guest svg.i{width:17px;height:17px}
+.add-guest:hover{text-decoration:underline}
 .detect-pill{display:inline-flex;align-items:center;gap:5px;margin:0 0 6px;padding:3px 10px;border-radius:999px;background:#E7E8E4;color:var(--ink);font-size:13px;font-weight:600;white-space:nowrap}
 .detect-pill svg.i{width:15px;height:15px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
@@ -482,6 +492,14 @@ button.li-row:active{transform:scale(.985)}
 .sheet .note{color:var(--muted);font-size:15px}
 .sheet .actions{display:flex;flex-direction:column;gap:8px;margin-top:16px}
 .sheet{max-height:90%;overflow-y:auto}
+.profile-head{display:flex;align-items:center;gap:12px;margin:0 0 8px}
+.profile-head h2,.profile-head .note{margin:0}
+.avatar.big{width:48px;height:48px;font-size:16px}
+.avatar-btn{transition:transform .12s}
+.avatar-btn:active{transform:scale(.92)}
+.menu-row{display:flex;align-items:center;gap:12px;width:100%;min-height:54px;padding:0;border:0;border-bottom:1px solid var(--line);background:none;color:var(--ink);font-size:16px;font-weight:600;text-align:left;cursor:pointer}
+.menu-row .li-go{margin-left:auto}
+.menu-row:active{background:#FAFAF7}
 .policy-list{list-style:none;margin:4px 0 0;padding:0}
 .policy-list li{display:flex;align-items:flex-start;gap:12px;margin:0 -10px;padding:12px 10px;border-top:1px solid var(--line)}
 .policy-list li:first-child{border-top:0}
@@ -709,19 +727,21 @@ const STR = {
     fuelHelp: 'The total is hard to read on this receipt. Pick the right amount or type it.',
     pickTotal: 'Pick the right total',
     guestsLabel: 'Who else was there?', guestN: 'Guest {n}', fromCal: 'From your calendar',
-    guestsHelp: "Client meals need the guests' names.<br>From your Calendar (“{event}”):", guestsDetected: '{n} guests detected',
+    guestsHelp: "Client meals need the guests' names.<br>From your Calendar (“{event}”):", guestsDetected: '{n} people on the receipt',
+    guestsHelpNoCal: "Client meals need the guests' names.", addGuest: 'Add another guest',
     calEvent: 'Dinner with the Bluefin team',
     polClient: 'Within policy: {per} per person (limit {limit}).', polClientNames: "{per} per person (limit {limit}). Add the guests' names to be within policy.", polMeals: 'Within policy: meals up to {limit} a day.',
     polOffice: 'Within policy: office supplies up to {limit} per receipt.', polTransport: 'Within policy: transport on work trips is covered.',
-    polHotel: 'Over policy: {rate} a night (limit {limit}).',
+    polHotel: 'Over policy: {rate} a night (limit {limit}).', polHotelOk: 'Within policy: {rate} a night (limit {limit}).',
+    polClientOver: 'Over policy: {per} per person (limit {limit}).', polMealsOver: 'Over policy: meals are up to {limit} a day.',
+    polOfficeOver: 'Over policy: office supplies are up to {limit} per receipt.',
     hotelPolicy: 'Add a reason for the higher rate. Pick one or type it.',
     reasonLabel: 'Why the higher rate?', reason_conf: 'It was the conference hotel', reason_none: 'No rooms under the limit nearby',
     reasonPh: 'Type a reason',
     errGuests: "Add each guest's name.", errReason: 'Add a reason for the higher rate.',
-    manualBtn: 'Enter manually', manualTitle: 'Add an expense', merchantPh: 'Where you paid', noReceipt: 'No receipt',
+    manualBtn: 'Enter manually', manualTitle: 'Add an expense', merchantPh: 'Where you paid', noReceipt: 'No receipt', datePh: 'Pick a date',
     noReceiptLabel: 'Why is there no receipt?', noReceiptHelp: 'Expenses need a receipt photo. Pick a reason or type one.',
     reason_lost: 'I lost it', reason_given: "The place didn't give one", errNoReceipt: "Add why there's no receipt.",
-    polNoReceipt: 'No receipt photo. Add a reason to be within policy.', polNoReceiptOk: 'Within policy: reason added for the missing receipt.',
     now: 'now', notifTitle: 'Report approved', notifBody: '{manager} approved your October report. {amount} is on its way.',
     approvedPill: 'Approved', approvedBy: 'Approved by {manager}',
     doneDA: 'Jordan approved it: Alex gets {amount} back. You closed the month in {time}.', doneDANoTime: 'Jordan approved it: Alex gets {amount} back.',
@@ -741,7 +761,8 @@ const STR = {
     sentLabel: 'Sent', sentTo: 'Sent to {manager}', sendMore1: 'Send 1 new receipt', sendMoreN: 'Send {n} new receipts',
     confirmSend: 'Send report', confirmKeep: 'Keep editing',
     doneTitle: 'Report sent', doneBody: "{amount} comes back to you once {manager} (manager) approves it. You'll get a notification when that happens.", doneBtn: 'Back to expenses',
-    celebrations: 'Celebrations', celebrationsHelp: 'Animations when you add a receipt or send a report.', close: 'Close', account: 'Alex Moreno · Acme'
+    celebrations: 'Celebrations', celebrationsHelp: 'Animations when you add a receipt or send a report.', close: 'Close', account: 'Alex Moreno · Acme',
+    accountMenu: 'Account', accountSub: 'Sales · Acme', signOut: 'Sign out', protoOnly: 'Not part of this prototype.'
   },
   pt: {
     guideLabel: 'Como testar este protótipo', howTo: 'Como testar', stDone: '(feito)', stNow: '(tarefa atual)',
@@ -792,19 +813,21 @@ const STR = {
     fuelHelp: 'O total está difícil de ler neste recibo. Escolha o valor certo ou digite.',
     pickTotal: 'Escolha o total certo',
     guestsLabel: 'Quem mais estava lá?', guestN: 'Convidado {n}', fromCal: 'Da sua agenda',
-    guestsHelp: 'Refeições com clientes precisam do nome dos convidados.<br>Da sua Agenda (“{event}”):', guestsDetected: '{n} convidados detectados',
+    guestsHelp: 'Refeições com clientes precisam do nome dos convidados.<br>Da sua Agenda (“{event}”):', guestsDetected: '{n} pessoas no recibo',
+    guestsHelpNoCal: 'Refeições com clientes precisam do nome dos convidados.', addGuest: 'Adicionar outro convidado',
     calEvent: 'Jantar com o time da Bluefin',
     polClient: 'Dentro da política: {per} por pessoa (limite {limit}).', polClientNames: '{per} por pessoa (limite {limit}). Adicione o nome dos convidados para ficar dentro da política.', polMeals: 'Dentro da política: refeições até {limit} por dia.',
     polOffice: 'Dentro da política: material de escritório até {limit} por recibo.', polTransport: 'Dentro da política: transporte em viagens de trabalho é coberto.',
-    polHotel: 'Fora da política: {rate} por noite (limite {limit}).',
+    polHotel: 'Fora da política: {rate} por noite (limite {limit}).', polHotelOk: 'Dentro da política: {rate} por noite (limite {limit}).',
+    polClientOver: 'Fora da política: {per} por pessoa (limite {limit}).', polMealsOver: 'Fora da política: refeições são até {limit} por dia.',
+    polOfficeOver: 'Fora da política: material de escritório é até {limit} por recibo.',
     hotelPolicy: 'Adicione um motivo para a diária mais alta. Escolha um ou digite.',
     reasonLabel: 'Por que a diária mais alta?', reason_conf: 'Era o hotel do evento', reason_none: 'Nenhum quarto dentro do limite por perto',
     reasonPh: 'Digite um motivo',
     errGuests: 'Adicione o nome de cada convidado.', errReason: 'Adicione um motivo para a diária mais alta.',
-    manualBtn: 'Inserir à mão', manualTitle: 'Adicionar despesa', merchantPh: 'Onde você pagou', noReceipt: 'Sem recibo',
+    manualBtn: 'Inserir à mão', manualTitle: 'Adicionar despesa', merchantPh: 'Onde você pagou', noReceipt: 'Sem recibo', datePh: 'Escolha uma data',
     noReceiptLabel: 'Por que não tem recibo?', noReceiptHelp: 'Despesas precisam da foto do recibo. Escolha um motivo ou digite.',
     reason_lost: 'Perdi o recibo', reason_given: 'O lugar não deu recibo', errNoReceipt: 'Adicione por que não tem recibo.',
-    polNoReceipt: 'Sem foto do recibo. Adicione um motivo para ficar dentro da política.', polNoReceiptOk: 'Dentro da política: motivo adicionado para o recibo que falta.',
     now: 'agora', notifTitle: 'Relatório aprovado', notifBody: '{manager} aprovou seu relatório de outubro. {amount} está a caminho.',
     approvedPill: 'Aprovado', approvedBy: 'Aprovados por {manager}',
     doneDA: 'O Jordan aprovou: Alex recebe {amount} de volta. Você fechou o mês em {time}.', doneDANoTime: 'O Jordan aprovou: Alex recebe {amount} de volta.',
@@ -824,7 +847,8 @@ const STR = {
     sentLabel: 'Enviado', sentTo: 'Enviados para {manager}', sendMore1: 'Enviar 1 recibo novo', sendMoreN: 'Enviar {n} recibos novos',
     confirmSend: 'Enviar relatório', confirmKeep: 'Continuar editando',
     doneTitle: 'Relatório enviado', doneBody: '{amount} volta para você assim que {manager} (gestor) aprovar. Você recebe uma notificação quando isso acontecer.', doneBtn: 'Voltar para despesas',
-    celebrations: 'Comemorações', celebrationsHelp: 'Animações quando você adiciona um recibo ou envia um relatório.', close: 'Fechar', account: 'Alex Moreno · Acme'
+    celebrations: 'Comemorações', celebrationsHelp: 'Animações quando você adiciona um recibo ou envia um relatório.', close: 'Fechar', account: 'Alex Moreno · Acme',
+    accountMenu: 'Conta', accountSub: 'Vendas · Acme', signOut: 'Sair', protoOnly: 'Não faz parte deste protótipo.'
   }
 };
 
@@ -851,7 +875,7 @@ const SAMPLES = [
     paper: [['title', 'QUICKFUEL #214'], ['small', 'I-5 Exit 288 · Tualatin, OR'], ['meta', '10/18/2026 &nbsp;06:15 PM'], ['rule'],
       ['row', 'PUMP 07 UNLEADED', ''], ['row', '12.40 GAL @ 3.750', ''], ['rule'],
       ['big', 'FUEL TOTAL', '$4<span class="smudge"><span class="blur">6</span></span>.50', 'total'], ['row', 'VISA ••4821', ''], ['center', 'KEEP RECEIPT FOR YOUR RECORDS']] },
-  { id: 'dinner', merchant: 'Trattoria Nonna', date: '2026-10-22', total: 129.16, category: 'client', guests: 3, needs: 'guests', tilt: '-2deg',
+  { id: 'dinner', merchant: 'Trattoria Nonna', date: '2026-10-22', total: 129.16, category: 'client', guests: 3, tilt: '-2deg',
     paper: [['title', 'TRATTORIA NONNA'], ['small', '88 Pine St · Seattle, WA'], ['meta', '10/22/2026 &nbsp;08:04 PM &nbsp;TABLE 12 &nbsp;GUESTS: 3'], ['rule'],
       ['row', 'Burrata', '16.00'], ['row', 'Tagliatelle x2', '48.00'], ['row', 'Mushroom risotto', '26.00'], ['row', 'Sparkling water', '6.00'], ['rule'],
       ['row', 'SUBTOTAL', '96.00'], ['row', 'TAX', '8.16'], ['row', 'TIP', '<span class="hand">25.00</span>'],
@@ -889,6 +913,7 @@ const ICON = {
   approver: '<circle cx="10" cy="8" r="3.5"/><path d="M3.5 20a6.5 6.5 0 0 1 10.6-5"/><path d="M15 18.5l2 2 4.5-4.5"/>',
   arrow: '<path d="M4 12h15M13 6l6 6-6 6"/>',
   next: '<path d="M9 6l6 6-6 6"/>',
+  chat: '<path d="M5 4.5h14A1.5 1.5 0 0 1 20.5 6v9a1.5 1.5 0 0 1-1.5 1.5h-9l-5 4v-4A1.5 1.5 0 0 1 3.5 15V6A1.5 1.5 0 0 1 5 4.5z"/><path d="M8 9h8M8 12.5h5"/>',
   clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
   zoom: '<path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/>',
   policy: '<path d="M6.5 3.5h7.5l4 4v13h-11.5z"/><path d="M14 3.5v4h4"/><path d="M9.5 12.5l1.8 1.8 3.4-3.4M9.5 17h5"/>',
@@ -1056,20 +1081,18 @@ function typeIn() {
 function renderIntro() {
   const a = t('cTitleA').split(' '), b = t('cTitleB').split(' ');
   const words = (list, from) => list.map((w, i) => `<span class="w" style="--wi:${from + i}">${w}</span>`).join(' ');
-  const people = Array.from({ length: 10 }, (_, i) => `<i class="${i < 5 ? 'on' : ''}" style="--pi:${i}">${icon('person')}</i>`).join('');
   $('#intro').innerHTML = `
     <div class="c-top">
       <p class="c-eyebrow">${t('cEyebrow')}</p>
       ${langButton()}
     </div>
     <h2 class="c-title" id="intro-title">${words(a, 0)} <em>${words(b, a.length)}</em></h2>
-    <section class="c-problem">
-      <p class="c-label dia">${t('aProblemH')}</p>
+    <section class="c-problem c-spot">
+      <p class="c-label">${icon('alert')}${t('aProblemH')}</p>
       <div class="c-stat">
         <p class="c-num">${t('statNum')}</p>
         <p class="c-stat-txt">${t('statText')}<span class="c-stat-sub">${t('statSub')}</span></p>
       </div>
-      <div class="c-people" aria-hidden="true">${people}</div>
       <p class="c-source">${t('aSourceLabel')} ${t('aSource')} <a href="${LINKS.source}" target="_blank" rel="noopener">${t('aSourceLink')}</a></p>
     </section>
     <section class="c-solution c-spot">
@@ -1083,7 +1106,7 @@ function renderIntro() {
     <h3 class="dia">${t('aDecH')}</h3>
     <ol class="c-list">${['d1', 'd2', 'd3', 'd4'].map((k, i) => `<li class="c-spot"><span class="c-n" aria-hidden="true">0${i + 1}</span><span>${t(k)}</span></li>`).join('')}</ol>
     <div class="c-cta c-spot">
-      <p>${t('ctaAsk')}</p>
+      <p class="c-cta-q">${icon('chat')}<span>${t('ctaAsk')}</span></p>
       <div class="row">
         <a class="g-btn" href="${LINKS.linkedin}" target="_blank" rel="noopener">${t('ctaLinkedIn')}</a>
         <a class="g-btn ghost" href="${LINKS.portfolio}" target="_blank" rel="noopener">${t('ctaPortfolio')}</a>
@@ -1187,7 +1210,7 @@ function ringCandidates() {
     const list = [];
     PAPER_FIELDS.forEach(k => { if (mismatch(k) && !noted(k)) list.push('#n-' + k); });
     if (s.flag && !r.resolved.total) list.push('[data-action="pick-total"][data-value="46.5"]');
-    if (s.needs === 'guests' && !guestsDone()) CAL_NAMES.forEach(n => { if (!r.values.guests.includes(n)) list.push(`[data-action="pick-guest"][data-name="${n}"]`); });
+    if (needsGuests() && s.guests && !guestsDone()) CAL_NAMES.forEach(n => { if (!r.values.guests.includes(n)) list.push(`[data-action="pick-guest"][data-name="${n}"]`); });
     if (s.needs === 'reason' && !reasonDone()) list.push('[data-action="pick-reason"][data-key="conf"]');
     list.push('[data-action="save"]');
     return list;
@@ -1311,13 +1334,14 @@ function render() {
   renderSheet();
 }
 const VIEW_IN = { 'home>camera': 'zoom', 'camera>review': 'fwd', 'home>review': 'fwd', 'review>home': 'back', 'home>done': 'pop', 'done>home': 'back' };
-const LOGO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3.5h8v6"/><path d="M10.5 6.5h3"/><path d="M4 9.5h16v5.2a7 7 0 0 1-4.6 6.6L12 22.5l-3.4-1.2A7 7 0 0 1 4 14.7z"/><path d="M7.5 12.5h9" stroke-dasharray="1.6 2"/></svg>';
+// the same receipt as the favicon
+const LOGO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 4.5h9v15l-2.25-1.5-2.25 1.5-2.25-1.5-2.25 1.5z"/><path d="M10 9h4M10 12.5h2.5"/></svg>';
 function appHead() {
   return `<header class="app-head">
       <div class="app-brand"><span class="logo">${LOGO}</span><span class="name">Backpocket</span></div>
       <div class="head-end">
         <button class="head-btn" type="button" data-action="policy">${icon('policy')}${t('policyBtn')}</button>
-        <span class="avatar" role="img" aria-label="${t('userName')}">AM</span>
+        <button class="avatar-btn" type="button" data-action="profile" aria-label="${t('accountMenu')}"><span class="avatar">AM</span></button>
       </div>
     </header>`;
 }
@@ -1355,8 +1379,8 @@ function renderHome() {
         ${sentList.length ? `<h2 class="h2">${t(allApproved ? 'approvedBy' : 'sentTo', { manager: MANAGER })} <span class="count">${sentList.length}</span></h2><ul class="list sent-list">${rows(sentList)}</ul>` : ''}
       </div>
       <div class="app-bar bar-row">
-        <button class="btn btn-primary" type="button" data-action="scan">${icon('camera')}${t('scan')}</button>
         <button class="btn btn-secondary" type="button" data-action="manual">${icon('pen')}${t('manualBtn')}</button>
+        <button class="btn btn-primary" type="button" data-action="scan">${icon('camera')}${t('scan')}</button>
       </div>
     </div>`;
   if (from !== amount) {
@@ -1463,7 +1487,11 @@ function openManual() {
   render(); state.review.reveal = false;
   scrollerTop(); focusHeading();
 }
-function guestsDone() { return state.review.values.guests.every(g => g.trim()); }
+const needsGuests = () => state.review.values.category === 'client';
+const needsReason = () => currentSample().needs === 'reason';
+/* the receipt counts everyone at the table, you included; an extra field left empty doesn't count */
+const guestNames = () => state.review.values.guests.map(g => g.trim()).filter(Boolean);
+function guestsDone() { const s = currentSample(); return guestNames().length >= (s.guests ? s.guests - 1 : 1); }
 function reasonDone() { return !!state.review.values.reason.trim(); }
 /* fields read off the paper: changing one to something the receipt doesn't say needs a note for the manager */
 const PAPER_FIELDS = ['merchant', 'date', 'total'];
@@ -1514,7 +1542,7 @@ function needsCount() {
   if (!s || !r) return 0;
   let n = PAPER_FIELDS.filter(k => mismatch(k) && !noted(k)).length;
   if (s.flag && !r.resolved.total) n++;
-  if (s.needs === 'guests' && !guestsDone()) n++;
+  if (needsGuests() && !guestsDone()) n++;
   if (s.needs === 'reason' && !reasonDone()) n++;
   return n;
 }
@@ -1524,27 +1552,46 @@ function errHTML(key) {
 }
 const checkNoteText = n => (n === 0 ? t('leftNone') : n === 1 ? t('left1') : t('leftN', { n }));
 function checkNoteHTML(n) { return `${icon(n ? 'look' : 'check')}<span>${checkNoteText(n)}</span>`; }
+/* checks the amount that's in the field against the rule for the chosen category; no amount, no verdict */
 function policyLine(s, v) {
-  if (s.manual) return { topic: 'receipts', over: !reasonDone(), text: t(reasonDone() ? 'polNoReceiptOk' : 'polNoReceipt') };
-  switch (s.category) {
-    // client meals are only within policy once everyone's names are in
-    case 'client': return { topic: 'client', over: !guestsDone(), text: t(guestsDone() ? 'polClient' : 'polClientNames', { per: money(v.total / s.guests), limit: moneyShort(POLICY.clientMealPerPerson) }) };
-    case 'lodging': return { topic: 'hotel', over: s.nightly > POLICY.hotelNight, text: t('polHotel', { rate: moneyShort(s.nightly), limit: moneyShort(POLICY.hotelNight) }) };
-    case 'meals': return { topic: 'meals', text: t('polMeals', { limit: moneyShort(POLICY.mealsDay) }) };
-    case 'office': return { topic: 'office', text: t('polOffice', { limit: moneyShort(POLICY.officeReceipt) }) };
-    default: return { topic: 'transport', text: t('polTransport') };
+  const amt = parseMoney(v.totalText);
+  if (!(amt > 0)) return null;
+  switch (v.category) {
+    case 'client': {
+      // per person over the limit is over policy; under it, it's only within policy once everyone's names are in
+      const per = amt / Math.max(s.guests || 0, guestNames().length + 1), vars = { per: money(per), limit: moneyShort(POLICY.clientMealPerPerson) };
+      if (per > POLICY.clientMealPerPerson) return { topic: 'client', over: true, text: t('polClientOver', vars) };
+      return { topic: 'client', over: !guestsDone(), text: t(guestsDone() ? 'polClient' : 'polClientNames', vars) };
+    }
+    case 'lodging': {
+      // a hotel entered by hand counts as one night
+      const rate = s.nightly || amt, over = rate > POLICY.hotelNight;
+      return { topic: 'hotel', over, text: t(over ? 'polHotel' : 'polHotelOk', { rate: moneyShort(rate), limit: moneyShort(POLICY.hotelNight) }) };
+    }
+    case 'meals': {
+      const over = amt > POLICY.mealsDay;
+      return { topic: 'meals', over, text: t(over ? 'polMealsOver' : 'polMeals', { limit: moneyShort(POLICY.mealsDay) }) };
+    }
+    case 'office': {
+      const over = amt > POLICY.officeReceipt;
+      return { topic: 'office', over, text: t(over ? 'polOfficeOver' : 'polOffice', { limit: moneyShort(POLICY.officeReceipt) }) };
+    }
+    case 'transport': return { topic: 'transport', text: t('polTransport') };
+    default: return null;
   }
 }
 /* every receipt gets the same policy line under the total: within (green) or not yet / over (amber) */
 const reasonAsk = s => (s.manual
-  ? { label: 'noReceiptLabel', help: 'noReceiptHelp', keys: ['lost', 'given'] }
+  ? { label: 'noReceiptLabel', help: 'noReceiptHelp', keys: ['lost', 'given'], topic: 'receipts' }
   : { label: 'reasonLabel', help: 'hotelPolicy', keys: ['conf', 'none'] });
+const policyLink = topic => `<button class="link-btn" type="button" data-action="policy" data-topic="${topic}">${t('seePolicy')}</button>`;
 function policyNote(s, v) {
   const pol = policyLine(s, v);
-  return `<p class="field-note${pol.over ? ' over' : ''}" id="policy-note">${icon(pol.over ? 'alert' : 'check')}<span>${pol.text} <button class="link-btn" type="button" data-action="policy" data-topic="${pol.topic}">${t('seePolicy')}</button></span></p>`;
+  if (!pol) return '';
+  return `<p class="field-note${pol.over ? ' over' : ''}">${icon(pol.over ? 'alert' : 'check')}<span>${pol.text} ${policyLink(pol.topic)}</span></p>`;
 }
 function askBox(id, text, label, chips, hidden = false) {
-  return `<div class="flag-box" id="h-${id}" ${hidden ? 'hidden' : ''}><p>${text}</p><div class="chips" role="group" aria-label="${label}">${chips}</div></div>`;
+  return `<div class="flag-box${chips ? '' : ' no-chips'}" id="h-${id}" ${hidden ? 'hidden' : ''}><p>${text}</p>${chips ? `<div class="chips" role="group" aria-label="${label}">${chips}</div>` : ''}</div>`;
 }
 function renderReview() {
   const s = currentSample(), r = state.review, v = r.values, reveal = r.reveal && !reduceMotion();
@@ -1554,27 +1601,31 @@ function renderReview() {
   const totalState = off ? markClass('total').trim() : flag ? (r.resolved.total ? 'checked' : 'flagged') : '';
   const totalBox = flag ? askBox('total', t('fuelHelp'), t('pickTotal'),
     [s.total, s.alt].map(val => `<button class="chip" type="button" data-action="pick-total" data-value="${val}" aria-pressed="${isTotal(val)}">${money(val)}</button>`).join('')) : '';
-  const totalNote = policyNote(s, v);
+  const totalNote = `<div id="policy-note">${policyNote(s, v)}</div>`;
   let extra = '';
-  if (s.needs === 'guests') {
+  if (needsGuests()) {
+    // any client meal asks who was there; a scanned one knows the guest count and has the calendar event
+    const cal = !!s.guests;
+    if (!v.guests.length) v.guests = [''];
     extra = `
       <div class="field ${guestsDone() ? 'checked' : 'flagged'}${r.errors.guests ? ' has-error' : ''}" id="fw-guests">
-        <div class="field-top"><span class="lbl" id="l-guests">${t('guestsLabel')}</span><span class="detect-pill">${icon('client')}${t('guestsDetected', { n: s.guests })}</span></div>
-        ${askBox('guests', t('guestsHelp', { event: t('calEvent') }), t('fromCal'),
-          CAL_NAMES.map(n => `<button class="chip" type="button" data-action="pick-guest" data-name="${esc(n)}" aria-pressed="${v.guests.includes(n)}">${icon('calendar')}${esc(n)}</button>`).join(''))}
+        <div class="field-top"><span class="lbl" id="l-guests">${t('guestsLabel')}</span>${cal ? `<span class="detect-pill">${icon('client')}${t('guestsDetected', { n: s.guests })}</span>` : ''}</div>
+        ${askBox('guests', cal ? t('guestsHelp', { event: t('calEvent') }) : t('guestsHelpNoCal'), t('fromCal'),
+          cal ? CAL_NAMES.map(n => `<button class="chip" type="button" data-action="pick-guest" data-name="${esc(n)}" aria-pressed="${v.guests.includes(n)}">${icon('calendar')}${esc(n)}</button>`).join('') : '')}
         <div class="stack guest-fields" role="group" aria-labelledby="l-guests">
           ${v.guests.map((g, i) => `<input class="input" name="guest" data-i="${i}" autocomplete="off" aria-label="${t('guestN', { n: i + 1 })}" placeholder="${t('guestN', { n: i + 1 })}" value="${esc(g)}" aria-describedby="h-guests e-guests">`).join('')}
         </div>
+        <button class="link-btn add-guest" type="button" data-action="add-guest">${icon('person')}${t('addGuest')}</button>
         ${errHTML('guests')}
       </div>`;
   }
   if (s.needs === 'reason') {
     // the same question for a hotel over the limit and for a missing receipt
     const reason = v.reasonKey ? t('reason_' + v.reasonKey) : v.reason, rq = reasonAsk(s);
-    extra = `
+    extra += `
       <div class="field ${reasonDone() ? 'checked' : 'flagged'}${r.errors.reason ? ' has-error' : ''}" id="fw-reason">
         <label class="lbl" for="f-reason">${t(rq.label)}</label>
-        ${askBox('reason', t(rq.help), t(rq.label),
+        ${askBox('reason', rq.topic ? `${t(rq.help)} ${policyLink(rq.topic)}` : t(rq.help), t(rq.label),
           rq.keys.map(k => `<button class="chip" type="button" data-action="pick-reason" data-key="${k}" aria-pressed="${v.reasonKey === k}">${t('reason_' + k)}</button>`).join(''))}
         <input class="input answer-field" id="f-reason" name="reason" autocomplete="off" placeholder="${t('reasonPh')}" value="${esc(reason)}" aria-describedby="h-reason e-reason">
         ${errHTML('reason')}
@@ -1587,7 +1638,8 @@ function renderReview() {
     </div>
     <div class="field${markClass('date')}${r.errors.date ? ' has-error' : ''}" id="fw-date">
       <label class="lbl" for="f-date">${t('date')}</label>
-      <input class="input" type="date" id="f-date" name="date" value="${esc(v.date)}" aria-describedby="m-date e-date">${noteBox('date')}${errHTML('date')}
+      <div class="datefield${v.date ? '' : ' empty'}">${icon('calendar')}<input class="input" type="date" id="f-date" name="date" value="${esc(v.date)}" aria-describedby="m-date e-date"><span class="date-ph" aria-hidden="true">${t('datePh')}</span></div>
+      ${noteBox('date')}${errHTML('date')}
     </div>
     <div class="field ${totalState}${r.errors.total ? ' has-error' : ''}" id="fw-total">
       <label class="lbl" for="f-total">${t('total')}</label>
@@ -1626,18 +1678,23 @@ function renderReview() {
 }
 function refreshReviewStatus() {
   const n = needsCount(), note = $('#check-note'), pn = $('#policy-note');
-  if (pn) pn.outerHTML = policyNote(currentSample(), state.review.values);
+  if (pn) pn.innerHTML = policyNote(currentSample(), state.review.values);
   if (note) { note.innerHTML = checkNoteHTML(n); note.className = 'check-note ' + (n ? 'todo' : 'ok'); }
-  const s = currentSample(), r = state.review;
-  if (s && s.needs) {
-    const key = s.needs, done = key === 'guests' ? guestsDone() : reasonDone();
+  const r = state.review;
+  [['guests', needsGuests(), needsGuests() && guestsDone()], ['reason', needsReason(), needsReason() && reasonDone()]].forEach(([key, on, done]) => {
+    if (!on) return;
     const fw = $('#fw-' + key);
     if (fw) {
       fw.classList.toggle('checked', done); fw.classList.toggle('flagged', !done);
       fw.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', String(key === 'guests' ? r.values.guests.includes(c.dataset.name) : r.values.reasonKey === c.dataset.key)));
     }
     if (done) clearError(key);
-  }
+  });
+}
+/* redraws the form in place, keeping the scroll position (a category change can add or remove a question) */
+function rerenderReview() {
+  const sc = $('#scroller'), top = sc.scrollTop;
+  renderReview(); sc.scrollTop = top;
 }
 function setError(key, msg) {
   state.review.errors[key] = msg;
@@ -1677,7 +1734,7 @@ function saveReview() {
   const amt = parseMoney(v.totalText);
   if (s.flag && !r.resolved.total) { setError('total', t('errTotal')); errs.push('total'); }
   else if (!(amt > 0)) { setError('total', t('errAmount')); errs.push('total'); }
-  if (s.needs === 'guests' && !guestsDone()) { setError('guests', t('errGuests')); errs.push('guests'); }
+  if (needsGuests() && !guestsDone()) { setError('guests', t('errGuests')); errs.push('guests'); }
   if (s.needs === 'reason' && !reasonDone()) { setError('reason', t(s.manual ? 'errNoReceipt' : 'errReason')); errs.push('reason'); }
   PAPER_FIELDS.forEach(k => { if (!errs.includes(k) && mismatch(k) && !noted(k)) { setError(k, t('errNote')); errs.push(k); } });
   if (errs.length) {
@@ -1695,7 +1752,7 @@ function saveReview() {
   }
   const entry = { id: s.id, merchant: v.merchant.trim(), date: v.date, total: amt, category: v.category, picked: r.picked, notes: {} };
   PAPER_FIELDS.forEach(k => { if (mismatch(k)) entry.notes[k] = v.notes[k].trim(); });
-  if (s.needs === 'guests') entry.guests = v.guests.map(g => g.trim());
+  if (needsGuests()) entry.guests = guestNames();
   if (s.needs === 'reason') { entry.reason = v.reason.trim(); entry.reasonKey = v.reasonKey; }
   if (s.manual) entry.manual = true;
   if (r.edit) Object.assign(state.ready.find(x => x.id === s.id), entry);
@@ -1751,6 +1808,15 @@ function renderSheet() {
         <button class="btn btn-primary" type="button" data-action="confirm-send">${t('confirmSend')}</button>
         <button class="btn btn-plain" type="button" data-action="close-sheet">${t('confirmKeep')}</button>
       </div>`;
+  } else if (state.sheet === 'profile') {
+    // the account menu: celebrations really switch off; the rest is a prototype
+    body = `
+      <div class="profile-head"><span class="avatar big" aria-hidden="true">AM</span><div><h2 id="sheet-title">${t('userName')}</h2><p class="note">${t('accountSub')}</p></div></div>
+      <div class="set-row"><div><p class="t">${t('celebrations')}</p><p class="h">${t('celebrationsHelp')}</p></div>
+        <button class="switch" type="button" role="switch" aria-checked="${state.celebrations}" aria-label="${t('celebrations')}" data-action="toggle-celebrations"></button></div>
+      <button class="menu-row" type="button" data-action="policy">${icon('policy')}${t('policyTitle')}${icon('next', 'li-go')}</button>
+      <button class="menu-row" type="button" data-action="signout">${icon('back')}${t('signOut')}</button>
+      <div class="actions"><button class="btn btn-plain" type="button" data-action="close-sheet">${t('close')}</button></div>`;
   } else if (state.sheet === 'policy') {
     // opened from a question, the rule it's about is highlighted
     body = `
@@ -1868,6 +1934,14 @@ document.addEventListener('click', e => {
     case 'pick-total': resolveTotal(Number(el.dataset.value), Number(el.dataset.value)); break;
     case 'use-receipt': useReceipt(el.dataset.key, el.dataset.value); break;
     case 'policy': state.policyTopic = el.dataset.topic || null; openSheet('policy', el); break;
+    case 'profile': openSheet('profile', el); break;
+    case 'toggle-celebrations': state.celebrations = !state.celebrations; el.setAttribute('aria-checked', String(state.celebrations)); break;
+    case 'signout': closeSheet(); showToast(t('protoOnly')); break;
+    case 'add-guest': {
+      state.review.values.guests.push(''); rerenderReview();
+      const all = document.querySelectorAll('[name="guest"]'); all[all.length - 1].focus();
+      break;
+    }
     case 'pick-guest': {
       // a calendar name goes into the first empty guest field; tapping it again takes it out
       const g = state.review.values.guests, name = el.dataset.name, i = g.indexOf(name);
@@ -1894,7 +1968,7 @@ document.addEventListener('input', e => {
   const el = e.target;
   switch (el.name) {
     case 'merchant': r.values.merchant = el.value; if (el.value.trim()) clearError('merchant'); refreshMismatch('merchant'); break;
-    case 'date': r.values.date = el.value; if (el.value) clearError('date'); refreshMismatch('date'); break;
+    case 'date': r.values.date = el.value; el.parentElement.classList.toggle('empty', !el.value); if (el.value) clearError('date'); refreshMismatch('date'); break;
     case 'total': {
       r.values.totalText = el.value;
       if (currentSample().flag && !r.resolved.total) resolveTotal(null, 'typed');
@@ -1909,7 +1983,7 @@ document.addEventListener('input', e => {
 });
 document.addEventListener('change', e => {
   const r = state.review; if (!r) return;
-  if (e.target.name === 'category') r.values.category = e.target.value;
+  if (e.target.name === 'category') { r.values.category = e.target.value; rerenderReview(); }
 });
 document.addEventListener('submit', e => { e.preventDefault(); if (e.target.id === 'review-form') saveReview(); });
 document.addEventListener('keydown', e => {
