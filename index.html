@@ -119,10 +119,15 @@ body{overflow:auto;background:var(--navy)}
 .c-problem{margin:0 0 var(--card-gap)}
 .c-problem .c-label{display:flex;align-items:center;gap:8px;margin:0 0 14px;color:var(--gold)}
 .c-problem .c-label svg.i{width:16px;height:16px}
-/* one sentence, then what it means: works for any prototype, whether or not the problem starts with a number */
-.c-problem-txt{margin:0;font:650 clamp(19px,.95rem + .5vw,23px)/1.28 var(--f-display);letter-spacing:-.015em;color:var(--ice)}
-.c-problem-txt b{font-weight:700;color:var(--gold)}
-.c-problem-sub{margin:8px 0 0;font:400 16px/1.5 var(--f-body);color:var(--ice-2)}
+/* every prototype's problem has a number: it leads, large and gold, beside the sentence it counts;
+   what it means and the source run full width below, from the number's left edge */
+/* the number is exactly two lines tall: from the top of line 1 to the baseline of line 2.
+   In Bricolage, digits and ascenders are .70 of the font size, so the number is (1.28 + .70) / .70 = 2.83 × the sentence's size,
+   and its margin lines its top up with the first line's ascenders */
+.c-stat{--p-fs:clamp(19px,.95rem + .5vw,23px);display:flex;align-items:flex-start;gap:18px}
+.c-num{flex:none;margin:calc(2px - var(--p-fs) * .1) 0 0;font:650 calc(var(--p-fs) * 2.83)/1 var(--f-display);letter-spacing:-.035em;color:var(--gold);font-variation-settings:"opsz" 96}
+.c-problem-txt{margin:2px 0 0;font:650 var(--p-fs)/1.28 var(--f-display);letter-spacing:-.015em;color:var(--ice)}
+.c-problem-sub{margin:10px 0 0;font:400 16px/1.5 var(--f-body);color:var(--ice-2)}
 /* the source belongs to the claim, so it sits right under it */
 .c-source{margin:6px 0 0;font-size:13px;line-height:1.5;color:var(--ice-muted)}
 /* cards with the portfolio's spotlight and border light that follow the pointer */
@@ -136,7 +141,7 @@ body{overflow:auto;background:var(--navy)}
 .c-solution .c-label{display:flex;align-items:center;gap:8px;margin:0 0 12px;color:var(--neon)}
 .c-solution .c-label svg.i{width:16px;height:16px}
 .c-why{margin:0;font:600 clamp(20px,1rem + .6vw,25px)/1.36 var(--f-display);letter-spacing:-.015em;color:var(--ice-2)}
-/* highlights are colored words, no underline, one per block: blue in the solution, gold in the problem */
+/* highlights are colored words, no underline, one per block: blue in the solution (the problem's gold is its number) */
 .c-why b{font-weight:700;color:var(--neon)}
 /* try it: points at the phone; a tap shows the next step there right away */
 .c-try{display:flex;align-items:center;gap:16px;width:100%;margin:0 0 var(--card-gap);padding:16px 16px 16px 20px;border:0;border-radius:14px;background:var(--neon);color:var(--neon-ink);text-align:left;cursor:pointer;box-shadow:inset 0 -2px 0 rgba(0,0,0,.18);transition:transform .18s var(--ease),box-shadow .18s}
@@ -727,7 +732,7 @@ const STR = {
     who: 'Victor Mascaro', whoRole: ' · UX/AI Designer', cEyebrow: 'Prototype 01 · Backpocket', cTitleA: 'Expense reports', cTitleB: 'from a photo', aSourceLabel: 'Source:',
     cWhy: "Why not have an expense report that <b>fills itself in from a photo</b>, highlights anything it isn't sure about, and checks every receipt against the expense policy?",
     cTryH: 'Try it', cTry: 'Add the 4 receipts in the app and send the October report.', cSolH: 'The solution',
-    problemText: "<b>50%</b> of workers don't file expense reports for money they're owed.", problemSub: 'The top complaint is the paperwork.',
+    problemNum: '50%', problemText: "of workers don't file expense reports for money they're owed.", problemSub: 'The top complaint is the paperwork.',
     protoName: 'Backpocket', by: 'Prototype by Victor Mascaro',
     langCode: 'EN', langLabel: 'EN, switch to Portuguese',
     taskOf: 'Task {n} of {total}', onPhone: "On Alex's phone", deviceLabel: "Alex's phone",
@@ -810,7 +815,7 @@ const STR = {
     who: 'Victor Mascaro', whoRole: ' · Designer UX/AI', cEyebrow: 'Protótipo 01 · Backpocket', cTitleA: 'Relatório de despesas', cTitleB: 'a partir de uma foto', aSourceLabel: 'Fonte:',
     cWhy: 'Por que não ter um relatório de despesas que <b>se preenche a partir de uma foto</b>, destaca o que não conseguiu ler com certeza e confere cada recibo com a política de despesas?',
     cTryH: 'Teste', cTry: 'Adicione os 4 recibos no app e envie o relatório de outubro.', cSolH: 'A solução',
-    problemText: '<b>50%</b> dos profissionais não pedem o reembolso de despesas que a empresa deve a eles.', problemSub: 'A maior reclamação é a papelada.',
+    problemNum: '50%', problemText: 'dos profissionais não pedem o reembolso de despesas que a empresa deve a eles.', problemSub: 'A maior reclamação é a papelada.',
     protoName: 'Backpocket', by: 'Protótipo de Victor Mascaro',
     langCode: 'PT', langLabel: 'PT, mudar para inglês',
     taskOf: 'Tarefa {n} de {total}', onPhone: 'No celular do Alex', deviceLabel: 'Celular do Alex',
@@ -1126,7 +1131,10 @@ function problemCard() {
   return `
     <section class="c-problem">
       <p class="c-label">${icon('alert')}${t('aProblemH')}</p>
-      <p class="c-problem-txt">${t('problemText')}</p>
+      <div class="c-stat">
+        <p class="c-num">${t('problemNum')}</p>
+        <p class="c-problem-txt">${t('problemText')}</p>
+      </div>
       <p class="c-problem-sub">${t('problemSub')}</p>
       <p class="c-source">${t('aSourceLabel')} ${t('aSource')} <a href="${LINKS.source}" target="_blank" rel="noopener">${t('aSourceLink')}</a></p>
     </section>`;
