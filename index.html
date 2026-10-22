@@ -80,7 +80,7 @@ body{overflow:auto;background:var(--navy)}
 /* clipped in one pass, so the light background never shows at the corners under a dark layer */
 .screen{position:relative;width:390px;height:844px;overflow:hidden;clip-path:inset(0 round 50px);background:var(--bg);color:var(--ink);font:16px/1.5 var(--font)}
 .island{position:absolute;z-index:40;top:11px;left:50%;width:124px;height:36px;margin-left:-62px;border-radius:20px;background:#000;pointer-events:none}
-.statusbar{position:absolute;z-index:30;top:0;left:0;right:0;height:54px;display:flex;align-items:center;justify-content:space-between;padding:4px 30px 0 46px;font-size:16px;font-weight:600;letter-spacing:-.01em;color:#000;pointer-events:none;background:var(--bg)}
+.statusbar{position:absolute;z-index:30;top:0;left:0;right:0;height:54px;display:flex;align-items:center;justify-content:space-between;padding:4px 30px 0 46px;font-size:16px;font-weight:600;letter-spacing:-.01em;color:#000;pointer-events:none;background:var(--surface)}
 .statusbar .icons{display:flex;align-items:center;gap:6px}
 .statusbar svg{display:block}
 .screen.dark .statusbar{color:#fff;background:#000}
@@ -266,7 +266,8 @@ body{overflow:auto;background:var(--navy)}
 .app{min-height:100%;display:flex;flex-direction:column}
 .view{flex:1;display:flex;flex-direction:column;min-height:100%}
 .content{flex:1;padding:0 16px 24px}
-.app-head{display:flex;align-items:center;justify-content:space-between;padding:8px 16px 4px}
+/* headers are white and stay pinned while the screen scrolls */
+.app-head{position:sticky;top:0;z-index:6;display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface);box-shadow:0 1px 0 var(--line)}
 .app-brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:15px}
 .logo{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--brand);color:#fff}
 .logo svg{width:20px;height:20px}
@@ -298,8 +299,24 @@ h2.h2{display:flex;align-items:center;gap:8px;margin:26px 0 4px;font-size:18px;l
 @keyframes plus{0%{opacity:0;transform:translate(150px,10px)}20%{opacity:1}100%{opacity:0;transform:translate(150px,-26px)}}
 .status-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:var(--brand-soft);color:var(--brand-ink);font-size:14px;font-weight:600}
 .status-pill svg.i{width:16px;height:16px}
-.pending-pill{position:absolute;top:14px;right:14px;display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:var(--flag-bg);border:1px solid #EBCB85;color:var(--flag-ink);font-size:13px;font-weight:600}
+/* label and pending pill share a row; the pill wraps under a long label instead of covering it */
+.mc-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 10px}
+.pending-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:var(--flag-bg);border:1px solid #EBCB85;color:var(--flag-ink);font-size:13px;font-weight:600}
 .pending-pill svg.i{width:15px;height:15px}
+.approved-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:var(--brand-soft);border:1px solid #9CCDB8;color:var(--brand-ink);font-size:13px;font-weight:600;animation:pop .45s var(--ease-pop)}
+.approved-pill svg.i{width:15px;height:15px}
+/* push notification, sliding down from the top of the phone */
+.notif{position:absolute;z-index:45;top:56px;left:10px;right:10px;display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:0;border-radius:22px;background:rgba(246,246,244,.9);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);box-shadow:0 10px 30px rgba(0,0,0,.2);color:var(--ink);text-align:left;cursor:pointer;animation:notifIn .45s cubic-bezier(.2,.8,.2,1)}
+.notif.out{animation:notifOut .3s ease-in forwards}
+.notif .logo{width:38px;height:38px;flex:none;border-radius:10px}
+.notif .logo svg{width:24px;height:24px}
+.notif-text{flex:1;min-width:0}
+.notif-head{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+.notif-head b{color:var(--ink);font-weight:600}
+.notif-title,.notif-body{display:block;font-size:15px;line-height:1.35}
+.notif-title{font-weight:600}
+@keyframes notifIn{from{opacity:0;transform:translateY(-120%)}}
+@keyframes notifOut{to{opacity:0;transform:translateY(-120%)}}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border:0;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;text-align:center;line-height:1.2;text-decoration:none;transition:background-color .15s,border-color .15s,transform .12s}
 .btn:active{transform:scale(.98)}
@@ -333,6 +350,8 @@ button.li-row:active{transform:scale(.985)}
 .sent-list li{background:#FAFAF8}
 
 .app-bar{position:sticky;bottom:0;z-index:5;padding:12px 16px 40px;background:var(--bg);box-shadow:0 -1px 0 var(--line)}
+.bar-row{display:flex;gap:8px}
+.bar-row .btn{width:auto;flex:1;padding:0 12px;font-size:15px;white-space:nowrap}
 
 .toast{position:absolute;z-index:32;left:16px;right:16px;bottom:118px;display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;background:var(--ink);color:#fff;font-size:15px;box-shadow:0 8px 24px rgba(0,0,0,.18);opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;pointer-events:none}
 .toast.show{opacity:1;transform:none}
@@ -365,7 +384,7 @@ button.li-row:active{transform:scale(.985)}
 @keyframes flash{0%{opacity:.9}100%{opacity:0}}
 
 /* review */
-.sub-head{position:sticky;top:0;z-index:6;display:flex;align-items:center;gap:4px;padding:4px 8px;background:var(--bg)}
+.sub-head{position:sticky;top:0;z-index:6;display:flex;align-items:center;gap:4px;padding:4px 8px;background:var(--surface);box-shadow:0 1px 0 var(--line);margin-bottom:12px}
 .icon-btn{display:grid;place-items:center;width:44px;height:44px;border:0;border-radius:12px;background:transparent;cursor:pointer;color:var(--ink);transition:background-color .15s,transform .12s}
 .icon-btn:active{transform:scale(.92)}
 .icon-btn:hover{background:#E7E8E4}
@@ -579,6 +598,7 @@ button.li-row:active{transform:scale(.985)}
   .toast{bottom:96px}
   .lightbox{padding-top:72px}
   .lb-close{top:14px}
+  .notif{top:10px}
 }
 @media (max-width:899px) and (min-width:500px){
   .app{max-width:480px;margin:0 auto;width:100%}
@@ -698,6 +718,13 @@ const STR = {
     reasonLabel: 'Why the higher rate?', reason_conf: 'It was the conference hotel', reason_none: 'No rooms under the limit nearby',
     reasonPh: 'Type a reason',
     errGuests: "Add each guest's name.", errReason: 'Add a reason for the higher rate.',
+    manualBtn: 'Enter manually', manualTitle: 'Add an expense', merchantPh: 'Where you paid', noReceipt: 'No receipt',
+    noReceiptLabel: 'Why is there no receipt?', noReceiptHelp: 'Expenses need a receipt photo. Pick a reason or type one.',
+    reason_lost: 'I lost it', reason_given: "The place didn't give one", errNoReceipt: "Add why there's no receipt.",
+    polNoReceipt: 'No receipt photo. Add a reason to be within policy.', polNoReceiptOk: 'Within policy: reason added for the missing receipt.',
+    now: 'now', notifTitle: 'Report approved', notifBody: '{manager} approved your October report. {amount} is on its way.',
+    approvedPill: 'Approved', approvedBy: 'Approved by {manager}',
+    doneDA: 'Jordan approved it: Alex gets {amount} back. You closed the month in {time}.', doneDANoTime: 'Jordan approved it: Alex gets {amount} back.',
     diffHelp: "This doesn't match the receipt, which says {was}. Add a reason, or use the receipt's value.",
     noteLabel: "Why it's different", useValue: 'Use {value}', useReceipt: 'Use the receipt', or: ' or ', errNote: "Add why this doesn't match the receipt.",
     policyBtn: 'Policy', policyTitle: 'Acme expense policy', seePolicy: 'See the policy',
@@ -707,13 +734,13 @@ const STR = {
     p_meals_t: 'Meals on work trips', p_meals: 'Up to {limit} a day.',
     p_office_t: 'Office supplies', p_office: 'Up to {limit} per receipt.',
     p_transport_t: 'Transport', p_transport: 'Fuel, trains, taxis and parking on work trips.',
-    errTotal: 'Pick the right total, or type it.', errMerchant: 'Add the merchant name.', errAmount: 'Enter the total, like 12.50.', errDate: 'Pick the date on the receipt.',
+    errTotal: 'Pick the right total, or type it.', errMerchant: 'Add the merchant name.', errAmount: 'Enter the total, like 12.50.', errDate: 'Add the date.',
     left1: '1 thing left to check', leftN: '{n} things left to check', leftNone: 'All set',
     save: 'Save receipt', saved: 'Saved. {amount} added to your report.', saveChanges: 'Save changes', updated: 'Changes saved.',
-    confirmTitle: 'Send the October report?', confirmTitleMore: 'Send the new receipts?', confirmBody: '{count}, {amount} to get back. It goes to {manager}, your manager, for approval.',
+    confirmTitle: 'Send the October report?', confirmTitleMore: 'Send the new receipts?', confirmBody: '{count}, {amount} to get back. It goes to {manager} (manager) for approval.',
     sentLabel: 'Sent', sentTo: 'Sent to {manager}', sendMore1: 'Send 1 new receipt', sendMoreN: 'Send {n} new receipts',
     confirmSend: 'Send report', confirmKeep: 'Keep editing',
-    doneTitle: 'Report sent', doneBody: "{amount} comes back to you once {manager} approves it. You'll get a notification when that happens.", doneBtn: 'Back to expenses',
+    doneTitle: 'Report sent', doneBody: "{amount} comes back to you once {manager} (manager) approves it. You'll get a notification when that happens.", doneBtn: 'Back to expenses',
     celebrations: 'Celebrations', celebrationsHelp: 'Animations when you add a receipt or send a report.', close: 'Close', account: 'Alex Moreno · Acme'
   },
   pt: {
@@ -774,6 +801,13 @@ const STR = {
     reasonLabel: 'Por que a diária mais alta?', reason_conf: 'Era o hotel do evento', reason_none: 'Nenhum quarto dentro do limite por perto',
     reasonPh: 'Digite um motivo',
     errGuests: 'Adicione o nome de cada convidado.', errReason: 'Adicione um motivo para a diária mais alta.',
+    manualBtn: 'Inserir à mão', manualTitle: 'Adicionar despesa', merchantPh: 'Onde você pagou', noReceipt: 'Sem recibo',
+    noReceiptLabel: 'Por que não tem recibo?', noReceiptHelp: 'Despesas precisam da foto do recibo. Escolha um motivo ou digite.',
+    reason_lost: 'Perdi o recibo', reason_given: 'O lugar não deu recibo', errNoReceipt: 'Adicione por que não tem recibo.',
+    polNoReceipt: 'Sem foto do recibo. Adicione um motivo para ficar dentro da política.', polNoReceiptOk: 'Dentro da política: motivo adicionado para o recibo que falta.',
+    now: 'agora', notifTitle: 'Relatório aprovado', notifBody: '{manager} aprovou seu relatório de outubro. {amount} está a caminho.',
+    approvedPill: 'Aprovado', approvedBy: 'Aprovados por {manager}',
+    doneDA: 'O Jordan aprovou: Alex recebe {amount} de volta. Você fechou o mês em {time}.', doneDANoTime: 'O Jordan aprovou: Alex recebe {amount} de volta.',
     diffHelp: 'Não bate com o recibo, que diz {was}. Adicione um motivo ou use o valor do recibo.',
     noteLabel: 'Por que está diferente', useValue: 'Usar {value}', useReceipt: 'Usar o recibo', or: ' ou ', errNote: 'Adicione por que não bate com o recibo.',
     policyBtn: 'Política', policyTitle: 'Política de despesas da Acme', seePolicy: 'Ver a política',
@@ -783,13 +817,13 @@ const STR = {
     p_meals_t: 'Refeições em viagem', p_meals: 'Até {limit} por dia.',
     p_office_t: 'Material de escritório', p_office: 'Até {limit} por recibo.',
     p_transport_t: 'Transporte', p_transport: 'Combustível, trem, táxi e estacionamento em viagens de trabalho.',
-    errTotal: 'Escolha o total certo ou digite.', errMerchant: 'Adicione o nome do estabelecimento.', errAmount: 'Digite o total, por exemplo 12,50.', errDate: 'Escolha a data do recibo.',
+    errTotal: 'Escolha o total certo ou digite.', errMerchant: 'Adicione o nome do estabelecimento.', errAmount: 'Digite o total, por exemplo 12,50.', errDate: 'Adicione a data.',
     left1: 'Falta 1 item para conferir', leftN: 'Faltam {n} itens para conferir', leftNone: 'Tudo certo',
     save: 'Salvar recibo', saved: 'Salvo. {amount} adicionado ao relatório.', saveChanges: 'Salvar alterações', updated: 'Alterações salvas.',
-    confirmTitle: 'Enviar o relatório de outubro?', confirmTitleMore: 'Enviar os recibos novos?', confirmBody: '{count}, {amount} para receber de volta. Vai para {manager}, seu gestor, aprovar.',
+    confirmTitle: 'Enviar o relatório de outubro?', confirmTitleMore: 'Enviar os recibos novos?', confirmBody: '{count}, {amount} para receber de volta. Vai para {manager} (gestor) aprovar.',
     sentLabel: 'Enviado', sentTo: 'Enviados para {manager}', sendMore1: 'Enviar 1 recibo novo', sendMoreN: 'Enviar {n} recibos novos',
     confirmSend: 'Enviar relatório', confirmKeep: 'Continuar editando',
-    doneTitle: 'Relatório enviado', doneBody: '{amount} volta para você assim que {manager} aprovar. Você recebe uma notificação quando isso acontecer.', doneBtn: 'Voltar para despesas',
+    doneTitle: 'Relatório enviado', doneBody: '{amount} volta para você assim que {manager} (gestor) aprovar. Você recebe uma notificação quando isso acontecer.', doneBtn: 'Voltar para despesas',
     celebrations: 'Comemorações', celebrationsHelp: 'Animações quando você adiciona um recibo ou envia um relatório.', close: 'Fechar', account: 'Alex Moreno · Acme'
   }
 };
@@ -871,7 +905,7 @@ function newState(prev) {
     view: 'home', sheet: null, reading: null,
     ready: BASE_READY.map(r => ({ ...r })), added: [],
     review: null, sent: null, newId: null, shownTotal: null, lastAdded: null,
-    startedAt: null, guideOpen: false, aboutOpen: prev ? prev.aboutOpen : false, demo: false, lastTask: null
+    startedAt: null, guideOpen: false, aboutOpen: prev ? prev.aboutOpen : false, demo: false, lastTask: null, manualCount: 0, approved: false
   };
 }
 let state = newState();
@@ -1073,7 +1107,8 @@ function renderGuide() {
   let card;
   if (task === 'done') {
     const amt = money(total());
-    const desc = state.sent.ms ? t('doneD', { amount: amt, time: fmtTime(state.sent.ms) }) : t('doneDNoTime', { amount: amt });
+    const d = state.approved ? 'doneDA' : 'doneD';
+    const desc = state.sent.ms ? t(d, { amount: amt, time: fmtTime(state.sent.ms) }) : t(d + 'NoTime', { amount: amt });
     card = `
       <section class="g-card" aria-live="polite">
         <span class="g-chip ok">${icon('check')}${t('doneChip')}</span>
@@ -1148,7 +1183,7 @@ function ringCandidates() {
   if (state.view === 'camera') return nextSample() && !state.reading ? ['[data-action="shutter"]'] : [];
   if (state.view === 'review') {
     const r = state.review, s = currentSample();
-    if (!r || r.edit) return [];
+    if (!r || r.edit || r.manual) return [];
     const list = [];
     PAPER_FIELDS.forEach(k => { if (mismatch(k) && !noted(k)) list.push('#n-' + k); });
     if (s.flag && !r.resolved.total) list.push('[data-action="pick-total"][data-value="46.5"]');
@@ -1168,7 +1203,7 @@ function placeRing() {
   const sRect = screen.getBoundingClientRect();
   const scale = (sRect.width / screen.offsetWidth) || 1;
   // the visible part of the screen: below the sticky header, above the sticky button bar
-  const vis = scroller.getBoundingClientRect(), head = scroller.querySelector('.sub-head'), bar = scroller.querySelector('.app-bar');
+  const vis = scroller.getBoundingClientRect(), head = scroller.querySelector('.sub-head, .app-head'), bar = scroller.querySelector('.app-bar');
   const top = head ? head.getBoundingClientRect().bottom : vis.top, bottom = bar ? bar.getBoundingClientRect().top : vis.bottom;
   let target = null;
   for (const sel of ringCandidates()) {
@@ -1214,7 +1249,7 @@ async function untilReady() {
 }
 async function scanFlow() {
   if (state.sheet) closeSheet();
-  if (state.view === 'review' && state.review && state.review.edit) { state.review = null; state.view = 'home'; render(); await wait(400); }
+  if (state.view === 'review' && state.review && (state.review.edit || state.review.manual)) { state.review = null; state.view = 'home'; render(); await wait(400); }
   if (state.view === 'review' && state.review) { await untilReady(); return; }
   if (state.view === 'home') { await tap('[data-action="scan"]', { scroll: false }); await wait(450); }
   if (state.view === 'camera') { await tap('[data-action="shutter"]', { scroll: false }); }
@@ -1290,11 +1325,12 @@ function renderHome() {
   const amount = total(), from = state.shownTotal ?? amount, n = state.ready.length;
   // the report can go out in parts: receipts to send stay editable, sent ones are listed on their own
   const toSend = state.ready.filter(r => !r.sent), sentList = state.ready.filter(r => r.sent);
+  const allApproved = sentList.length > 0 && sentList.every(r => r.approved);
   const rows = list => [...list].sort((a, b) => b.date.localeCompare(a.date)).map(r => {
     const row = `
       <span class="cat-ic">${icon(r.category)}</span>
-      <span class="li-main"><span class="li-title">${esc(r.merchant)}</span><span class="li-sub">${t('cat_' + r.category)} · ${dateShort(r.date)}</span></span>
-      <span class="li-end"><span class="li-amt tnum">${money(r.total)}</span><span class="li-status${r.sent ? ' sent' : ''}">${icon(r.sent ? 'send' : 'check')}${t(r.sent ? 'sentLabel' : 'ready')}</span></span>`;
+      <span class="li-main"><span class="li-title">${esc(r.merchant)}</span><span class="li-sub">${t('cat_' + r.category)} · ${dateShort(r.date)}${r.manual ? ' · ' + t('noReceipt') : ''}</span></span>
+      <span class="li-end"><span class="li-amt tnum">${money(r.total)}</span><span class="li-status${r.sent && !r.approved ? ' sent' : ''}">${r.approved ? icon('check') + t('approvedPill') : r.sent ? icon('send') + t('sentLabel') : icon('check') + t('ready')}</span></span>`;
     return `
     <li class="${r.id === state.newId && !reduceMotion() ? 'is-new' : ''}">
       ${r.sent ? `<div class="li-row">${row}</div>` : `<button class="li-row" type="button" data-action="edit" data-id="${r.id}">${row}${icon('next', 'li-go')}</button>`}
@@ -1308,17 +1344,20 @@ function renderHome() {
         <h1 class="h1" tabindex="-1">${t('reportTitle')}</h1>
         <p class="sub meta"><span>${icon('calendar')}${t('due')}</span><span>${icon('approver')}${t('approver', { manager: MANAGER })}</span></p>
         <section class="card money-card" aria-labelledby="mc-label">
-          <p class="eyebrow" id="mc-label">${t('toGetBack')}</p>
+          <div class="mc-top"><p class="eyebrow" id="mc-label">${t('toGetBack')}</p>${toSend.length ? '' : allApproved ? `<span class="approved-pill">${icon('check')}${t('approvedPill')}</span>` : `<span class="pending-pill">${icon('clock')}${t('pendingPill')}</span>`}</div>
           <p class="big tnum" id="big-amount">${money(from)}</p>
           <span class="plus tnum" id="plus" aria-hidden="true"></span>
           <p class="mc-meta">${n === 1 ? t('count1') : t('countN', { n })}</p>
           ${toSend.length ? `<button class="btn btn-secondary" type="button" data-action="send">${icon('send')}${sendLabel}</button>`
-                          : `<span class="status-pill">${icon('check')}${t('sentPill')}</span><span class="pending-pill">${icon('clock')}${t('pendingPill')}</span>`}
+                          : `<span class="status-pill">${icon('check')}${t('sentPill')}</span>`}
         </section>
         ${toSend.length ? `<h2 class="h2">${t('receipts')} <span class="count">${toSend.length}</span></h2><ul class="list">${rows(toSend)}</ul>` : ''}
-        ${sentList.length ? `<h2 class="h2">${t('sentTo', { manager: MANAGER })} <span class="count">${sentList.length}</span></h2><ul class="list sent-list">${rows(sentList)}</ul>` : ''}
+        ${sentList.length ? `<h2 class="h2">${t(allApproved ? 'approvedBy' : 'sentTo', { manager: MANAGER })} <span class="count">${sentList.length}</span></h2><ul class="list sent-list">${rows(sentList)}</ul>` : ''}
       </div>
-      <div class="app-bar"><button class="btn btn-primary" type="button" data-action="scan">${icon('camera')}${t('scan')}</button></div>
+      <div class="app-bar bar-row">
+        <button class="btn btn-primary" type="button" data-action="scan">${icon('camera')}${t('scan')}</button>
+        <button class="btn btn-secondary" type="button" data-action="manual">${icon('pen')}${t('manualBtn')}</button>
+      </div>
     </div>`;
   if (from !== amount) {
     countUp($('#big-amount'), from, amount);
@@ -1403,20 +1442,34 @@ function openEdit(id) {
   if (!item) return;
   state.view = 'review';
   state.review = {
-    id, edit: true,
+    id, edit: true, manual: !!item.manual, sample: item.manual ? manualSample(id, item.category) : undefined,
     values: { merchant: item.merchant, date: item.date, total: item.total, totalText: numText(item.total), category: item.category,
       guests: item.guests ? [...item.guests] : CAL_NAMES.map(() => ''), reason: item.reason || '', reasonKey: item.reasonKey || null, notes: { merchant: '', date: '', total: '', ...item.notes } },
     resolved: { total: true }, picked: item.picked ?? null, errors: {}
   };
   render(); scrollerTop(); focusHeading();
 }
-function currentSample() { return state.review && (SAMPLES.find(s => s.id === state.review.id) || BASE_READY.find(s => s.id === state.review.id)); }
+function currentSample() { return state.review && (state.review.sample || SAMPLES.find(s => s.id === state.review.id) || BASE_READY.find(s => s.id === state.review.id)); }
+/* no receipt: the same form, empty, with no photo; the policy then needs a reason for the missing receipt */
+const manualSample = (id, category = 'other') => ({ id, manual: true, needs: 'reason', merchant: '', date: '', total: 0, category });
+function openManual() {
+  const id = 'm' + (++state.manualCount);
+  state.view = 'review';
+  state.review = {
+    id, manual: true, reveal: true, sample: manualSample(id),
+    values: { merchant: '', date: '', total: 0, totalText: '', category: 'other', guests: [], reason: '', reasonKey: null, notes: { merchant: '', date: '', total: '' } },
+    resolved: { total: true }, picked: null, errors: {}
+  };
+  render(); state.review.reveal = false;
+  scrollerTop(); focusHeading();
+}
 function guestsDone() { return state.review.values.guests.every(g => g.trim()); }
 function reasonDone() { return !!state.review.values.reason.trim(); }
 /* fields read off the paper: changing one to something the receipt doesn't say needs a note for the manager */
 const PAPER_FIELDS = ['merchant', 'date', 'total'];
 function mismatch(key) {
   const s = currentSample(), v = state.review.values;
+  if (s.manual) return false;
   if (key === 'merchant') return !!v.merchant.trim() && v.merchant.trim().toLowerCase() !== s.merchant.toLowerCase();
   if (key === 'date') return !!v.date && v.date !== s.date;
   const amt = parseMoney(v.totalText);
@@ -1426,6 +1479,7 @@ const noted = key => !!state.review.values.notes[key].trim();
 const markClass = key => (mismatch(key) ? (noted(key) ? ' checked' : ' flagged') : '');
 function noteBox(key) {
   const s = currentSample(), totals = [s.total, s.alt].filter(x => x != null);
+  if (s.manual) return '';
   const uses = key === 'total' ? totals.map(x => [x, money(x)]) : [[s[key], key === 'date' ? dateShort(s.date) : esc(s.merchant)]];
   return `
     <div class="flag-box note-box" id="m-${key}" ${mismatch(key) ? '' : 'hidden'}>
@@ -1471,6 +1525,7 @@ function errHTML(key) {
 const checkNoteText = n => (n === 0 ? t('leftNone') : n === 1 ? t('left1') : t('leftN', { n }));
 function checkNoteHTML(n) { return `${icon(n ? 'look' : 'check')}<span>${checkNoteText(n)}</span>`; }
 function policyLine(s, v) {
+  if (s.manual) return { topic: 'receipts', over: !reasonDone(), text: t(reasonDone() ? 'polNoReceiptOk' : 'polNoReceipt') };
   switch (s.category) {
     // client meals are only within policy once everyone's names are in
     case 'client': return { topic: 'client', over: !guestsDone(), text: t(guestsDone() ? 'polClient' : 'polClientNames', { per: money(v.total / s.guests), limit: moneyShort(POLICY.clientMealPerPerson) }) };
@@ -1481,6 +1536,9 @@ function policyLine(s, v) {
   }
 }
 /* every receipt gets the same policy line under the total: within (green) or not yet / over (amber) */
+const reasonAsk = s => (s.manual
+  ? { label: 'noReceiptLabel', help: 'noReceiptHelp', keys: ['lost', 'given'] }
+  : { label: 'reasonLabel', help: 'hotelPolicy', keys: ['conf', 'none'] });
 function policyNote(s, v) {
   const pol = policyLine(s, v);
   return `<p class="field-note${pol.over ? ' over' : ''}" id="policy-note">${icon(pol.over ? 'alert' : 'check')}<span>${pol.text} <button class="link-btn" type="button" data-action="policy" data-topic="${pol.topic}">${t('seePolicy')}</button></span></p>`;
@@ -1511,12 +1569,13 @@ function renderReview() {
       </div>`;
   }
   if (s.needs === 'reason') {
-    const reason = v.reasonKey ? t('reason_' + v.reasonKey) : v.reason;
+    // the same question for a hotel over the limit and for a missing receipt
+    const reason = v.reasonKey ? t('reason_' + v.reasonKey) : v.reason, rq = reasonAsk(s);
     extra = `
       <div class="field ${reasonDone() ? 'checked' : 'flagged'}${r.errors.reason ? ' has-error' : ''}" id="fw-reason">
-        <label class="lbl" for="f-reason">${t('reasonLabel')}</label>
-        ${askBox('reason', t('hotelPolicy'), t('reasonLabel'),
-          ['conf', 'none'].map(k => `<button class="chip" type="button" data-action="pick-reason" data-key="${k}" aria-pressed="${v.reasonKey === k}">${t('reason_' + k)}</button>`).join(''))}
+        <label class="lbl" for="f-reason">${t(rq.label)}</label>
+        ${askBox('reason', t(rq.help), t(rq.label),
+          rq.keys.map(k => `<button class="chip" type="button" data-action="pick-reason" data-key="${k}" aria-pressed="${v.reasonKey === k}">${t('reason_' + k)}</button>`).join(''))}
         <input class="input answer-field" id="f-reason" name="reason" autocomplete="off" placeholder="${t('reasonPh')}" value="${esc(reason)}" aria-describedby="h-reason e-reason">
         ${errHTML('reason')}
       </div>`;
@@ -1524,7 +1583,7 @@ function renderReview() {
   const fields = `
     <div class="field${markClass('merchant')}${r.errors.merchant ? ' has-error' : ''}" id="fw-merchant">
       <label class="lbl" for="f-merchant">${t('merchant')}</label>
-      <input class="input" id="f-merchant" name="merchant" autocomplete="off" value="${esc(v.merchant)}" aria-describedby="m-merchant e-merchant">${noteBox('merchant')}${errHTML('merchant')}
+      <input class="input" id="f-merchant" name="merchant" autocomplete="off" placeholder="${t('merchantPh')}" value="${esc(v.merchant)}" aria-describedby="m-merchant e-merchant">${noteBox('merchant')}${errHTML('merchant')}
     </div>
     <div class="field${markClass('date')}${r.errors.date ? ' has-error' : ''}" id="fw-date">
       <label class="lbl" for="f-date">${t('date')}</label>
@@ -1549,13 +1608,13 @@ function renderReview() {
     <div class="view review">
       <header class="sub-head">
         <button class="icon-btn" type="button" data-action="discard" aria-label="${r.edit ? t('back') : t('discard')}">${icon('back')}</button>
-        <h1 class="sub-title" tabindex="-1">${r.edit ? t('editTitle') : t('reviewTitle')}</h1>
+        <h1 class="sub-title" tabindex="-1">${r.edit ? t('editTitle') : s.manual ? t('manualTitle') : t('reviewTitle')}</h1>
       </header>
       <div class="content">
-        <div class="photo">
+        ${s.manual ? '' : `<div class="photo">
           <div class="photo-inner">${receiptHTML(s, { mark: s.flag && !r.resolved.total })}</div>
           <button class="photo-open" type="button" data-action="photo" aria-label="${t('seePhoto')}"><span class="photo-zoom" aria-hidden="true">${icon('zoom')}</span></button>
-        </div>
+        </div>`}
         ${status}
         <form class="form${reveal ? ' reveal' : ''}" id="review-form" novalidate>${fields}</form>
       </div>
@@ -1619,7 +1678,7 @@ function saveReview() {
   if (s.flag && !r.resolved.total) { setError('total', t('errTotal')); errs.push('total'); }
   else if (!(amt > 0)) { setError('total', t('errAmount')); errs.push('total'); }
   if (s.needs === 'guests' && !guestsDone()) { setError('guests', t('errGuests')); errs.push('guests'); }
-  if (s.needs === 'reason' && !reasonDone()) { setError('reason', t('errReason')); errs.push('reason'); }
+  if (s.needs === 'reason' && !reasonDone()) { setError('reason', t(s.manual ? 'errNoReceipt' : 'errReason')); errs.push('reason'); }
   PAPER_FIELDS.forEach(k => { if (!errs.includes(k) && mismatch(k) && !noted(k)) { setError(k, t('errNote')); errs.push(k); } });
   if (errs.length) {
     const first = errs[0];
@@ -1638,8 +1697,9 @@ function saveReview() {
   PAPER_FIELDS.forEach(k => { if (mismatch(k)) entry.notes[k] = v.notes[k].trim(); });
   if (s.needs === 'guests') entry.guests = v.guests.map(g => g.trim());
   if (s.needs === 'reason') { entry.reason = v.reason.trim(); entry.reasonKey = v.reasonKey; }
+  if (s.manual) entry.manual = true;
   if (r.edit) Object.assign(state.ready.find(x => x.id === s.id), entry);
-  else { state.ready.push(entry); state.added.push(s.id); state.lastAdded = amt; }
+  else { state.ready.push(entry); if (!s.manual) state.added.push(s.id); state.lastAdded = amt; }
   state.newId = s.id;
   state.review = null; state.view = 'home';
   render(); scrollerTop(); focusHeading();
@@ -1714,6 +1774,40 @@ function sendReport() {
   state.newId = null; state.sheet = null; state.view = 'done';
   render(); scrollerTop(); focusHeading(); announce(t('doneTitle'));
   if (state.celebrations && !reduceMotion()) burst();
+  if (currentTask() === 'done') scheduleApproval();
+}
+/* at the end, the manager approves: a notification slides in and the report turns approved */
+let notifTimer = null;
+function scheduleApproval() {
+  const run = state;
+  setTimeout(() => {
+    if (state !== run) return;
+    const batch = state.ready.filter(r => r.sent && !r.approved);
+    if (!batch.length) return;
+    batch.forEach(r => { r.approved = true; });
+    state.approved = true;
+    showNotif();
+    if (state.view === 'home') renderHome();
+    renderGuide();
+  }, reduceMotion() ? 1500 : 3500);
+}
+function showNotif() {
+  const old = $('#notif'); if (old) old.remove();
+  $('#screen').insertAdjacentHTML('beforeend', `
+    <button class="notif" id="notif" type="button" data-action="notif">
+      <span class="logo" aria-hidden="true">${LOGO}</span>
+      <span class="notif-text"><span class="notif-head"><b>Backpocket</b><span>${t('now')}</span></span>
+        <span class="notif-title">${t('notifTitle')}</span><span class="notif-body">${t('notifBody', { manager: MANAGER, amount: money(total()) })}</span></span>
+    </button>`);
+  announce(t('notifTitle'));
+  clearTimeout(notifTimer);
+  notifTimer = setTimeout(hideNotif, 6000);
+}
+function hideNotif() {
+  clearTimeout(notifTimer);
+  const n = $('#notif'); if (!n) return;
+  if (reduceMotion()) { n.remove(); return; }
+  n.classList.add('out'); setTimeout(() => n.remove(), 300);
 }
 function renderDone() {
   $('#app').innerHTML = `
@@ -1761,9 +1855,11 @@ document.addEventListener('click', e => {
       if (!reduceMotion()) { document.querySelectorAll('.lang-btn').forEach(btn => replay(btn, 'is-flipping')); typeIn(); }
       break;
     }
-    case 'restart': state = newState(state); render(); scrollerTop(); break;
+    case 'restart': state = newState(state); hideNotif(); render(); scrollerTop(); break;
     case 'hint': lastActivity = performance.now() - HINT_DELAY; hintScrollAt = 0; replay($('.phone-fit'), 'look'); break;
     case 'edit': openEdit(el.dataset.id); break;
+    case 'manual': startClock(); openManual(); break;
+    case 'notif': hideNotif(); if (state.view !== 'home') { state.view = 'home'; state.review = null; state.sheet = null; state.shownTotal = null; render(); scrollerTop(); focusHeading(); } break;
     case 'scan': startClock(); state.view = 'camera'; render(); focusHeading(); break;
     case 'close-camera': state.view = 'home'; state.reading = null; state.shownTotal = null; render(); focusHeading(); break;
     case 'shutter': shutter(); break;
