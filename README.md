@@ -1,6 +1,6 @@
 # Backpocket · Prototype 01
 
-Backpocket is a prototype you can try: an expense report that fills itself in from a photo of the receipt, highlights anything it isn't sure about, and shows how close you are to getting your money back.
+Backpocket is a prototype you can try: an expense report that fills itself in from a photo of the receipt, highlights anything it isn't sure about, and checks every receipt against the expense policy.
 
 Concept and design by [Victor Mascaro](https://victor-mascaro-ux.github.io/my-portfolio/), UX/AI designer.
 
@@ -21,10 +21,10 @@ The bar above the phone walks you through 7 short tasks: scan Alex's 4 receipts 
 
 ## Design decisions
 
-- The AI fills in every field and highlights only what it isn't sure about, with the reason and the part of the photo it read.
-- It knows the expense policy and asks only for what a photo can't tell it.
-- The amount you'll get back grows with each receipt. Celebrations can be turned off in settings, and nothing is locked.
-- Each receipt is one photo. You only type what the photo can't tell the AI.
+- **One photo per receipt.** The AI fills in the merchant, date, total and category, so a clear receipt needs no typing.
+- **It asks only when it has to.** A smudged total, or something the policy needs that no receipt shows, like who was at a client dinner.
+- **Every question works the same way.** The field, a short note on why it's asking, and answers to pick. You can always type your own.
+- **Progress you can see.** The amount coming back grows with each receipt. It motivates without blocking anything: you can send the report at any time.
 
 ## What's real
 

@@ -103,12 +103,12 @@ body{overflow:auto;background:var(--navy)}
 .c-problem{margin:0 0 28px}
 .c-problem .c-label{margin:0 0 14px}
 .c-stat{display:flex;align-items:flex-start;gap:18px}
-.c-num{flex:none;margin:0;font:700 clamp(58px,2.4rem + 2.4vw,84px)/.86 var(--f-display);letter-spacing:-.045em;color:var(--gold);font-variation-settings:"opsz" 96}
+.c-num{flex:none;margin:0;font:700 clamp(58px,2.4rem + 2.4vw,84px)/.86 var(--f-display);letter-spacing:-.045em;color:var(--neon);font-variation-settings:"opsz" 96}
 .c-stat-txt{margin:2px 0 0;font:650 clamp(19px,.95rem + .5vw,23px)/1.28 var(--f-display);letter-spacing:-.015em;color:var(--ice)}
 .c-stat-sub{display:block;margin-top:8px;font:400 16px/1.5 var(--f-body);letter-spacing:0;color:var(--ice-2)}
 .c-people{display:flex;gap:4px;margin:18px 0 12px}
 .c-people i{display:grid;color:var(--navy-line-2)}
-.c-people i.on{color:var(--gold)}
+.c-people i.on{color:var(--neon)}
 .c-people svg.i{width:26px;height:26px;stroke-width:1.7}
 .c-people i.on svg{fill:currentColor}
 .c-source{margin:0;font-size:13px;color:var(--ice-muted)}
@@ -141,6 +141,7 @@ body{overflow:auto;background:var(--navy)}
 .c-list{display:grid;gap:10px;margin:0 0 44px;padding:0;list-style:none}
 .c-list li{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:14px;background:var(--navy-2);border:1px solid var(--navy-line);font-size:15px;line-height:1.5;color:var(--ice-2);transition:transform .18s var(--ease),border-color .18s}
 .c-list li:hover{transform:translateY(-2px);border-color:var(--navy-line-2)}
+.c-list b{display:block;margin-bottom:3px;font:650 17px/1.3 var(--f-display);letter-spacing:-.01em;color:var(--ice)}
 .c-n{flex:none;display:inline-grid;place-items:center;min-width:30px;height:24px;margin-top:-1px;border-radius:7px;background:var(--neon-soft);border:1px solid rgba(79,195,247,.45);color:var(--neon);font:700 12px/1 var(--f-mono)}
 .c-cta{padding:22px;border-radius:22px;background:var(--navy-2);border:1px solid var(--navy-line)}
 .c-cta p{margin:0 0 14px;font:650 21px/1.25 var(--f-display);letter-spacing:-.015em}
@@ -254,6 +255,12 @@ body{overflow:auto;background:var(--navy)}
 .app-brand .dot{color:var(--muted)}
 .avatar-btn{display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:transparent;cursor:pointer}
 .avatar{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#DDE7E2;color:var(--brand-ink);font-weight:600;font-size:13px}
+.head-end{display:flex;align-items:center;gap:8px}
+.head-btn{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font-size:14px;font-weight:600;cursor:pointer;transition:background-color .15s,transform .12s}
+.head-btn:hover{background:#FAFAF7}
+.head-btn:active{transform:scale(.96)}
+.head-btn svg.i{width:17px;height:17px}
+.link-btn{padding:0;border:0;background:none;color:inherit;font:inherit;font-weight:600;text-decoration:underline;text-underline-offset:2px;cursor:pointer}
 h1.h1{margin:12px 0 2px;font-size:28px;line-height:1.2;letter-spacing:-.015em}
 h1:focus{outline:none}
 .sub{margin:0 0 16px;color:var(--muted);font-size:15px}
@@ -377,6 +384,8 @@ button.li-row:active{transform:scale(.985)}
 .checked .flag-box{background:#F3F8F5;border-color:#C6E1D4;color:var(--ink)}
 .checked .input{border-color:var(--brand);background:var(--surface)}
 .flag-box p{margin:0 0 10px;font-size:15px}
+.note-box .input{margin:0 0 10px;background:var(--surface)}
+.note-box:not([hidden]){animation:rise .25s ease-out}
 .field-note{display:flex;align-items:center;gap:6px;margin:8px 0 0;color:var(--brand-ink);font-size:14px;font-weight:600}
 .field-note svg.i{width:16px;height:16px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
@@ -417,6 +426,14 @@ button.li-row:active{transform:scale(.985)}
 .sheet p{margin:0 0 10px;font-size:16px}
 .sheet .note{color:var(--muted);font-size:15px}
 .sheet .actions{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.sheet{max-height:90%;overflow-y:auto}
+.policy-list{list-style:none;margin:4px 0 0;padding:0}
+.policy-list li{display:flex;align-items:flex-start;gap:12px;margin:0 -10px;padding:12px 10px;border-top:1px solid var(--line)}
+.policy-list li:first-child{border-top:0}
+.policy-list li.hl{background:var(--flag-bg);border-color:transparent;border-radius:12px}
+.policy-list li.hl + li{border-color:transparent}
+.policy-list .t{margin:0;font-weight:600;font-size:15px}
+.policy-list .h{margin:0;color:var(--muted);font-size:14px}
 .set-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:8px}
 .set-row p{margin:0}
 .set-row .t{font-weight:600}
@@ -567,7 +584,8 @@ const LINKS = {
   source: 'https://ir.walkme.com/news-releases/news-release-details/walkme-survey-shows-half-workers-dont-file-expense-reports'
 };
 const MANAGER = 'Jordan Lee';
-const POLICY = { hotelNight: 180, clientMealPerPerson: 75 };
+const POLICY = { hotelNight: 180, clientMealPerPerson: 75, mealsDay: 60 };
+const POLICY_RULES = [['other', 'receipts'], ['lodging', 'hotel', POLICY.hotelNight], ['client', 'client', POLICY.clientMealPerPerson], ['meals', 'meals', POLICY.mealsDay], ['transport', 'transport']];
 const CAL_NAMES = ['Dana Reyes', 'Sam Okafor'];
 const HINT_DELAY = 4000;
 const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -578,7 +596,7 @@ const STR = {
   en: {
     guideLabel: 'How to try this prototype', howTo: 'How to try it', stDone: '(done)', stNow: '(current task)',
     who: 'Victor Mascaro', whoRole: ' · UX/AI Designer', cEyebrow: 'Prototype 01 · Backpocket', cTitleA: 'Expense reports', cTitleB: 'from a photo', aSourceLabel: 'Source:',
-    cWhy: "Why not have an expense report that <b>fills itself in from a photo</b>, <b>highlights anything it isn't sure about</b>, and <b>shows how close you are to getting your money back</b>?",
+    cWhy: "Why not have an expense report that <b>fills itself in from a photo</b>, <b>highlights anything it isn't sure about</b>, and <b>checks every receipt against the expense policy</b>?",
     cTryH: 'Try it', cTry: 'Add the 4 receipts in the app and send the October report.', cSolH: 'The solution',
     statNum: '50%', statText: "of workers don't file expense reports for money they're owed.", statSub: 'The top complaint is the paperwork.', gameToggle: 'Progress and celebrations',
     protoName: 'Backpocket', by: 'Prototype by Victor Mascaro',
@@ -602,12 +620,12 @@ const STR = {
     aProblem: "Half of workers don't file expense reports for money they're owed. The top complaint is the paperwork.",
     aSource: 'WalkMe and Propeller Insights survey of 2,400+ workers in 5 countries, Nov 2023.', aSourceLink: 'Read it',
     aWhyH: 'The idea',
-    aWhy: "Why not have an expense report that fills itself in from a photo, highlights anything it isn't sure about, and shows how much money is coming back to you?",
+    aWhy: "Why not have an expense report that fills itself in from a photo, highlights anything it isn't sure about, and checks every receipt against the expense policy?",
     aDecH: 'Design decisions',
-    d1: "The AI fills in every field and highlights only what it isn't sure about, with the reason and the part of the photo it read.",
-    d2: "It knows the expense policy and asks only for what a photo can't tell it, like who was at a client dinner.",
-    d3: "The amount you'll get back grows with each receipt, and nothing is locked.",
-    d4: 'Each receipt is one photo. You only type what the photo can’t tell the AI.',
+    d1: '<b>One photo per receipt.</b> The AI fills in the merchant, date, total and category, so a clear receipt needs no typing.',
+    d2: "<b>It asks only when it has to.</b> A smudged total, or something the policy needs that no receipt shows, like who was at a client dinner.",
+    d3: "<b>Every question works the same way.</b> The field, a short note on why it's asking, and answers to pick. You can always type your own.",
+    d4: '<b>Progress you can see.</b> The amount coming back grows with each receipt. It motivates without blocking anything: you can send the report at any time.',
     ctaAsk: 'Want something like this for your product?', ctaLinkedIn: 'Message me on LinkedIn', ctaPortfolio: 'See my portfolio', restart: 'Start over',
     timeSec: '{s}\u00a0s', timeMin: '{m}\u00a0min {s}\u00a0s',
     appName: 'Expenses', userName: 'Alex Moreno', settings: 'Settings',
@@ -631,6 +649,14 @@ const STR = {
     reasonLabel: 'Why the higher rate?', reason_conf: 'It was the conference hotel', reason_none: 'No rooms under the limit nearby',
     reasonPh: 'Reason for {manager}',
     errGuests: "Add each guest's name.", errReason: 'Add a reason for the higher rate.',
+    diffHelp: "This doesn't match the receipt, which says {was}. Tell {manager} why, or use the receipt's value.",
+    noteLabel: "Why it's different", useValue: 'Use {value}', useReceipt: 'Use the receipt', or: ' or ', errNote: "Tell {manager} why this doesn't match the receipt.",
+    policyBtn: 'Policy', policyTitle: 'Acme expense policy', seePolicy: 'See the policy',
+    p_receipts_t: 'Receipts', p_receipts: 'A photo of every receipt. Reports are due on the last day of the month.',
+    p_hotel_t: 'Hotels', p_hotel: 'Up to {limit} a night. Above that, add a reason for your manager.',
+    p_client_t: 'Client meals', p_client: 'Up to {limit} per person. List everyone who was there.',
+    p_meals_t: 'Meals on work trips', p_meals: 'Up to {limit} a day.',
+    p_transport_t: 'Transport', p_transport: 'Fuel, trains, taxis and parking on work trips.',
     errTotal: 'Pick the right total, or type it.', errMerchant: 'Add the merchant name.', errAmount: 'Enter the total, like 12.50.', errDate: 'Pick the date on the receipt.',
     left1: '1 thing left to check', leftN: '{n} things left to check', leftNone: 'All set',
     save: 'Save receipt', saved: 'Saved. {amount} added to your report.', saveChanges: 'Save changes', updated: 'Changes saved.',
@@ -642,7 +668,7 @@ const STR = {
   pt: {
     guideLabel: 'Como testar este protótipo', howTo: 'Como testar', stDone: '(feito)', stNow: '(tarefa atual)',
     who: 'Victor Mascaro', whoRole: ' · Designer UX/AI', cEyebrow: 'Protótipo 01 · Backpocket', cTitleA: 'Relatório de despesas', cTitleB: 'a partir de uma foto', aSourceLabel: 'Fonte:',
-    cWhy: 'Por que não ter um relatório de despesas que <b>se preenche a partir de uma foto</b>, <b>destaca o que não conseguiu ler com certeza</b> e <b>mostra quanto falta para você receber seu dinheiro de volta</b>?',
+    cWhy: 'Por que não ter um relatório de despesas que <b>se preenche a partir de uma foto</b>, <b>destaca o que não conseguiu ler com certeza</b> e <b>confere cada recibo com a política de despesas</b>?',
     cTryH: 'Teste', cTry: 'Adicione os 4 recibos no app e envie o relatório de outubro.', cSolH: 'A solução',
     statNum: '50%', statText: 'dos profissionais não pedem o reembolso de despesas que a empresa deve a eles.', statSub: 'A maior reclamação é a papelada.', gameToggle: 'Progresso e comemorações',
     protoName: 'Backpocket', by: 'Protótipo de Victor Mascaro',
@@ -666,12 +692,12 @@ const STR = {
     aProblem: 'Metade dos profissionais não pede o reembolso de despesas que a empresa deve a eles. A maior reclamação é a papelada.',
     aSource: 'Pesquisa WalkMe e Propeller Insights com mais de 2.400 profissionais em 5 países, nov 2023.', aSourceLink: 'Ler a pesquisa',
     aWhyH: 'A ideia',
-    aWhy: 'Por que não ter um relatório de despesas que se preenche a partir de uma foto, destaca o que não conseguiu ler com certeza e mostra quanto dinheiro vai voltar para você?',
+    aWhy: 'Por que não ter um relatório de despesas que se preenche a partir de uma foto, destaca o que não conseguiu ler com certeza e confere cada recibo com a política de despesas?',
     aDecH: 'Decisões de design',
-    d1: 'A IA preenche todos os campos e destaca só o que não leu com certeza, com o motivo e o trecho da foto que ela leu.',
-    d2: 'Ela conhece a política de despesas e só pergunta o que a foto não mostra, como quem estava num jantar com cliente.',
-    d3: 'O valor que você vai receber cresce a cada recibo, e nada fica bloqueado.',
-    d4: 'Cada recibo é uma foto. Você só digita o que a foto não conta para a IA.',
+    d1: '<b>Uma foto por recibo.</b> A IA preenche estabelecimento, data, total e categoria, então um recibo legível não exige digitar nada.',
+    d2: '<b>Só pergunta quando precisa.</b> Um total borrado, ou algo que a política exige e nenhum recibo mostra, como quem estava num jantar com cliente.',
+    d3: '<b>Toda pergunta funciona do mesmo jeito.</b> O campo, uma nota curta explicando o porquê e respostas para escolher. Você sempre pode digitar a sua.',
+    d4: '<b>Progresso visível.</b> O valor a receber cresce a cada recibo. Isso motiva sem bloquear nada: você pode enviar o relatório a qualquer momento.',
     ctaAsk: 'Quer algo assim no seu produto?', ctaLinkedIn: 'Falar comigo no LinkedIn', ctaPortfolio: 'Ver meu portfólio', restart: 'Começar de novo',
     timeSec: '{s}\u00a0s', timeMin: '{m}\u00a0min {s}\u00a0s',
     appName: 'Despesas', userName: 'Alex Moreno', settings: 'Configurações',
@@ -695,6 +721,14 @@ const STR = {
     reasonLabel: 'Por que a diária mais alta?', reason_conf: 'Era o hotel do evento', reason_none: 'Nenhum quarto dentro do limite por perto',
     reasonPh: 'Motivo para {manager}',
     errGuests: 'Adicione o nome de cada convidado.', errReason: 'Adicione um motivo para a diária mais alta.',
+    diffHelp: 'Não bate com o recibo, que diz {was}. Explique para {manager} o porquê ou use o valor do recibo.',
+    noteLabel: 'Por que está diferente', useValue: 'Usar {value}', useReceipt: 'Usar o recibo', or: ' ou ', errNote: 'Explique para {manager} por que não bate com o recibo.',
+    policyBtn: 'Política', policyTitle: 'Política de despesas da Acme', seePolicy: 'Ver a política',
+    p_receipts_t: 'Recibos', p_receipts: 'Uma foto de cada recibo. O relatório vence no último dia do mês.',
+    p_hotel_t: 'Hotéis', p_hotel: 'Até {limit} por noite. Acima disso, informe um motivo para seu gestor.',
+    p_client_t: 'Refeições com clientes', p_client: 'Até {limit} por pessoa. Informe todos que estavam lá.',
+    p_meals_t: 'Refeições em viagem', p_meals: 'Até {limit} por dia.',
+    p_transport_t: 'Transporte', p_transport: 'Combustível, trem, táxi e estacionamento em viagens de trabalho.',
     errTotal: 'Escolha o total certo ou digite.', errMerchant: 'Adicione o nome do estabelecimento.', errAmount: 'Digite o total, por exemplo 12,50.', errDate: 'Escolha a data do recibo.',
     left1: 'Falta 1 item para conferir', leftN: 'Faltam {n} itens para conferir', leftNone: 'Tudo certo',
     save: 'Salvar recibo', saved: 'Salvo. {amount} adicionado ao relatório.', saveChanges: 'Salvar alterações', updated: 'Alterações salvas.',
@@ -766,6 +800,7 @@ const ICON = {
   approver: '<circle cx="10" cy="8" r="3.5"/><path d="M3.5 20a6.5 6.5 0 0 1 10.6-5"/><path d="M15 18.5l2 2 4.5-4.5"/>',
   arrow: '<path d="M4 12h15M13 6l6 6-6 6"/>',
   next: '<path d="M9 6l6 6-6 6"/>',
+  policy: '<path d="M6.5 3.5h7.5l4 4v13h-11.5z"/><path d="M14 3.5v4h4"/><path d="M9.5 12.5l1.8 1.8 3.4-3.4M9.5 17h5"/>',
   spark: '<path d="M12 3.5l1.9 5.1 5.1 1.9-5.1 1.9L12 17.5l-1.9-5.1L5 10.5l5.1-1.9z"/><path d="M18.5 16l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/>'
 };
 const icon = (name, cls = '') => `<svg class="i ${cls}" viewBox="0 0 24 24" aria-hidden="true">${ICON[name] || ''}</svg>`;
@@ -978,6 +1013,7 @@ function ringCandidates() {
     const r = state.review, s = currentSample();
     if (!r || r.phase !== 'ready' || r.edit) return [];
     const list = [];
+    PAPER_FIELDS.forEach(k => { if (mismatch(k) && !noted(k)) list.push('#n-' + k); });
     if (s.flag && !r.resolved.total) list.push('[data-action="pick-total"][data-value="46.5"]');
     if (s.needs === 'guests' && !guestsDone()) CAL_NAMES.forEach(n => { if (!r.values.guests.includes(n)) list.push(`[data-action="pick-guest"][data-name="${n}"]`); });
     if (s.needs === 'reason' && !reasonDone()) list.push('[data-action="pick-reason"][data-key="conf"]');
@@ -1108,7 +1144,10 @@ const LOGO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-
 function appHead() {
   return `<header class="app-head">
       <div class="app-brand"><span class="logo">${LOGO}</span><span class="name">Backpocket</span></div>
-      <span class="avatar" role="img" aria-label="${t('userName')}">AM</span>
+      <div class="head-end">
+        <button class="head-btn" type="button" data-action="policy">${icon('policy')}${t('policyBtn')}</button>
+        <span class="avatar" role="img" aria-label="${t('userName')}">AM</span>
+      </div>
     </header>`;
 }
 function renderHome() {
@@ -1207,7 +1246,7 @@ function openReview(id) {
   state.view = 'review';
   state.review = {
     id, phase: 'reading', showWhole: false,
-    values: { merchant: s.merchant, date: s.date, total: s.total, totalText: numText(s.total), category: s.category, guests: CAL_NAMES.map(() => ''), reason: '', reasonKey: null },
+    values: { merchant: s.merchant, date: s.date, total: s.total, totalText: numText(s.total), category: s.category, guests: CAL_NAMES.map(() => ''), reason: '', reasonKey: null, notes: { merchant: '', date: '', total: '' } },
     resolved: { total: !s.flag }, picked: null, errors: {}
   };
   render(); scrollerTop(); focusHeading();
@@ -1227,7 +1266,7 @@ function openEdit(id) {
   state.review = {
     id, edit: true, phase: 'ready', showWhole: false,
     values: { merchant: item.merchant, date: item.date, total: item.total, totalText: numText(item.total), category: item.category,
-      guests: item.guests ? [...item.guests] : CAL_NAMES.map(() => ''), reason: item.reason || '', reasonKey: item.reasonKey || null },
+      guests: item.guests ? [...item.guests] : CAL_NAMES.map(() => ''), reason: item.reason || '', reasonKey: item.reasonKey || null, notes: { merchant: '', date: '', total: '', ...item.notes } },
     resolved: { total: true }, picked: item.picked ?? null, errors: {}
   };
   render(); scrollerTop(); focusHeading();
@@ -1235,10 +1274,54 @@ function openEdit(id) {
 function currentSample() { return state.review && (SAMPLES.find(s => s.id === state.review.id) || BASE_READY.find(s => s.id === state.review.id)); }
 function guestsDone() { return state.review.values.guests.every(g => g.trim()); }
 function reasonDone() { return !!state.review.values.reason.trim(); }
+/* fields read off the paper: changing one to something the receipt doesn't say needs a note for the manager */
+const PAPER_FIELDS = ['merchant', 'date', 'total'];
+function mismatch(key) {
+  const s = currentSample(), v = state.review.values;
+  if (key === 'merchant') return !!v.merchant.trim() && v.merchant.trim().toLowerCase() !== s.merchant.toLowerCase();
+  if (key === 'date') return !!v.date && v.date !== s.date;
+  const amt = parseMoney(v.totalText);
+  return amt > 0 && ![s.total, s.alt].some(x => x != null && Math.abs(x - amt) < 0.005);
+}
+const noted = key => !!state.review.values.notes[key].trim();
+const markClass = key => (mismatch(key) ? (noted(key) ? ' checked' : ' flagged') : '');
+function noteBox(key) {
+  const s = currentSample(), totals = [s.total, s.alt].filter(x => x != null);
+  const uses = key === 'total' ? totals.map(x => [x, money(x)]) : [[s[key], key === 'date' ? dateShort(s.date) : esc(s.merchant)]];
+  return `
+    <div class="flag-box note-box" id="m-${key}" ${mismatch(key) ? '' : 'hidden'}>
+      <p>${t('diffHelp', { was: `<b>${uses.map(u => u[1]).join(t('or'))}</b>`, manager: MANAGER })}</p>
+      <input class="input" id="n-${key}" name="note" data-key="${key}" autocomplete="off" aria-label="${t('noteLabel')}" placeholder="${t('noteLabel')}" value="${esc(state.review.values.notes[key])}">
+      <div class="chips" role="group" aria-label="${t('useReceipt')}">${uses.map(([val, label]) => `<button class="chip" type="button" data-action="use-receipt" data-key="${key}" data-value="${esc(val)}">${t('useValue', { value: label })}</button>`).join('')}</div>
+    </div>`;
+}
+function refreshMismatch(key) {
+  const s = currentSample(), r = state.review, off = mismatch(key), ok = noted(key);
+  const box = $('#m-' + key), fw = $('#fw-' + key);
+  if (box) box.hidden = !off;
+  // the fuel total's own question steps aside while the note is asked for
+  const ask = key === 'total' && !!s.flag, h = ask && $('#h-total');
+  if (h) h.hidden = off;
+  if (fw) {
+    fw.classList.toggle('flagged', off ? !ok : ask && !r.resolved.total);
+    fw.classList.toggle('checked', off ? ok : ask && r.resolved.total);
+  }
+  if ((!off || ok) && r.errors[key] === t('errNote', { manager: MANAGER })) clearError(key);
+  refreshReviewStatus();
+}
+function useReceipt(key, value) {
+  const s = currentSample(), v = state.review.values;
+  if (key === 'total') {
+    const n = Number(value);
+    if (s.flag) resolveTotal(n, n);
+    else { v.total = n; v.totalText = numText(n); const inp = $('#f-total'); if (inp) { inp.value = v.totalText; replay(inp, 'filled'); } }
+  } else { v[key] = value; const inp = $('#f-' + key); if (inp) { inp.value = value; replay(inp, 'filled'); } }
+  clearError(key); refreshMismatch(key);
+}
 function needsCount() {
   const s = currentSample(), r = state.review;
   if (!s || !r) return 0;
-  let n = 0;
+  let n = PAPER_FIELDS.filter(k => mismatch(k) && !noted(k)).length;
   if (s.flag && !r.resolved.total) n++;
   if (s.needs === 'guests' && !guestsDone()) n++;
   if (s.needs === 'reason' && !reasonDone()) n++;
@@ -1250,8 +1333,8 @@ function errHTML(key) {
 }
 const checkNoteText = n => (n === 0 ? t('leftNone') : n === 1 ? t('left1') : t('leftN', { n }));
 function checkNoteHTML(n) { return `${icon(n ? 'look' : 'check')}<span>${checkNoteText(n)}</span>`; }
-function askBox(id, text, label, chips) {
-  return `<div class="flag-box" id="h-${id}"><p>${text}</p><div class="chips" role="group" aria-label="${label}">${chips}</div></div>`;
+function askBox(id, text, label, chips, hidden = false) {
+  return `<div class="flag-box" id="h-${id}" ${hidden ? 'hidden' : ''}><p>${text}</p><div class="chips" role="group" aria-label="${label}">${chips}</div></div>`;
 }
 function renderReview() {
   const s = currentSample(), r = state.review, v = r.values, reading = r.phase === 'reading', reveal = r.reveal && !reduceMotion();
@@ -1261,11 +1344,12 @@ function renderReview() {
     fields = [1, 2, 3, 4].map(() => '<div aria-hidden="true"><div class="skel-label"></div><div class="skel"></div></div>').join('');
   } else {
     // every question follows one pattern: the field, then a box that says why and offers answers, then any error
-    const flag = s.flag === 'total';
-    const totalState = flag ? (r.resolved.total ? 'checked' : 'flagged') : '';
+    const flag = s.flag === 'total', off = mismatch('total');
+    const totalState = off ? markClass('total').trim() : flag ? (r.resolved.total ? 'checked' : 'flagged') : '';
     const totalBox = flag ? askBox('total', t('fuelHelp'), t('pickTotal'),
-      [s.total, s.alt].map(val => `<button class="chip" type="button" data-action="pick-total" data-value="${val}" aria-pressed="${r.picked === val}">${money(val)}</button>`).join('')) : '';
-    const totalNote = s.needs === 'guests' ? `<p class="field-note">${icon('check')}${t('policyOk', { per: money(v.total / s.guests), limit: moneyShort(POLICY.clientMealPerPerson) })}</p>` : '';
+      [s.total, s.alt].map(val => `<button class="chip" type="button" data-action="pick-total" data-value="${val}" aria-pressed="${r.picked === val}">${money(val)}</button>`).join(''), off) : '';
+    const seePolicy = topic => `<button class="link-btn" type="button" data-action="policy" data-topic="${topic}">${t('seePolicy')}</button>`;
+    const totalNote = s.needs === 'guests' ? `<p class="field-note">${icon('check')}<span>${t('policyOk', { per: money(v.total / s.guests), limit: moneyShort(POLICY.clientMealPerPerson) })} ${seePolicy('client')}</span></p>` : '';
     let extra = '';
     if (s.needs === 'guests') {
       extra = `
@@ -1285,25 +1369,25 @@ function renderReview() {
         <div class="field ${reasonDone() ? 'checked' : 'flagged'}${r.errors.reason ? ' has-error' : ''}" id="fw-reason">
           <label class="lbl" for="f-reason">${t('reasonLabel')}</label>
           <input class="input" id="f-reason" name="reason" autocomplete="off" placeholder="${t('reasonPh', { manager: MANAGER })}" value="${esc(reason)}" aria-describedby="h-reason e-reason">
-          ${askBox('reason', t('hotelPolicy', { rate: moneyShort(s.nightly), limit: moneyShort(POLICY.hotelNight), manager: MANAGER }), t('reasonLabel'),
+          ${askBox('reason', `${t('hotelPolicy', { rate: moneyShort(s.nightly), limit: moneyShort(POLICY.hotelNight), manager: MANAGER })} ${seePolicy('hotel')}`, t('reasonLabel'),
             ['conf', 'none'].map(k => `<button class="chip" type="button" data-action="pick-reason" data-key="${k}" aria-pressed="${v.reasonKey === k}">${t('reason_' + k)}</button>`).join(''))}
           ${errHTML('reason')}
         </div>`;
     }
     fields = `
-      <div class="field${r.errors.merchant ? ' has-error' : ''}" id="fw-merchant">
+      <div class="field${markClass('merchant')}${r.errors.merchant ? ' has-error' : ''}" id="fw-merchant">
         <label class="lbl" for="f-merchant">${t('merchant')}</label>
-        <input class="input" id="f-merchant" name="merchant" autocomplete="off" value="${esc(v.merchant)}" aria-describedby="e-merchant">${errHTML('merchant')}
+        <input class="input" id="f-merchant" name="merchant" autocomplete="off" value="${esc(v.merchant)}" aria-describedby="m-merchant e-merchant">${noteBox('merchant')}${errHTML('merchant')}
       </div>
-      <div class="field${r.errors.date ? ' has-error' : ''}" id="fw-date">
+      <div class="field${markClass('date')}${r.errors.date ? ' has-error' : ''}" id="fw-date">
         <label class="lbl" for="f-date">${t('date')}</label>
-        <input class="input" type="date" id="f-date" name="date" value="${esc(v.date)}" aria-describedby="e-date">${errHTML('date')}
+        <input class="input" type="date" id="f-date" name="date" value="${esc(v.date)}" aria-describedby="m-date e-date">${noteBox('date')}${errHTML('date')}
       </div>
       <div class="field ${totalState}${r.errors.total ? ' has-error' : ''}" id="fw-total">
         <label class="lbl" for="f-total">${t('total')}</label>
         <div class="money"><span class="cur" aria-hidden="true">$</span>
-          <input class="input tnum" id="f-total" name="total" inputmode="decimal" autocomplete="off" value="${esc(v.totalText)}" aria-describedby="${flag ? 'h-total ' : ''}e-total"></div>
-        ${totalBox}${totalNote}${errHTML('total')}
+          <input class="input tnum" id="f-total" name="total" inputmode="decimal" autocomplete="off" value="${esc(v.totalText)}" aria-describedby="${flag ? 'h-total ' : ''}m-total e-total"></div>
+        ${totalBox}${noteBox('total')}${totalNote}${errHTML('total')}
       </div>
       <div class="field" id="fw-category">
         <label class="lbl" for="f-category">${t('category')}</label>
@@ -1386,10 +1470,12 @@ function saveReview() {
   else if (s.flag && !r.resolved.total) { setError('total', t('errTotal')); errs.push('total'); }
   if (s.needs === 'guests' && !guestsDone()) { setError('guests', t('errGuests')); errs.push('guests'); }
   if (s.needs === 'reason' && !reasonDone()) { setError('reason', t('errReason')); errs.push('reason'); }
+  PAPER_FIELDS.forEach(k => { if (!errs.includes(k) && mismatch(k) && !noted(k)) { setError(k, t('errNote', { manager: MANAGER })); errs.push(k); } });
   if (errs.length) {
     const first = errs[0];
     let target;
-    if (first === 'total' && s.flag && !r.resolved.total) target = document.querySelector('[data-action="pick-total"]');
+    if (PAPER_FIELDS.includes(first) && mismatch(first) && !noted(first)) target = $('#n-' + first);
+    else if (first === 'total' && s.flag && !r.resolved.total) target = document.querySelector('[data-action="pick-total"]');
     else if (first === 'guests') target = [...document.querySelectorAll('[name="guest"]')].find(i => !i.value.trim());
     else target = $('#f-' + first);
     const fw = $('#fw-' + first);
@@ -1398,7 +1484,8 @@ function saveReview() {
     announce(state.review.errors[first]);
     return;
   }
-  const entry = { id: s.id, merchant: v.merchant.trim(), date: v.date, total: amt, category: v.category, picked: r.picked };
+  const entry = { id: s.id, merchant: v.merchant.trim(), date: v.date, total: amt, category: v.category, picked: r.picked, notes: {} };
+  PAPER_FIELDS.forEach(k => { if (mismatch(k)) entry.notes[k] = v.notes[k].trim(); });
   if (s.needs === 'guests') entry.guests = v.guests.map(g => g.trim());
   if (s.needs === 'reason') { entry.reason = v.reason.trim(); entry.reasonKey = v.reasonKey; }
   if (r.edit) Object.assign(state.ready.find(x => x.id === s.id), entry);
@@ -1441,6 +1528,15 @@ function renderSheet() {
         <button class="btn btn-primary" type="button" data-action="confirm-send">${t('confirmSend')}</button>
         <button class="btn btn-plain" type="button" data-action="close-sheet">${t('confirmKeep')}</button>
       </div>`;
+  } else if (state.sheet === 'policy') {
+    // opened from a question, the rule it's about is highlighted
+    body = `
+      <h2 id="sheet-title">${t('policyTitle')}</h2>
+      <ul class="policy-list">${POLICY_RULES.map(([ic, k, limit]) => `
+        <li class="${state.policyTopic === k ? 'hl' : ''}"><span class="cat-ic">${icon(ic)}</span>
+          <div><p class="t">${t('p_' + k + '_t')}</p><p class="h">${t('p_' + k, { limit: limit ? moneyShort(limit) : '' })}</p></div></li>`).join('')}
+      </ul>
+      <div class="actions"><button class="btn btn-plain" type="button" data-action="close-sheet">${t('close')}</button></div>`;
   }
   layer.innerHTML = `<div class="scrim" data-action="close-sheet"></div><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title"><div class="grab" aria-hidden="true"></div>${body}</div>`;
   layer.classList.add('open');
@@ -1511,6 +1607,8 @@ document.addEventListener('click', e => {
       break;
     }
     case 'pick-total': resolveTotal(Number(el.dataset.value), Number(el.dataset.value)); break;
+    case 'use-receipt': useReceipt(el.dataset.key, el.dataset.value); break;
+    case 'policy': state.policyTopic = el.dataset.topic || null; openSheet('policy', el); break;
     case 'pick-guest': {
       // a calendar name goes into the first empty guest field; tapping it again takes it out
       const g = state.review.values.guests, name = el.dataset.name, i = g.indexOf(name);
@@ -1536,14 +1634,16 @@ document.addEventListener('input', e => {
   const r = state.review; if (!r) return;
   const el = e.target;
   switch (el.name) {
-    case 'merchant': r.values.merchant = el.value; if (el.value.trim()) clearError('merchant'); break;
-    case 'date': r.values.date = el.value; if (el.value) clearError('date'); break;
+    case 'merchant': r.values.merchant = el.value; if (el.value.trim()) clearError('merchant'); refreshMismatch('merchant'); break;
+    case 'date': r.values.date = el.value; if (el.value) clearError('date'); refreshMismatch('date'); break;
     case 'total': {
       r.values.totalText = el.value;
       if (currentSample().flag && !r.resolved.total) resolveTotal(null, 'typed');
       if (parseMoney(el.value) > 0) clearError('total');
+      refreshMismatch('total');
       break;
     }
+    case 'note': r.values.notes[el.dataset.key] = el.value; refreshMismatch(el.dataset.key); break;
     case 'guest': r.values.guests[Number(el.dataset.i)] = el.value; refreshReviewStatus(); break;
     case 'reason': r.values.reason = el.value; r.values.reasonKey = null; refreshReviewStatus(); break;
   }
