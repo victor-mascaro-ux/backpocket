@@ -30,7 +30,7 @@ The bar above the phone walks you through 7 short tasks: scan Alex's 4 receipts 
 
 - The AI is scripted with 4 sample receipts, so it works the same for everyone.
 - There's no backend, no analytics and no API key. Nothing you type leaves your browser.
-- Backpocket, Acme, Alex Moreno (a sales rep), Jordan Lee (his manager, who approves the report), the merchants and the calendar event are all fictional.
+- Backpocket, Acme, Alex Moreno (a sales rep), Jordan Lee (his manager, who approves the report), Sam Rivera (in finance), the merchants and the calendar event are all fictional.
 - English and Brazilian Portuguese, picked from your browser language.
 
 ## Run it locally
