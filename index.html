@@ -283,8 +283,11 @@ body{overflow:auto;background:var(--navy)}
 .g-about summary::-webkit-details-marker{display:none}
 .g-about summary svg{transition:transform .35s var(--ease-pop)}
 .g-about[open] summary svg{transform:rotate(180deg)}
+.g-about.closing summary svg{transform:none}
 /* the drawer shows the same cards as the left panel, a little tighter */
 .g-about .in{padding:0 12px 12px;color:var(--ice-2)}
+/* the drawer opens with the same eyebrow as the left panel: which prototype this is */
+.g-eyebrow{margin:2px 0 16px}
 .g-about a{color:var(--neon)}
 .g-about .c-solution{padding:18px}
 .g-about .c-decisions{margin:0}
@@ -356,6 +359,8 @@ h1:focus{outline:none}
 .sub.meta span{display:inline-flex;align-items:center;gap:6px}
 .sub.meta svg.i{width:17px;height:17px}
 h2.h2{display:flex;align-items:center;gap:8px;margin:26px 0 4px;font-size:18px;line-height:1.3}
+.sent-h{justify-content:space-between}
+.sent-t{display:inline-flex;align-items:center;gap:8px}
 .count{display:inline-grid;place-items:center;min-width:24px;height:24px;padding:0 7px;border-radius:999px;background:#E7E8E4;font-size:13px;font-weight:600}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 1px 2px rgba(16,24,40,.05),0 2px 6px rgba(16,24,40,.06)}
 .money-card{position:relative;padding:16px}
@@ -446,7 +451,6 @@ button.li-row:active{transform:scale(.985)}
 .shutter span{width:62px;height:62px;border-radius:50%;background:#fff;transition:transform .1s}
 .shutter:active span{transform:scale(.9)}
 .shutter:focus-visible{outline-color:#FFD54A;outline-offset:4px;border-radius:50%}
-.cam-empty{position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);margin:0;padding:8px 14px;border-radius:999px;background:rgba(0,0,0,.55);font-size:15px;font-weight:600;white-space:nowrap}
 .flash{position:absolute;inset:0;z-index:10;background:#fff;opacity:0;pointer-events:none}
 .flash.go{animation:flash .35s ease-out}
 @keyframes flash{0%{opacity:.9}100%{opacity:0}}
@@ -831,6 +835,7 @@ const STR = {
     noReceiptLabel: 'Why is there no receipt?', noReceiptHelp: 'Expenses need a receipt photo. Pick a reason or type one.',
     reason_lost: 'I lost it', reason_given: "The place didn't give one", errNoReceipt: "Add why there's no receipt.",
     now: 'now', notifTitle: 'Report approved', notifBody: '{manager} approved your October report. {amount} is on its way.',
+    notifTitlePart: 'Receipts approved', notifBodyPart: '{manager} approved {count}. {amount} is on its way.',
     approvedPill: 'Approved', approvedBy: 'Approved by {manager}',
     doneDA: 'Jordan approved it: Alex gets {amount} back. You closed the month in {time}.', doneDANoTime: 'Jordan approved it: Alex gets {amount} back.',
     diffHelp: "This doesn't match the receipt, which says {was}. Add a reason, or use the receipt's value.",
@@ -914,6 +919,7 @@ const STR = {
     noReceiptLabel: 'Por que não tem recibo?', noReceiptHelp: 'Despesas precisam da foto do recibo. Escolha um motivo ou digite.',
     reason_lost: 'Perdi o recibo', reason_given: 'O lugar não deu recibo', errNoReceipt: 'Adicione por que não tem recibo.',
     now: 'agora', notifTitle: 'Relatório aprovado', notifBody: '{manager} aprovou seu relatório de outubro. {amount} está a caminho.',
+    notifTitlePart: 'Recibos aprovados', notifBodyPart: '{manager} aprovou {count}. {amount} está a caminho.',
     approvedPill: 'Aprovado', approvedBy: 'Aprovados por {manager}',
     doneDA: 'O Jordan aprovou: Alex recebe {amount} de volta. Você fechou o mês em {time}.', doneDANoTime: 'O Jordan aprovou: Alex recebe {amount} de volta.',
     diffHelp: 'Não bate com o recibo, que diz {was}. Adicione um motivo ou use o valor do recibo.',
@@ -1313,7 +1319,7 @@ function renderGuide() {
   const about = `
     <details class="g-about" ${state.aboutOpen ? 'open' : ''}>
       <summary>${t('about')}${icon('expand')}</summary>
-      <div class="in">${problemCard()}${solutionCard()}${decisions()}</div>
+      <div class="in"><p class="c-eyebrow g-eyebrow">${t('cEyebrow')}</p>${problemCard()}${solutionCard()}${decisions()}</div>
     </details>`;
   const foot = `
     <div class="g-foot">
@@ -1486,8 +1492,8 @@ function render() {
   renderSheet();
 }
 const VIEW_IN = { 'home>camera': 'zoom', 'camera>review': 'fwd', 'home>review': 'fwd', 'review>home': 'back', 'home>done': 'pop', 'done>home': 'back' };
-// a receipt tucked into a pocket: the app's name, drawn
-const LOGO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3.5h8v6"/><path d="M10.5 6.5h3"/><path d="M4 9.5h16v5.2a7 7 0 0 1-4.6 6.6L12 22.5l-3.4-1.2A7 7 0 0 1 4 14.7z"/><path d="M7.5 12.5h9" stroke-dasharray="1.6 2"/></svg>';
+// the app's name, drawn: a torn-off receipt tucked at a tilt into a stitched jeans pocket
+const LOGO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.6 10.3L7.3 4.6l1.3-1.2 1.6.8 1.3-1.2 1.6.8 1.3-1.2 1.6.8 1.2 5.2"/><path d="M3.5 10h17v6.5L12 21.5l-8.5-5z"/><path d="M6.2 12.6v2.6L12 18.6l5.8-3.4v-2.6" stroke-dasharray="1.4 1.6"/></svg>';
 function appHead() {
   return `<header class="app-head">
       <div class="app-brand"><span class="logo">${LOGO}</span><span class="name">Backpocket</span></div>
@@ -1528,7 +1534,7 @@ function renderHome() {
                           : `<span class="status-pill">${icon('check')}${t('sentPill')}</span>`}
         </section>
         ${toSend.length ? `<h2 class="h2">${t('receipts')} <span class="count">${toSend.length}</span></h2><ul class="list">${rows(toSend)}</ul>` : ''}
-        ${sentList.length ? `<h2 class="h2">${t(allApproved ? 'approvedBy' : 'sentTo', { manager: MANAGER })} <span class="count">${sentList.length}</span></h2><ul class="list sent-list">${rows(sentList)}</ul>` : ''}
+        ${sentList.length ? `<h2 class="h2 sent-h"><span class="sent-t">${t('sentTo', { manager: MANAGER })} <span class="count">${sentList.length}</span></span>${allApproved ? `<span class="approved-pill">${icon('check')}${t('approvedPill')}</span>` : `<span class="pending-pill">${icon('clock')}${t('pendingPill')}</span>`}</h2><ul class="list sent-list">${rows(sentList)}</ul>` : ''}
       </div>
       <div class="app-bar bar-row">
         <button class="btn btn-secondary" type="button" data-action="manual">${icon('pen')}${t('manualBtn')}</button>
@@ -1573,7 +1579,7 @@ function renderCamera() {
     <div class="view camera${reading ? ' reading' : ''}">
       <h1 class="sr-only" tabindex="-1">${t('scan')}</h1>
       <div class="viewfinder">
-        ${s ? `<div class="cam-target"><div class="corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>${receiptHTML(s)}${reading ? '<div class="cam-scan" aria-hidden="true"></div>' : ''}</div>` : `<p class="cam-empty">${t('noReceipt')}</p>`}
+        ${s ? `<div class="cam-target"><div class="corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>${receiptHTML(s)}${reading ? '<div class="cam-scan" aria-hidden="true"></div>' : ''}</div>` : ''}
       </div>
       <div class="cam-top">
         <button class="cam-btn" type="button" data-action="close-camera" aria-label="${t('closeCam')}">${icon('close')}</button>
@@ -2064,9 +2070,9 @@ function sendReport() {
   state.newId = null; state.sheet = null; state.view = 'done';
   render(); scrollerTop(); focusHeading(); announce(t('doneTitle'));
   if (!reduceMotion()) burst();
-  if (currentTask() === 'done') scheduleApproval();
+  scheduleApproval();
 }
-/* at the end, the manager approves: a notification slides in and the report turns approved */
+/* the manager approves every batch that's sent, early or at the end: a notification slides in and those receipts turn approved */
 let notifTimer = null;
 function scheduleApproval() {
   const run = state;
@@ -2075,21 +2081,25 @@ function scheduleApproval() {
     const batch = state.ready.filter(r => r.sent && !r.approved);
     if (!batch.length) return;
     batch.forEach(r => { r.approved = true; });
-    state.approved = true;
-    showNotif();
+    // the whole report counts as approved once every receipt is in and approved
+    state.approved = currentTask() === 'done' && state.ready.every(r => r.approved);
+    showNotif(batch);
     if (state.view === 'home') renderHome();
     renderGuide();
   }, reduceMotion() ? 1500 : 3500);
 }
-function showNotif() {
+function showNotif(batch) {
+  const amount = money(batch.reduce((a, r) => a + r.total, 0)), count = batch.length === 1 ? t('count1') : t('countN', { n: batch.length });
+  const title = t(state.approved ? 'notifTitle' : 'notifTitlePart');
+  const body = state.approved ? t('notifBody', { manager: MANAGER, amount: money(total()) }) : t('notifBodyPart', { manager: MANAGER, count, amount });
   const old = $('#notif'); if (old) old.remove();
   $('#screen').insertAdjacentHTML('beforeend', `
     <button class="notif" id="notif" type="button" data-action="notif">
       <span class="logo" aria-hidden="true">${LOGO}</span>
       <span class="notif-text"><span class="notif-head"><b>Backpocket</b><span>${t('now')}</span></span>
-        <span class="notif-title">${t('notifTitle')}</span><span class="notif-body">${t('notifBody', { manager: MANAGER, amount: money(total()) })}</span></span>
+        <span class="notif-title">${title}</span><span class="notif-body">${body}</span></span>
     </button>`);
-  announce(t('notifTitle'));
+  announce(title);
   clearTimeout(notifTimer);
   notifTimer = setTimeout(hideNotif, 6000);
 }
@@ -2251,6 +2261,23 @@ document.addEventListener('keydown', e => {
   } else if (e.key === 'Escape' && state.guideOpen) closeGuide();
 });
 document.addEventListener('toggle', e => { if (e.target.classList && e.target.classList.contains('g-about')) state.aboutOpen = e.target.open; }, true);
+/* "About this concept" unfolds and folds like the steps panel: the drawer's height animates, then it stays open or closes */
+document.addEventListener('click', e => {
+  const sum = e.target.closest && e.target.closest('.g-about > summary');
+  if (!sum) return;
+  const d = sum.parentElement, inner = d.querySelector('.in');
+  if (reduceMotion() || !inner || !inner.animate) return;
+  e.preventDefault();
+  if (d.dataset.anim) return;
+  const opening = !d.open;
+  d.dataset.anim = '1';
+  if (opening) d.open = true; else d.classList.add('closing');
+  const h = inner.scrollHeight;
+  inner.style.overflow = 'hidden';
+  const a = inner.animate(opening ? [{ height: '0px', opacity: 0 }, { height: h + 'px', opacity: 1 }] : [{ height: h + 'px', opacity: 1 }, { height: '0px', opacity: 0 }],
+    { duration: opening ? 340 : 260, easing: opening ? 'cubic-bezier(.16, 1, .3, 1)' : 'cubic-bezier(.4, 0, .2, 1)' });
+  a.onfinish = () => { inner.style.overflow = ''; if (!opening) { d.open = false; d.classList.remove('closing'); } delete d.dataset.anim; };
+});
 
 /* fit the phone to the window */
 function fit() {
