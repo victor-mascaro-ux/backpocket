@@ -12,7 +12,7 @@ Half of workers don't file expense reports for money they're owed, and the top c
 
 ## How to try it
 
-The bar above the phone walks you through 7 short tasks: scan Alex's 4 receipts and send the October report. Each task has a **Show me** button that does it for you, and a pulsing ring on the phone points at the next tap. The app itself has no instructions in it, the same as a real product. Each receipt shows a different thing the AI does:
+The bar above the phone walks you through 7 short tasks: scan Alex's 4 receipts and send the October report. Each task has a **Show me** button that does it for you, and if you pause for a few seconds, a pulsing ring on the phone points at the next tap. The app itself has no instructions in it, the same as a real product. Each receipt shows a different thing the AI does:
 
 1. **Café**: everything is clear, so you just save it.
 2. **Fuel**: the total is smudged. The AI shows the part of the photo it read and asks you to pick between the two readings.
