@@ -57,19 +57,22 @@ svg.i{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-widt
 body{overflow:auto;background:var(--navy)}
 .page{position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(380px,680px) auto;grid-template-rows:minmax(0,1fr);grid-template-areas:"panel stage";justify-content:center;column-gap:clamp(56px,7vw,112px);padding:20px 32px;height:100vh;height:100dvh;background:radial-gradient(var(--dot) 1px,transparent 1.3px) 0 0/24px 24px,var(--navy)}
 .page::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(560px circle at var(--gx,80%) var(--gy,37%),var(--glow),transparent 65%)}
-.bar-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;min-width:44px;padding:0 10px;border:1px solid var(--navy-line);border-radius:10px;background:var(--navy-2);color:var(--ice);font:700 13px/1 var(--f-mono);letter-spacing:.04em;cursor:pointer;transition:background-color .18s,border-color .18s,transform .18s var(--ease)}
-.bar-btn:hover{border-color:var(--navy-line-2);background:var(--navy-3)}
-.bar-btn:active{transform:scale(.96)}
+/* language button: the portfolio's tool button, with the current language's flag and code */
+.tool{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 12px;border:1px solid var(--navy-line);border-radius:10px;background:var(--navy-2);color:var(--ice);font-size:.8125rem;font-weight:600;cursor:pointer;transition:background-color .18s,border-color .18s,color .18s,transform .18s var(--ease)}
+.tool:hover{border-color:var(--navy-line-2)}
+.tool.lang-btn{gap:7px;padding:0 11px 0 10px}
+.lang-flag{width:20px;height:14px;object-fit:cover;object-position:left center;border-radius:3px;box-shadow:0 0 0 1px var(--navy-line);flex:none}
+.lang-code{font-family:var(--f-mono);font-size:.74rem;font-weight:700;letter-spacing:.04em}
+.flag-br:not(:lang(pt-BR)),.flag-us:lang(pt-BR){display:none}
 .stage{grid-area:stage;position:relative;display:flex;flex-direction:column;gap:12px;width:calc(418px * var(--s));min-height:0}
 .mini-av{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#DDE7E2;color:var(--brand-ink);font-size:10px;font-weight:700}
 /* the phone is dealt in once, like the portfolio's player card, then stays still */
 .phone-fit{position:relative;width:calc(418px * var(--s));height:calc(872px * var(--s));flex:none;animation:deal 1.15s var(--ease-out) .25s backwards}
 .phone{position:absolute;left:0;top:0;width:418px;height:872px;transform:scale(var(--s));transform-origin:top left;border-radius:64px;padding:14px;background:#0B0B0D;box-shadow:inset 0 0 0 2px #2A2D35,inset 0 0 0 6px #111318,0 0 0 1px #2B3557,0 40px 90px rgba(0,0,0,.55),var(--card-glow)}
-/* Try it: the frame lights up twice to say "over here" */
-.phone-fit.look .phone{animation:look 1.8s var(--ease-out)}
+/* Try it: the frame's glow swells once and settles, to say "over here" */
+.phone-fit.look .phone{animation:look 2.4s ease-in-out}
 @keyframes look{
-  20%,65%{box-shadow:inset 0 0 0 2px #2A2D35,inset 0 0 0 6px #111318,0 0 0 3px var(--neon),0 40px 90px rgba(0,0,0,.55),0 0 70px 6px rgba(79,195,247,.8),0 0 170px 12px rgba(79,195,247,.5)}
-  42%{box-shadow:inset 0 0 0 2px #2A2D35,inset 0 0 0 6px #111318,0 0 0 1px #2B3557,0 40px 90px rgba(0,0,0,.55),0 0 48px -4px rgba(79,195,247,.5),0 0 130px -16px rgba(79,195,247,.38)}
+  35%{box-shadow:inset 0 0 0 2px #2A2D35,inset 0 0 0 6px #111318,0 0 0 2px var(--neon),0 40px 90px rgba(0,0,0,.55),0 0 64px 4px rgba(79,195,247,.75),0 0 160px 10px rgba(79,195,247,.45)}
 }
 .phone::before,.phone::after{content:"";position:absolute;width:4px;border-radius:2px;background:#22252C}
 .phone::before{left:-4px;top:180px;height:64px;box-shadow:0 84px 0 #22252C}
@@ -176,8 +179,6 @@ body{overflow:auto;background:var(--navy)}
 .g-name{margin:0;font:700 22px/1.2 var(--f-display);letter-spacing:-.02em}
 .g-by{display:inline-block;margin-top:2px;font-size:13px;color:var(--ice-muted);text-decoration:none}
 .g-by:hover{color:var(--ice);text-decoration:underline}
-.g-lang{min-width:44px;min-height:40px;padding:0 10px;border:1px solid var(--navy-line);border-radius:10px;background:var(--navy-2);color:var(--ice);font:700 13px/1 var(--f-mono);cursor:pointer;transition:background-color .18s,border-color .18s}
-.g-lang:hover{border-color:var(--navy-line-2);background:var(--navy-3)}
 .g-dashes{display:flex;gap:5px}
 .g-dashes i{flex:1;height:4px;border-radius:2px;background:#24325E}
 .g-dashes i.done{background:var(--neon)}
@@ -238,7 +239,16 @@ body{overflow:auto;background:var(--navy)}
 .g-compact.swap{animation:glow 1s var(--ease-out) var(--age,0s)}
 .g-compact.swap .g-step{animation:pop .5s var(--ease-pop) var(--age,0s) backwards}
 .g-compact.swap .g-ctitle{animation:swapin .45s var(--ease-out) var(--age,0s) backwards}
-.relang .concept,.relang .guide,.relang .app{animation:fade .3s ease-out}
+/* language switch, as in the portfolio: the flag flips over like a card, the code rolls in,
+   and the text on screen types itself in again; the part not yet typed keeps its space, headings carry a caret */
+.lang-btn.is-flipping .lang-flag{animation:flagFlip .7s var(--ease-pop) both}
+.lang-btn.is-flipping .lang-code{display:inline-block;animation:codeRoll .5s var(--ease-out) .12s both}
+.tw-off{visibility:hidden}
+.tw-head .tw-on{position:relative}
+.tw-head.is-typing .tw-on::after{content:"";position:absolute;right:-3px;top:.08em;bottom:.02em;width:2px;border-radius:1px;background:var(--neon);animation:caretBlink .45s steps(1) infinite}
+@keyframes flagFlip{from{transform:perspective(80px) rotateY(-180deg) scale(.8)}}
+@keyframes codeRoll{from{opacity:0;transform:translateY(80%)}}
+@keyframes caretBlink{50%{opacity:0}}
 @keyframes rise{from{opacity:0;transform:translateY(16px)}}
 @keyframes wordUp{from{opacity:0;transform:translateY(.5em) rotate(3deg);filter:blur(8px)}}
 @keyframes spinIn{from{transform:rotate(-135deg) scale(.3)}}
@@ -314,6 +324,8 @@ button.li-row:active{transform:scale(.985)}
 .li-amt{margin:0;font-weight:600;font-size:15px}
 .li-status{display:inline-flex;align-items:center;gap:4px;margin:0;color:var(--brand-ink);font-size:13px;font-weight:600}
 .li-status svg.i{width:16px;height:16px}
+.li-status.sent{color:var(--muted)}
+.sent-list li{background:#FAFAF8}
 
 .app-bar{position:sticky;bottom:0;z-index:5;padding:12px 16px 40px;background:var(--bg);box-shadow:0 -1px 0 var(--line)}
 
@@ -353,17 +365,24 @@ button.li-row:active{transform:scale(.985)}
 .icon-btn:active{transform:scale(.92)}
 .icon-btn:hover{background:#E7E8E4}
 .sub-title{margin:0;font-size:18px;line-height:1.3}
-.photo{position:relative;margin:4px 0 0;padding:14px 0 8px;border-radius:16px;background:linear-gradient(160deg,#9C7A57,#6E5136);overflow:hidden}
-.photo-inner{position:relative;max-height:200px;overflow:hidden;transition:max-height .3s}
-.photo.whole .photo-inner{max-height:900px}
-.photo:not(.whole) .photo-inner::after{content:"";position:absolute;left:0;right:0;bottom:0;height:56px;background:linear-gradient(to bottom,rgba(110,81,54,0),rgba(110,81,54,.95))}
-.photo .receipt{transform:rotate(var(--tilt,-1.5deg))}
-.photo-toggle{display:flex;align-items:center;gap:6px;margin:6px auto 0;min-height:40px;padding:0 14px;border:0;border-radius:999px;background:rgba(255,255,255,.9);color:var(--ink);font-weight:600;font-size:14px;cursor:pointer;transition:background-color .15s,transform .12s}
-.photo-toggle:hover{background:#fff}
-.photo-toggle:active{transform:scale(.96)}
-.scanline{position:absolute;left:10%;right:10%;top:0;height:46px;background:linear-gradient(to bottom,rgba(79,195,247,0),rgba(79,195,247,.35) 70%,rgba(36,87,214,.9) 100%);border-bottom:2px solid #2457D6;animation:scan 1.15s ease-in-out infinite;pointer-events:none}
-@keyframes scan{0%{transform:translateY(-40px)}100%{transform:translateY(205px)}}
-.ai-line{display:flex;align-items:flex-start;gap:8px;margin:14px 0 6px;font-size:15px}
+.photo{position:relative;margin:4px 0 0;padding:14px 0 0;border-radius:16px;background:linear-gradient(160deg,#9C7A57,#6E5136);overflow:hidden}
+.photo-inner{position:relative;max-height:200px;overflow:hidden}
+.photo-inner::after{content:"";position:absolute;left:0;right:0;bottom:0;height:56px;background:linear-gradient(to bottom,rgba(110,81,54,0),rgba(110,81,54,.95))}
+.photo .receipt{transform:rotate(var(--tilt,-1.5deg));transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.photo:hover .receipt{transform:rotate(var(--tilt,-1.5deg)) scale(1.03)}
+/* the whole photo opens the receipt full size */
+.photo-open{position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;justify-content:flex-end;padding:10px;border:0;border-radius:inherit;background:transparent;cursor:zoom-in}
+.photo-open:focus-visible{outline-offset:-3px}
+.photo-zoom{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.92);color:var(--ink);box-shadow:0 2px 8px rgba(0,0,0,.2);transition:transform .15s}
+.photo-zoom svg.i{width:18px;height:18px}
+.photo-open:hover .photo-zoom{transform:scale(1.1)}
+/* lightbox, as in the portfolio: dark blurred backdrop, the receipt centered with a soft glow */
+.lightbox{position:absolute;inset:0;display:grid;place-items:center;padding:110px 16px 60px;overflow-y:auto;background:rgba(2,6,18,.68);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);cursor:zoom-out;animation:fade .25s cubic-bezier(.16,1,.3,1)}
+.lb-photo{transform:scale(1.18);filter:drop-shadow(0 0 34px rgba(79,195,247,.55));animation:lbZoom .3s cubic-bezier(.16,1,.3,1)}
+.lb-close{position:absolute;top:62px;right:16px;width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:var(--surface);color:var(--ink);cursor:pointer}
+.lb-close svg.i{width:18px;height:18px}
+.sheet-layer.closing .lightbox{animation:fadeout .2s ease-in forwards}
+@keyframes lbZoom{from{opacity:0;transform:scale(1.1)}}
 /* what's left to check, under the photo */
 .check-note{display:flex;align-items:center;gap:8px;margin:14px 0 6px;font-size:15px;font-weight:600}
 .check-note.todo{color:var(--flag-ink)}
@@ -381,8 +400,6 @@ button.li-row:active{transform:scale(.985)}
 .money{position:relative}
 .money .cur{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
 .money .input{padding-left:30px}
-.skel{height:48px;border-radius:10px;background:linear-gradient(90deg,#E9EAE6 0%,#F4F4F1 50%,#E9EAE6 100%);background-size:200% 100%;animation:shimmer 1.2s linear infinite}
-.skel-label{width:90px;height:14px;margin-bottom:10px;border-radius:6px;background:#E3E4E0}
 @keyframes shimmer{to{background-position:-200% 0}}
 /* every question the AI asks looks the same: the field, then one box that says why and offers answers */
 .flagged .input{border-color:var(--flag-line);border-width:2px;background:#FFFCF2}
@@ -391,9 +408,11 @@ button.li-row:active{transform:scale(.985)}
 .checked .input{border-color:var(--brand);background:var(--surface)}
 .flag-box p{margin:0 0 10px;font-size:15px}
 .note-box .input{margin:0 0 10px;background:var(--surface)}
+.guest-fields{margin-top:10px}
+#h-guests{margin-top:0}
 .note-box:not([hidden]){animation:rise .25s ease-out}
-.field-note{display:flex;align-items:center;gap:6px;margin:8px 0 0;color:var(--brand-ink);font-size:14px;font-weight:600}
-.field-note svg.i{width:16px;height:16px}
+.field-note{display:flex;align-items:flex-start;gap:6px;margin:8px 0 0;color:var(--brand-ink);font-size:14px;font-weight:600}
+.field-note svg.i{width:16px;height:16px;margin-top:3px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 16px;border:1.5px solid var(--line-strong);border-radius:999px;background:var(--surface);font-weight:600;font-size:15px;cursor:pointer;transition:background-color .15s,border-color .15s,color .15s,transform .12s}
 .chip:hover{border-color:var(--ink)}
@@ -487,6 +506,15 @@ button.li-row:active{transform:scale(.985)}
 @keyframes aim{from{opacity:0;transform:translate(-50%,-50%) scale(.8) rotate(-4deg)}}
 @keyframes lock{from{opacity:0;transform:translate(var(--lx),var(--ly))}}
 @keyframes blink{50%{opacity:.35}}
+/* after the shutter: the receipt is read right in the camera */
+.cam-scan{position:absolute;inset:-8px -6px;z-index:2;overflow:hidden;pointer-events:none}
+.cam-scan::before{content:"";position:absolute;left:0;right:0;top:-64px;height:64px;background:linear-gradient(to bottom,rgba(79,195,247,0),rgba(79,195,247,.35) 70%,rgba(79,195,247,.85));border-bottom:2px solid #4FC3F7;animation:camscan 1.2s ease-in-out infinite}
+.camera.reading .cam-target,.camera.reading .corners i{animation:none}
+.camera.reading .corners i{border-color:#4FC3F7;transition:border-color .3s}
+.camera.reading .cam-pill{animation:fade .25s ease-out}
+.cam-pill .spinner{width:14px;height:14px;margin:0;border-color:rgba(255,255,255,.3);border-top-color:#fff}
+.shutter[aria-disabled="true"]{opacity:.45;cursor:progress;transform:none}
+@keyframes camscan{to{top:100%}}
 /* review: the fields fill in one after another once the photo is read */
 .form.reveal>*{animation:rise .45s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(60ms + var(--i,0) * 70ms)}
 .check-note.reveal{animation:rise .4s cubic-bezier(.2,.8,.2,1) backwards}
@@ -538,13 +566,15 @@ button.li-row:active{transform:scale(.985)}
   .app-bar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
   .sheet{padding-bottom:calc(20px + env(safe-area-inset-bottom))}
   .toast{bottom:96px}
+  .lightbox{padding-top:72px}
+  .lb-close{top:14px}
 }
 @media (max-width:899px) and (min-width:500px){
   .app{max-width:480px;margin:0 auto;width:100%}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
-  .scanline{display:none}
+  .cam-scan{display:none}
   .ring{animation:none;box-shadow:0 0 0 6px rgba(79,195,247,.35)}
 }
 </style>
@@ -606,7 +636,7 @@ const STR = {
     cTryH: 'Try it', cTry: 'Add the 4 receipts in the app and send the October report.', cSolH: 'The solution',
     statNum: '50%', statText: "of workers don't file expense reports for money they're owed.", statSub: 'The top complaint is the paperwork.', gameToggle: 'Progress and celebrations',
     protoName: 'Backpocket', by: 'Prototype by Victor Mascaro',
-    langBtn: 'PT', langLabel: 'Ver em português',
+    langCode: 'EN', langLabel: 'EN, switch to Portuguese',
     taskOf: 'Task {n} of {total}', onPhone: "On Alex's phone", deviceLabel: "Alex's phone",
     showMe: 'Show me', showing: 'Showing…',
     helpRing: 'or do it yourself on the phone: tap the pulsing ring.',
@@ -628,10 +658,10 @@ const STR = {
     aWhyH: 'The idea',
     aWhy: "Why not have an expense report that fills itself in from a photo, highlights anything it isn't sure about, and checks every receipt against the expense policy?",
     aDecH: 'Design decisions',
-    d1: '<b>One photo per receipt.</b> The AI fills in the merchant, date, total and category, so a clear receipt needs no typing.',
-    d2: "<b>It asks only when it has to.</b> A smudged total, or something the policy needs that no receipt shows, like who was at a client dinner.",
-    d3: "<b>Every question works the same way.</b> The field, a short note on why it's asking, and answers to pick. You can always type your own.",
-    d4: '<b>Progress you can see.</b> The amount coming back grows with each receipt. It motivates without blocking anything: you can send the report at any time.',
+    d1: "<b>Snap, and it's filled in.</b> One photo gives you the merchant, date, total and category.",
+    d2: '<b>Blurry? It asks.</b> When a receipt is hard to read, it shows what it sees and you pick the right one.',
+    d3: '<b>The policy is built in.</b> Over a limit, or different from the receipt? Add a quick reason for your manager, right there.',
+    d4: '<b>Send whenever you like.</b> One receipt or all of them, the report is ready when you are.',
     ctaAsk: 'Want something like this for your product?', ctaLinkedIn: 'Message me on LinkedIn', ctaPortfolio: 'See my portfolio', restart: 'Start over',
     timeSec: '{s}\u00a0s', timeMin: '{m}\u00a0min {s}\u00a0s',
     appName: 'Expenses', userName: 'Alex Moreno', settings: 'Settings',
@@ -641,14 +671,14 @@ const STR = {
     sentPill: 'Sent · Waiting for {manager}',
     closeCam: 'Close camera', found: 'Receipt found', noReceipt: 'Point the camera at a receipt', shutter: 'Take photo',
     discard: 'Discard and go back', reviewTitle: 'Check the details', editTitle: 'Edit receipt', back: 'Back',
-    reading: 'Reading the receipt…', readingBtn: 'Reading…',
-    showWhole: 'Show whole receipt', showLess: 'Show less',
+    reading: 'Reading the receipt…',
+    seePhoto: 'See the whole receipt', photoLabel: 'Receipt photo',
     merchant: 'Merchant', date: 'Date', total: 'Total', category: 'Category',
     cat_meals: 'Meals', cat_client: 'Client meals', cat_lodging: 'Lodging', cat_transport: 'Transport', cat_office: 'Office supplies', cat_other: 'Other',
-    fuelHelp: 'Part of the total is smudged. Pick the right amount or type it.',
+    fuelHelp: 'The total is hard to read on this receipt. Pick the right amount or type it.',
     pickTotal: 'Pick the right total',
     guestsLabel: 'Who else was there?', guestN: 'Guest {n}', fromCal: 'From your calendar',
-    guestsHelp: "Client meals need the guests' names. Pick them from “{event}” on your calendar or type them.",
+    guestsHelp: "Client meals need the guests' names.<br>From your Calendar (“{event}”):",
     calEvent: 'Dinner with the Bluefin team',
     policyOk: 'Within policy: {per} per person (limit {limit}).',
     hotelPolicy: '{rate} a night is over the {limit} limit, so {manager} needs a reason. Pick one or type it.',
@@ -658,15 +688,16 @@ const STR = {
     diffHelp: "This doesn't match the receipt, which says {was}. Tell {manager} why, or use the receipt's value.",
     noteLabel: "Why it's different", useValue: 'Use {value}', useReceipt: 'Use the receipt', or: ' or ', errNote: "Tell {manager} why this doesn't match the receipt.",
     policyBtn: 'Policy', policyTitle: 'Acme expense policy', seePolicy: 'See the policy',
-    p_receipts_t: 'Receipts', p_receipts: 'A photo of every receipt. Reports are due on the last day of the month.',
-    p_hotel_t: 'Hotels', p_hotel: 'Up to {limit} a night. Above that, add a reason for your manager.',
+    p_receipts_t: 'Receipts', p_receipts: 'Snap a photo of each receipt, and send your report by the last day of the month.',
+    p_hotel_t: 'Hotels', p_hotel: 'Up to {limit} a night. Paid more? Add a quick note saying why.',
     p_client_t: 'Client meals', p_client: 'Up to {limit} per person. List everyone who was there.',
     p_meals_t: 'Meals on work trips', p_meals: 'Up to {limit} a day.',
     p_transport_t: 'Transport', p_transport: 'Fuel, trains, taxis and parking on work trips.',
     errTotal: 'Pick the right total, or type it.', errMerchant: 'Add the merchant name.', errAmount: 'Enter the total, like 12.50.', errDate: 'Pick the date on the receipt.',
     left1: '1 thing left to check', leftN: '{n} things left to check', leftNone: 'All set',
     save: 'Save receipt', saved: 'Saved. {amount} added to your report.', saveChanges: 'Save changes', updated: 'Changes saved.',
-    confirmTitle: 'Send the October report?', confirmBody: '{n} receipts, {amount} to get back. It goes to {manager}, your manager, for approval.',
+    confirmTitle: 'Send the October report?', confirmTitleMore: 'Send the new receipts?', confirmBody: '{count}, {amount} to get back. It goes to {manager}, your manager, for approval.',
+    sentLabel: 'Sent', sentTo: 'Sent to {manager}', sendMore1: 'Send 1 new receipt', sendMoreN: 'Send {n} new receipts',
     confirmSend: 'Send report', confirmKeep: 'Keep editing',
     doneTitle: 'Report sent', doneBody: "{amount} comes back to you once {manager} approves it. You'll get a notification when that happens.", doneBtn: 'Back to expenses',
     celebrations: 'Celebrations', celebrationsHelp: 'Animations when you add a receipt or send a report.', close: 'Close', account: 'Alex Moreno · Acme'
@@ -678,7 +709,7 @@ const STR = {
     cTryH: 'Teste', cTry: 'Adicione os 4 recibos no app e envie o relatório de outubro.', cSolH: 'A solução',
     statNum: '50%', statText: 'dos profissionais não pedem o reembolso de despesas que a empresa deve a eles.', statSub: 'A maior reclamação é a papelada.', gameToggle: 'Progresso e comemorações',
     protoName: 'Backpocket', by: 'Protótipo de Victor Mascaro',
-    langBtn: 'EN', langLabel: 'View in English',
+    langCode: 'PT', langLabel: 'PT, mudar para inglês',
     taskOf: 'Tarefa {n} de {total}', onPhone: 'No celular do Alex', deviceLabel: 'Celular do Alex',
     showMe: 'Mostrar', showing: 'Mostrando…',
     helpRing: 'ou faça você mesmo no celular: toque no anel pulsante.',
@@ -700,10 +731,10 @@ const STR = {
     aWhyH: 'A ideia',
     aWhy: 'Por que não ter um relatório de despesas que se preenche a partir de uma foto, destaca o que não conseguiu ler com certeza e confere cada recibo com a política de despesas?',
     aDecH: 'Decisões de design',
-    d1: '<b>Uma foto por recibo.</b> A IA preenche estabelecimento, data, total e categoria, então um recibo legível não exige digitar nada.',
-    d2: '<b>Só pergunta quando precisa.</b> Um total borrado, ou algo que a política exige e nenhum recibo mostra, como quem estava num jantar com cliente.',
-    d3: '<b>Toda pergunta funciona do mesmo jeito.</b> O campo, uma nota curta explicando o porquê e respostas para escolher. Você sempre pode digitar a sua.',
-    d4: '<b>Progresso visível.</b> O valor a receber cresce a cada recibo. Isso motiva sem bloquear nada: você pode enviar o relatório a qualquer momento.',
+    d1: '<b>Tirou a foto, preencheu.</b> Uma foto já traz estabelecimento, data, total e categoria.',
+    d2: '<b>Borrado? O app pergunta.</b> Quando o recibo está difícil de ler, ele mostra o que viu e você escolhe o valor certo.',
+    d3: '<b>A política já vem junto.</b> Passou do limite ou ficou diferente do recibo? Escreva um motivo rápido para o seu gestor, ali mesmo.',
+    d4: '<b>Envie quando quiser.</b> Com um recibo ou com todos, o relatório fica pronto quando você estiver.',
     ctaAsk: 'Quer algo assim no seu produto?', ctaLinkedIn: 'Falar comigo no LinkedIn', ctaPortfolio: 'Ver meu portfólio', restart: 'Começar de novo',
     timeSec: '{s}\u00a0s', timeMin: '{m}\u00a0min {s}\u00a0s',
     appName: 'Despesas', userName: 'Alex Moreno', settings: 'Configurações',
@@ -713,14 +744,14 @@ const STR = {
     sentPill: 'Enviado · Aguardando {manager}',
     closeCam: 'Fechar câmera', found: 'Recibo encontrado', noReceipt: 'Aponte a câmera para um recibo', shutter: 'Tirar foto',
     discard: 'Descartar e voltar', reviewTitle: 'Confira os dados', editTitle: 'Editar recibo', back: 'Voltar',
-    reading: 'Lendo o recibo…', readingBtn: 'Lendo…',
-    showWhole: 'Ver recibo inteiro', showLess: 'Ver menos',
+    reading: 'Lendo o recibo…',
+    seePhoto: 'Ver o recibo inteiro', photoLabel: 'Foto do recibo',
     merchant: 'Estabelecimento', date: 'Data', total: 'Total', category: 'Categoria',
     cat_meals: 'Refeições', cat_client: 'Refeições com clientes', cat_lodging: 'Hospedagem', cat_transport: 'Transporte', cat_office: 'Material de escritório', cat_other: 'Outros',
-    fuelHelp: 'Parte do total está borrada. Escolha o valor certo ou digite.',
+    fuelHelp: 'O total está difícil de ler neste recibo. Escolha o valor certo ou digite.',
     pickTotal: 'Escolha o total certo',
     guestsLabel: 'Quem mais estava lá?', guestN: 'Convidado {n}', fromCal: 'Da sua agenda',
-    guestsHelp: 'Refeições com clientes precisam do nome dos convidados. Escolha do evento “{event}” na sua agenda ou digite.',
+    guestsHelp: 'Refeições com clientes precisam do nome dos convidados.<br>Da sua Agenda (“{event}”):',
     calEvent: 'Jantar com o time da Bluefin',
     policyOk: 'Dentro da política: {per} por pessoa (limite {limit}).',
     hotelPolicy: '{rate} por noite passa do limite de {limit}, então {manager} precisa de um motivo. Escolha um ou digite.',
@@ -730,15 +761,16 @@ const STR = {
     diffHelp: 'Não bate com o recibo, que diz {was}. Explique para {manager} o porquê ou use o valor do recibo.',
     noteLabel: 'Por que está diferente', useValue: 'Usar {value}', useReceipt: 'Usar o recibo', or: ' ou ', errNote: 'Explique para {manager} por que não bate com o recibo.',
     policyBtn: 'Política', policyTitle: 'Política de despesas da Acme', seePolicy: 'Ver a política',
-    p_receipts_t: 'Recibos', p_receipts: 'Uma foto de cada recibo. O relatório vence no último dia do mês.',
-    p_hotel_t: 'Hotéis', p_hotel: 'Até {limit} por noite. Acima disso, informe um motivo para seu gestor.',
+    p_receipts_t: 'Recibos', p_receipts: 'Tire uma foto de cada recibo e envie o relatório até o último dia do mês.',
+    p_hotel_t: 'Hotéis', p_hotel: 'Até {limit} por noite. Pagou mais? Deixe uma nota rápida dizendo o porquê.',
     p_client_t: 'Refeições com clientes', p_client: 'Até {limit} por pessoa. Informe todos que estavam lá.',
     p_meals_t: 'Refeições em viagem', p_meals: 'Até {limit} por dia.',
     p_transport_t: 'Transporte', p_transport: 'Combustível, trem, táxi e estacionamento em viagens de trabalho.',
     errTotal: 'Escolha o total certo ou digite.', errMerchant: 'Adicione o nome do estabelecimento.', errAmount: 'Digite o total, por exemplo 12,50.', errDate: 'Escolha a data do recibo.',
     left1: 'Falta 1 item para conferir', leftN: 'Faltam {n} itens para conferir', leftNone: 'Tudo certo',
     save: 'Salvar recibo', saved: 'Salvo. {amount} adicionado ao relatório.', saveChanges: 'Salvar alterações', updated: 'Alterações salvas.',
-    confirmTitle: 'Enviar o relatório de outubro?', confirmBody: '{n} recibos, {amount} para receber de volta. Vai para {manager}, seu gestor, aprovar.',
+    confirmTitle: 'Enviar o relatório de outubro?', confirmTitleMore: 'Enviar os recibos novos?', confirmBody: '{count}, {amount} para receber de volta. Vai para {manager}, seu gestor, aprovar.',
+    sentLabel: 'Enviado', sentTo: 'Enviados para {manager}', sendMore1: 'Enviar 1 recibo novo', sendMoreN: 'Enviar {n} recibos novos',
     confirmSend: 'Enviar relatório', confirmKeep: 'Continuar editando',
     doneTitle: 'Relatório enviado', doneBody: '{amount} volta para você assim que {manager} aprovar. Você recebe uma notificação quando isso acontecer.', doneBtn: 'Voltar para despesas',
     celebrations: 'Comemorações', celebrationsHelp: 'Animações quando você adiciona um recibo ou envia um relatório.', close: 'Fechar', account: 'Alex Moreno · Acme'
@@ -806,6 +838,7 @@ const ICON = {
   approver: '<circle cx="10" cy="8" r="3.5"/><path d="M3.5 20a6.5 6.5 0 0 1 10.6-5"/><path d="M15 18.5l2 2 4.5-4.5"/>',
   arrow: '<path d="M4 12h15M13 6l6 6-6 6"/>',
   next: '<path d="M9 6l6 6-6 6"/>',
+  zoom: '<path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/>',
   policy: '<path d="M6.5 3.5h7.5l4 4v13h-11.5z"/><path d="M14 3.5v4h4"/><path d="M9.5 12.5l1.8 1.8 3.4-3.4M9.5 17h5"/>',
   spark: '<path d="M12 3.5l1.9 5.1 5.1 1.9-5.1 1.9L12 17.5l-1.9-5.1L5 10.5l5.1-1.9z"/><path d="M18.5 16l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/>'
 };
@@ -817,7 +850,7 @@ function newState(prev) {
   return {
     lang: prev ? prev.lang : detectLang(),
     celebrations: prev ? prev.celebrations : true,
-    view: 'home', sheet: null,
+    view: 'home', sheet: null, reading: null,
     ready: BASE_READY.map(r => ({ ...r })), added: [],
     review: null, sent: null, newId: null, shownTotal: null, lastAdded: null,
     startedAt: null, guideOpen: false, aboutOpen: prev ? prev.aboutOpen : false, demo: false, lastTask: null
@@ -880,13 +913,93 @@ function receiptHTML(s, { mark = false } = {}) {
 
 /* ================= GUIDE (outside the product) ================= */
 function currentTask() {
-  if (state.sent) return 'done';
   const a = state.added, rv = state.review;
+  if (SAMPLES.every(s => a.includes(s.id)) && state.ready.every(r => r.sent)) return 'done';
   if (!a.includes('cafe')) return rv && rv.id === 'cafe' ? 't2' : 't1';
   if (!a.includes('fuel')) return rv && rv.id === 'fuel' ? 't4' : 't3';
   if (!a.includes('dinner')) return 't5';
   if (!a.includes('hotel')) return 't6';
   return 't7';
+}
+/* language button, as in the portfolio: the current language's flag and code */
+function langButton() {
+  return `<button class="tool lang-btn" type="button" data-action="lang" aria-label="${t('langLabel')}">
+    <img class="lang-flag flag-br" src="flags/br.webp" alt="" width="20" height="14"><img class="lang-flag flag-us" src="flags/us.svg" alt="" width="20" height="14"><span class="lang-code">${t('langCode')}</span></button>`;
+}
+/* Language switch, as in the portfolio: the text on screen types itself in again, top to bottom. Each block
+   types as one stream; while a piece types it's a wrapper of the typed part and a hidden rest that keeps its
+   space, so nothing reflows, and when done it goes back to plain text. Headings type slower and carry a caret. */
+let typing = null;
+function typeIn() {
+  if (typing) typing.finish();
+  const vh = innerHeight, groups = [], byBlock = new Map();
+  const blockOf = el => {
+    while (el.parentElement && el !== document.body && /^(inline|contents)/.test(getComputedStyle(el).display)) el = el.parentElement;
+    return el;
+  };
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  for (let n; (n = walker.nextNode());) {
+    const el = n.parentElement;
+    if (!n.nodeValue.trim() || !el || el.closest('script, style, svg, .receipt, .sr-only, [aria-hidden="true"]')) continue;
+    const r = el.getBoundingClientRect();
+    if (!r.width || r.bottom <= 0 || r.top >= vh) continue;
+    const block = blockOf(el);
+    let g = byBlock.get(block);
+    if (!g) {
+      const br = block.getBoundingClientRect();
+      g = { nodes: [], top: Math.round(br.top), left: br.left, head: !!block.closest('h1, h2, h3') };
+      byBlock.set(block, g); groups.push(g);
+    }
+    g.nodes.push(n);
+  }
+  if (!groups.length) return;
+  groups.sort((a, b) => a.top - b.top || a.left - b.left);
+  groups.forEach((g, gi) => {
+    let sum = 0;
+    g.parts = g.nodes.map(node => {
+      const full = node.nodeValue, w = document.createElement('span'), on = document.createElement('span'), off = document.createElement('span');
+      w.className = 'tw' + (g.head ? ' tw-head' : ''); on.className = 'tw-on'; off.className = 'tw-off'; off.textContent = full;
+      w.append(on, off);
+      node.parentNode.replaceChild(w, node);
+      const part = { w, on, off, full, from: sum, k: 0 };
+      sum += full.length;
+      return part;
+    });
+    g.total = sum; g.K = -1;
+    g.delay = Math.min(gi * 14, 280);
+    g.dur = g.head ? Math.max(180, Math.min(sum * 24, 520)) : Math.max(100, Math.min(sum * 6, 420));
+  });
+  const t0 = performance.now();
+  let raf = 0;
+  const restore = g => {
+    g.done = true;
+    g.parts.forEach(pt => { if (pt.w.parentNode) pt.w.parentNode.replaceChild(document.createTextNode(pt.full), pt.w); });
+  };
+  const frame = now => {
+    let busy = 0;
+    groups.forEach(g => {
+      if (g.done) return;
+      const p = (now - t0 - g.delay) / g.dur;
+      if (p >= 1) { restore(g); return; }
+      busy++;
+      if (p <= 0) return;
+      const K = Math.round(g.total * p);
+      if (K === g.K) return;
+      g.K = K;
+      g.parts.forEach(pt => {
+        const k = Math.max(0, Math.min(pt.full.length, K - pt.from));
+        if (k !== pt.k) { pt.k = k; pt.on.textContent = pt.full.slice(0, k); pt.off.textContent = pt.full.slice(k); }
+        // the caret sits on the piece being typed now
+        pt.w.classList.toggle('is-typing', K > pt.from && K <= pt.from + pt.full.length);
+      });
+    });
+    if (busy) raf = requestAnimationFrame(frame); else typing = null;
+  };
+  const job = { finish() { cancelAnimationFrame(raf); clearTimeout(safety); groups.forEach(g => { if (!g.done) restore(g); }); if (typing === job) typing = null; } };
+  // if frames stall (a tab in the background), the text still comes back
+  const safety = setTimeout(() => job.finish(), 1500);
+  typing = job;
+  raf = requestAnimationFrame(frame);
 }
 function renderIntro() {
   const a = t('cTitleA').split(' '), b = t('cTitleB').split(' ');
@@ -895,7 +1008,7 @@ function renderIntro() {
   $('#intro').innerHTML = `
     <div class="c-top">
       <p class="c-eyebrow">${t('cEyebrow')}</p>
-      <button class="bar-btn" type="button" data-action="lang" aria-label="${t('langLabel')}" lang="${state.lang === 'en' ? 'pt-BR' : 'en'}">${t('langBtn')}</button>
+      ${langButton()}
     </div>
     <h2 class="c-title" id="intro-title">${words(a, 0)} <em>${words(b, a.length)}</em></h2>
     <section class="c-problem">
@@ -941,7 +1054,7 @@ function renderGuide() {
   const running = state.demo;
   let card;
   if (task === 'done') {
-    const amt = money(state.sent.amount);
+    const amt = money(total());
     const desc = state.sent.ms ? t('doneD', { amount: amt, time: fmtTime(state.sent.ms) }) : t('doneDNoTime', { amount: amt });
     card = `
       <section class="g-card" aria-live="polite">
@@ -996,7 +1109,7 @@ function renderGuide() {
     <div class="g-full" id="g-full">
       <div class="g-head">
         <p class="g-name">${t('protoName')}</p>
-        <button class="g-lang" type="button" data-action="lang" aria-label="${t('langLabel')}" lang="${state.lang === 'en' ? 'pt-BR' : 'en'}">${t('langBtn')}</button>
+        ${langButton()}
       </div>
       <div class="g-dashes" aria-hidden="true">${dashes}</div>
       <p class="g-label">${task === 'done' ? t('doneChip') : t('taskOf', { n: idx + 1, total: TASKS.length })}</p>
@@ -1014,10 +1127,10 @@ function ringCandidates() {
   if (state.sheet === 'confirm') return ['[data-action="confirm-send"]'];
   if (state.sheet) return [];
   if (state.view === 'home') return task === 't7' ? ['[data-action="send"]'] : ['[data-action="scan"]'];
-  if (state.view === 'camera') return nextSample() ? ['[data-action="shutter"]'] : [];
+  if (state.view === 'camera') return nextSample() && !state.reading ? ['[data-action="shutter"]'] : [];
   if (state.view === 'review') {
     const r = state.review, s = currentSample();
-    if (!r || r.phase !== 'ready' || r.edit) return [];
+    if (!r || r.edit) return [];
     const list = [];
     PAPER_FIELDS.forEach(k => { if (mismatch(k) && !noted(k)) list.push('#n-' + k); });
     if (s.flag && !r.resolved.total) list.push('[data-action="pick-total"][data-value="46.5"]');
@@ -1079,7 +1192,7 @@ async function tap(sel, { scroll = true } = {}) {
   return true;
 }
 async function untilReady() {
-  for (let i = 0; i < 60; i++) { if (state.review && state.review.phase === 'ready') return; await wait(100); }
+  for (let i = 0; i < 60; i++) { if (state.view === 'review' && state.review) return; await wait(100); }
 }
 async function scanFlow() {
   if (state.sheet) closeSheet();
@@ -1157,18 +1270,20 @@ function appHead() {
     </header>`;
 }
 function renderHome() {
-  const amount = total(), from = state.shownTotal ?? amount, n = state.ready.length, sent = !!state.sent;
-  // each receipt opens for editing until the report is sent
-  const list = [...state.ready].sort((a, b) => b.date.localeCompare(a.date)).map(r => {
+  const amount = total(), from = state.shownTotal ?? amount, n = state.ready.length;
+  // the report can go out in parts: receipts to send stay editable, sent ones are listed on their own
+  const toSend = state.ready.filter(r => !r.sent), sentList = state.ready.filter(r => r.sent);
+  const rows = list => [...list].sort((a, b) => b.date.localeCompare(a.date)).map(r => {
     const row = `
       <span class="cat-ic">${icon(r.category)}</span>
       <span class="li-main"><span class="li-title">${esc(r.merchant)}</span><span class="li-sub">${t('cat_' + r.category)} · ${dateShort(r.date)}</span></span>
-      <span class="li-end"><span class="li-amt tnum">${money(r.total)}</span><span class="li-status">${icon('check')}${t('ready')}</span></span>`;
+      <span class="li-end"><span class="li-amt tnum">${money(r.total)}</span><span class="li-status${r.sent ? ' sent' : ''}">${icon(r.sent ? 'send' : 'check')}${t(r.sent ? 'sentLabel' : 'ready')}</span></span>`;
     return `
     <li class="${r.id === state.newId && !reduceMotion() ? 'is-new' : ''}">
-      ${sent ? `<div class="li-row">${row}</div>` : `<button class="li-row" type="button" data-action="edit" data-id="${r.id}">${row}${icon('next', 'li-go')}</button>`}
+      ${r.sent ? `<div class="li-row">${row}</div>` : `<button class="li-row" type="button" data-action="edit" data-id="${r.id}">${row}${icon('next', 'li-go')}</button>`}
     </li>`;
   }).join('');
+  const sendLabel = !sentList.length ? t('sendReport') : toSend.length === 1 ? t('sendMore1') : t('sendMoreN', { n: toSend.length });
   $('#app').innerHTML = `
     <div class="view home">
       ${appHead()}
@@ -1177,18 +1292,18 @@ function renderHome() {
         <p class="sub meta"><span>${icon('calendar')}${t('due')}</span><span>${icon('approver')}${t('approver', { manager: MANAGER })}</span></p>
         <section class="card money-card" aria-labelledby="mc-label">
           <p class="eyebrow" id="mc-label">${t('toGetBack')}</p>
-          <p class="big tnum" id="big-amount">${money(sent ? amount : from)}</p>
+          <p class="big tnum" id="big-amount">${money(from)}</p>
           <span class="plus tnum" id="plus" aria-hidden="true"></span>
           <p class="mc-meta">${n === 1 ? t('count1') : t('countN', { n })}</p>
-          ${sent ? `<span class="status-pill">${icon('check')}${t('sentPill', { manager: MANAGER })}</span>`
-                 : `<button class="btn btn-secondary" type="button" data-action="send">${icon('send')}${t('sendReport')}</button>`}
+          ${toSend.length ? `<button class="btn btn-secondary" type="button" data-action="send">${icon('send')}${sendLabel}</button>`
+                          : `<span class="status-pill">${icon('check')}${t('sentPill', { manager: MANAGER })}</span>`}
         </section>
-        <h2 class="h2">${t('receipts')} <span class="count">${n}</span></h2>
-        <ul class="list">${list}</ul>
+        ${toSend.length ? `<h2 class="h2">${t('receipts')} <span class="count">${toSend.length}</span></h2><ul class="list">${rows(toSend)}</ul>` : ''}
+        ${sentList.length ? `<h2 class="h2">${t('sentTo', { manager: MANAGER })} <span class="count">${sentList.length}</span></h2><ul class="list sent-list">${rows(sentList)}</ul>` : ''}
       </div>
-      ${sent ? '' : `<div class="app-bar"><button class="btn btn-primary" type="button" data-action="scan">${icon('camera')}${t('scan')}</button></div>`}
+      <div class="app-bar"><button class="btn btn-primary" type="button" data-action="scan">${icon('camera')}${t('scan')}</button></div>
     </div>`;
-  if (!sent && from !== amount) {
+  if (from !== amount) {
     countUp($('#big-amount'), from, amount);
     if (state.celebrations && state.lastAdded && !reduceMotion()) {
       const p = $('#plus'); p.textContent = '+' + money(state.lastAdded); p.classList.add('go');
@@ -1221,28 +1336,34 @@ function showToast(msg) {
 
 /* camera */
 function renderCamera() {
-  const s = nextSample();
+  const s = nextSample(), reading = !!state.reading;
   $('#app').innerHTML = `
-    <div class="view camera">
+    <div class="view camera${reading ? ' reading' : ''}">
       <h1 class="sr-only" tabindex="-1">${t('scan')}</h1>
       <div class="viewfinder">
-        ${s ? `<div class="cam-target"><div class="corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>${receiptHTML(s)}</div>` : `<p class="cam-empty">${t('noReceipt')}</p>`}
+        ${s ? `<div class="cam-target"><div class="corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>${receiptHTML(s)}${reading ? '<div class="cam-scan" aria-hidden="true"></div>' : ''}</div>` : `<p class="cam-empty">${t('noReceipt')}</p>`}
       </div>
       <div class="cam-top">
         <button class="cam-btn" type="button" data-action="close-camera" aria-label="${t('closeCam')}">${icon('close')}</button>
-        ${s ? `<span class="cam-pill"><span class="dot" aria-hidden="true"></span>${t('found')}</span>` : '<span></span>'}
+        ${s ? `<span class="cam-pill">${reading ? `<span class="spinner" aria-hidden="true"></span>${t('reading')}` : `<span class="dot" aria-hidden="true"></span>${t('found')}`}</span>` : '<span></span>'}
         <span style="width:44px" aria-hidden="true"></span>
       </div>
-      <div class="cam-bottom"><button class="shutter" type="button" data-action="shutter" aria-label="${t('shutter')}"><span></span></button></div>
+      <div class="cam-bottom"><button class="shutter" type="button" data-action="shutter" aria-label="${t('shutter')}" ${reading ? 'aria-disabled="true"' : ''}><span></span></button></div>
       <div class="flash" id="flash"></div>
     </div>`;
 }
+/* the photo is read right here in the camera; the details then open already filled in */
 async function shutter() {
+  if (state.reading) return;
   const s = nextSample();
   if (!s) { showToast(t('noReceipt')); return; }
   startClock();
   const f = $('#flash');
-  if (f && !reduceMotion()) { f.classList.add('go'); await wait(220); }
+  if (f && !reduceMotion()) { f.classList.add('go'); await wait(330); }
+  state.reading = s.id; render(); announce(t('reading'));
+  await wait(reduceMotion() ? 500 : 1400);
+  if (state.reading !== s.id || state.view !== 'camera') return;
+  state.reading = null;
   openReview(s.id);
 }
 
@@ -1251,18 +1372,12 @@ function openReview(id) {
   const s = SAMPLES.find(x => x.id === id);
   state.view = 'review';
   state.review = {
-    id, phase: 'reading', showWhole: false,
+    id, reveal: true,
     values: { merchant: s.merchant, date: s.date, total: s.total, totalText: numText(s.total), category: s.category, guests: CAL_NAMES.map(() => ''), reason: '', reasonKey: null, notes: { merchant: '', date: '', total: '' } },
     resolved: { total: !s.flag }, picked: null, errors: {}
   };
-  render(); scrollerTop(); focusHeading();
-  announce(t('reading'));
-  setTimeout(() => {
-    if (!state.review || state.review.id !== id) return;
-    state.review.phase = 'ready'; state.review.reveal = true;
-    render(); state.review.reveal = false;
-    focusHeading(); announce(checkNoteText(needsCount()));
-  }, reduceMotion() ? 500 : 1300);
+  render(); state.review.reveal = false;
+  scrollerTop(); focusHeading(); announce(checkNoteText(needsCount()));
 }
 /* a saved receipt opens with what was saved, already checked */
 function openEdit(id) {
@@ -1270,7 +1385,7 @@ function openEdit(id) {
   if (!item) return;
   state.view = 'review';
   state.review = {
-    id, edit: true, phase: 'ready', showWhole: false,
+    id, edit: true,
     values: { merchant: item.merchant, date: item.date, total: item.total, totalText: numText(item.total), category: item.category,
       guests: item.guests ? [...item.guests] : CAL_NAMES.map(() => ''), reason: item.reason || '', reasonKey: item.reasonKey || null, notes: { merchant: '', date: '', total: '', ...item.notes } },
     resolved: { total: true }, picked: item.picked ?? null, errors: {}
@@ -1343,69 +1458,62 @@ function askBox(id, text, label, chips, hidden = false) {
   return `<div class="flag-box" id="h-${id}" ${hidden ? 'hidden' : ''}><p>${text}</p><div class="chips" role="group" aria-label="${label}">${chips}</div></div>`;
 }
 function renderReview() {
-  const s = currentSample(), r = state.review, v = r.values, reading = r.phase === 'reading', reveal = r.reveal && !reduceMotion();
+  const s = currentSample(), r = state.review, v = r.values, reveal = r.reveal && !reduceMotion();
   const cats = ['meals', 'client', 'lodging', 'transport', 'office', 'other'].map(c => `<option value="${c}" ${v.category === c ? 'selected' : ''}>${t('cat_' + c)}</option>`).join('');
-  let fields;
-  if (reading) {
-    fields = [1, 2, 3, 4].map(() => '<div aria-hidden="true"><div class="skel-label"></div><div class="skel"></div></div>').join('');
-  } else {
-    // every question follows one pattern: the field, then a box that says why and offers answers, then any error
-    const flag = s.flag === 'total', off = mismatch('total');
-    const totalState = off ? markClass('total').trim() : flag ? (r.resolved.total ? 'checked' : 'flagged') : '';
-    const totalBox = flag ? askBox('total', t('fuelHelp'), t('pickTotal'),
-      [s.total, s.alt].map(val => `<button class="chip" type="button" data-action="pick-total" data-value="${val}" aria-pressed="${r.picked === val}">${money(val)}</button>`).join(''), off) : '';
-    const seePolicy = topic => `<button class="link-btn" type="button" data-action="policy" data-topic="${topic}">${t('seePolicy')}</button>`;
-    const totalNote = s.needs === 'guests' ? `<p class="field-note">${icon('check')}<span>${t('policyOk', { per: money(v.total / s.guests), limit: moneyShort(POLICY.clientMealPerPerson) })} ${seePolicy('client')}</span></p>` : '';
-    let extra = '';
-    if (s.needs === 'guests') {
-      extra = `
-        <div class="field ${guestsDone() ? 'checked' : 'flagged'}${r.errors.guests ? ' has-error' : ''}" id="fw-guests">
-          <span class="lbl" id="l-guests">${t('guestsLabel')}</span>
-          <div class="stack" role="group" aria-labelledby="l-guests">
-            ${v.guests.map((g, i) => `<input class="input" name="guest" data-i="${i}" autocomplete="off" aria-label="${t('guestN', { n: i + 1 })}" placeholder="${t('guestN', { n: i + 1 })}" value="${esc(g)}" aria-describedby="h-guests e-guests">`).join('')}
-          </div>
-          ${askBox('guests', t('guestsHelp', { event: t('calEvent') }), t('fromCal'),
-            CAL_NAMES.map(n => `<button class="chip" type="button" data-action="pick-guest" data-name="${esc(n)}" aria-pressed="${v.guests.includes(n)}">${icon('calendar')}${esc(n)}</button>`).join(''))}
-          ${errHTML('guests')}
-        </div>`;
-    }
-    if (s.needs === 'reason') {
-      const reason = v.reasonKey ? t('reason_' + v.reasonKey) : v.reason;
-      extra = `
-        <div class="field ${reasonDone() ? 'checked' : 'flagged'}${r.errors.reason ? ' has-error' : ''}" id="fw-reason">
-          <label class="lbl" for="f-reason">${t('reasonLabel')}</label>
-          <input class="input" id="f-reason" name="reason" autocomplete="off" placeholder="${t('reasonPh', { manager: MANAGER })}" value="${esc(reason)}" aria-describedby="h-reason e-reason">
-          ${askBox('reason', `${t('hotelPolicy', { rate: moneyShort(s.nightly), limit: moneyShort(POLICY.hotelNight), manager: MANAGER })} ${seePolicy('hotel')}`, t('reasonLabel'),
-            ['conf', 'none'].map(k => `<button class="chip" type="button" data-action="pick-reason" data-key="${k}" aria-pressed="${v.reasonKey === k}">${t('reason_' + k)}</button>`).join(''))}
-          ${errHTML('reason')}
-        </div>`;
-    }
-    fields = `
-      <div class="field${markClass('merchant')}${r.errors.merchant ? ' has-error' : ''}" id="fw-merchant">
-        <label class="lbl" for="f-merchant">${t('merchant')}</label>
-        <input class="input" id="f-merchant" name="merchant" autocomplete="off" value="${esc(v.merchant)}" aria-describedby="m-merchant e-merchant">${noteBox('merchant')}${errHTML('merchant')}
-      </div>
-      <div class="field${markClass('date')}${r.errors.date ? ' has-error' : ''}" id="fw-date">
-        <label class="lbl" for="f-date">${t('date')}</label>
-        <input class="input" type="date" id="f-date" name="date" value="${esc(v.date)}" aria-describedby="m-date e-date">${noteBox('date')}${errHTML('date')}
-      </div>
-      <div class="field ${totalState}${r.errors.total ? ' has-error' : ''}" id="fw-total">
-        <label class="lbl" for="f-total">${t('total')}</label>
-        <div class="money"><span class="cur" aria-hidden="true">$</span>
-          <input class="input tnum" id="f-total" name="total" inputmode="decimal" autocomplete="off" value="${esc(v.totalText)}" aria-describedby="${flag ? 'h-total ' : ''}m-total e-total"></div>
-        ${totalBox}${noteBox('total')}${totalNote}${errHTML('total')}
-      </div>
-      <div class="field" id="fw-category">
-        <label class="lbl" for="f-category">${t('category')}</label>
-        <select class="select" id="f-category" name="category">${cats}</select>
-      </div>
-      ${extra}`;
+  // every question follows one pattern: the field, then a box that says why and offers answers, then any error
+  const flag = s.flag === 'total', off = mismatch('total');
+  const totalState = off ? markClass('total').trim() : flag ? (r.resolved.total ? 'checked' : 'flagged') : '';
+  const totalBox = flag ? askBox('total', t('fuelHelp'), t('pickTotal'),
+    [s.total, s.alt].map(val => `<button class="chip" type="button" data-action="pick-total" data-value="${val}" aria-pressed="${r.picked === val}">${money(val)}</button>`).join(''), off) : '';
+  const seePolicy = topic => `<button class="link-btn" type="button" data-action="policy" data-topic="${topic}">${t('seePolicy')}</button>`;
+  const totalNote = s.needs === 'guests' ? `<p class="field-note">${icon('check')}<span>${t('policyOk', { per: money(v.total / s.guests), limit: moneyShort(POLICY.clientMealPerPerson) })} ${seePolicy('client')}</span></p>` : '';
+  let extra = '';
+  if (s.needs === 'guests') {
+    extra = `
+      <div class="field ${guestsDone() ? 'checked' : 'flagged'}${r.errors.guests ? ' has-error' : ''}" id="fw-guests">
+        <span class="lbl" id="l-guests">${t('guestsLabel')}</span>
+        ${askBox('guests', t('guestsHelp', { event: t('calEvent') }), t('fromCal'),
+          CAL_NAMES.map(n => `<button class="chip" type="button" data-action="pick-guest" data-name="${esc(n)}" aria-pressed="${v.guests.includes(n)}">${icon('calendar')}${esc(n)}</button>`).join(''))}
+        <div class="stack guest-fields" role="group" aria-labelledby="l-guests">
+          ${v.guests.map((g, i) => `<input class="input" name="guest" data-i="${i}" autocomplete="off" aria-label="${t('guestN', { n: i + 1 })}" placeholder="${t('guestN', { n: i + 1 })}" value="${esc(g)}" aria-describedby="h-guests e-guests">`).join('')}
+        </div>
+        ${errHTML('guests')}
+      </div>`;
   }
+  if (s.needs === 'reason') {
+    const reason = v.reasonKey ? t('reason_' + v.reasonKey) : v.reason;
+    extra = `
+      <div class="field ${reasonDone() ? 'checked' : 'flagged'}${r.errors.reason ? ' has-error' : ''}" id="fw-reason">
+        <label class="lbl" for="f-reason">${t('reasonLabel')}</label>
+        <input class="input" id="f-reason" name="reason" autocomplete="off" placeholder="${t('reasonPh', { manager: MANAGER })}" value="${esc(reason)}" aria-describedby="h-reason e-reason">
+        ${askBox('reason', `${t('hotelPolicy', { rate: moneyShort(s.nightly), limit: moneyShort(POLICY.hotelNight), manager: MANAGER })} ${seePolicy('hotel')}`, t('reasonLabel'),
+          ['conf', 'none'].map(k => `<button class="chip" type="button" data-action="pick-reason" data-key="${k}" aria-pressed="${v.reasonKey === k}">${t('reason_' + k)}</button>`).join(''))}
+        ${errHTML('reason')}
+      </div>`;
+  }
+  const fields = `
+    <div class="field${markClass('merchant')}${r.errors.merchant ? ' has-error' : ''}" id="fw-merchant">
+      <label class="lbl" for="f-merchant">${t('merchant')}</label>
+      <input class="input" id="f-merchant" name="merchant" autocomplete="off" value="${esc(v.merchant)}" aria-describedby="m-merchant e-merchant">${noteBox('merchant')}${errHTML('merchant')}
+    </div>
+    <div class="field${markClass('date')}${r.errors.date ? ' has-error' : ''}" id="fw-date">
+      <label class="lbl" for="f-date">${t('date')}</label>
+      <input class="input" type="date" id="f-date" name="date" value="${esc(v.date)}" aria-describedby="m-date e-date">${noteBox('date')}${errHTML('date')}
+    </div>
+    <div class="field ${totalState}${r.errors.total ? ' has-error' : ''}" id="fw-total">
+      <label class="lbl" for="f-total">${t('total')}</label>
+      <div class="money"><span class="cur" aria-hidden="true">$</span>
+        <input class="input tnum" id="f-total" name="total" inputmode="decimal" autocomplete="off" value="${esc(v.totalText)}" aria-describedby="${flag ? 'h-total ' : ''}m-total e-total"></div>
+      ${totalBox}${noteBox('total')}${totalNote}${errHTML('total')}
+    </div>
+    <div class="field" id="fw-category">
+      <label class="lbl" for="f-category">${t('category')}</label>
+      <select class="select" id="f-category" name="category">${cats}</select>
+    </div>
+    ${extra}`;
   const n = needsCount();
-  // under the photo: reading, then what's left to check
-  const status = reading
-    ? `<p class="ai-line"><span class="spinner" aria-hidden="true"></span><span>${t('reading')}</span></p>`
-    : `<p class="check-note ${n ? 'todo' : 'ok'}${reveal ? ' reveal' : ''}" id="check-note">${checkNoteHTML(n)}</p>`;
+  // under the photo: what's left to check
+  const status = `<p class="check-note ${n ? 'todo' : 'ok'}${reveal ? ' reveal' : ''}" id="check-note">${checkNoteHTML(n)}</p>`;
   $('#app').innerHTML = `
     <div class="view review">
       <header class="sub-head">
@@ -1413,16 +1521,15 @@ function renderReview() {
         <h1 class="sub-title" tabindex="-1">${r.edit ? t('editTitle') : t('reviewTitle')}</h1>
       </header>
       <div class="content">
-        <div class="photo${r.showWhole ? ' whole' : ''}">
-          <div class="photo-inner">${receiptHTML(s, { mark: !reading && s.flag && !r.resolved.total })}</div>
-          ${reading ? '<div class="scanline" aria-hidden="true"></div>' : ''}
-          <button class="photo-toggle" type="button" data-action="toggle-photo" aria-expanded="${r.showWhole}">${icon(r.showWhole ? 'collapse' : 'expand')}${r.showWhole ? t('showLess') : t('showWhole')}</button>
+        <div class="photo">
+          <div class="photo-inner">${receiptHTML(s, { mark: s.flag && !r.resolved.total })}</div>
+          <button class="photo-open" type="button" data-action="photo" aria-label="${t('seePhoto')}"><span class="photo-zoom" aria-hidden="true">${icon('zoom')}</span></button>
         </div>
         ${status}
         <form class="form${reveal ? ' reveal' : ''}" id="review-form" novalidate>${fields}</form>
       </div>
       <div class="app-bar">
-        <button class="btn btn-primary" type="button" data-action="save" ${reading ? 'aria-disabled="true"' : ''}>${reading ? t('readingBtn') : r.edit ? t('saveChanges') : t('save')}</button>
+        <button class="btn btn-primary" type="button" data-action="save">${r.edit ? t('saveChanges') : t('save')}</button>
       </div>
     </div>`;
   if (reveal) [...$('#review-form').children].forEach((el, i) => el.style.setProperty('--i', i));
@@ -1467,7 +1574,7 @@ function resolveTotal(val, picked) {
 }
 function saveReview() {
   const s = currentSample(), r = state.review;
-  if (!s || r.phase !== 'ready') return;
+  if (!s) return;
   const v = r.values, errs = [];
   if (!v.merchant.trim()) { setError('merchant', t('errMerchant')); errs.push('merchant'); }
   if (!v.date) { setError('date', t('errDate')); errs.push('date'); }
@@ -1507,7 +1614,7 @@ let sheetOpener = null;
 function openSheet(name, opener) {
   sheetOpener = opener || document.activeElement;
   state.sheet = name; renderSheet();
-  const f = $('#sheet-layer .sheet button'); if (f) f.focus({ preventScroll: true });
+  const f = $('#sheet-layer [role="dialog"] button'); if (f) f.focus({ preventScroll: true });
 }
 function closeSheet() {
   state.sheet = null; renderSheet();
@@ -1517,6 +1624,18 @@ let sheetTimer = null;
 function renderSheet() {
   const layer = $('#sheet-layer');
   clearTimeout(sheetTimer);
+  if (state.sheet === 'photo' && !state.review) state.sheet = null;
+  if (state.sheet === 'photo') {
+    // tap anywhere to close, like the portfolio's picture lightbox
+    const s = currentSample();
+    layer.innerHTML = `
+      <div class="lightbox" data-action="close-sheet" role="dialog" aria-modal="true" aria-label="${t('photoLabel')}">
+        <button class="lb-close" type="button" data-action="close-sheet" aria-label="${t('close')}">${icon('close')}</button>
+        <div class="lb-photo">${receiptHTML(s, { mark: s.flag && !state.review.resolved.total })}</div>
+      </div>`;
+    layer.classList.remove('closing'); layer.classList.add('open');
+    return;
+  }
   if (!state.sheet) {
     // slide an open sheet back down before removing it
     if (!layer.classList.contains('open') || reduceMotion()) { layer.classList.remove('open', 'closing'); layer.innerHTML = ''; return; }
@@ -1527,9 +1646,10 @@ function renderSheet() {
   layer.classList.remove('closing');
   let body = '';
   if (state.sheet === 'confirm') {
+    const batch = state.ready.filter(r => !r.sent);
     body = `
-      <h2 id="sheet-title">${t('confirmTitle')}</h2>
-      <p>${t('confirmBody', { n: state.ready.length, amount: money(total()), manager: MANAGER })}</p>
+      <h2 id="sheet-title">${batch.length < state.ready.length ? t('confirmTitleMore') : t('confirmTitle')}</h2>
+      <p>${t('confirmBody', { count: batch.length === 1 ? t('count1') : t('countN', { n: batch.length }), amount: money(batch.reduce((a, r) => a + r.total, 0)), manager: MANAGER })}</p>
       <div class="actions">
         <button class="btn btn-primary" type="button" data-action="confirm-send">${t('confirmSend')}</button>
         <button class="btn btn-plain" type="button" data-action="close-sheet">${t('confirmKeep')}</button>
@@ -1550,8 +1670,11 @@ function renderSheet() {
 
 /* sent */
 function sendReport() {
-  state.sent = { count: state.ready.length, amount: total(), ms: state.startedAt ? Date.now() - state.startedAt : null };
-  state.sheet = null; state.view = 'done';
+  // sends what isn't sent yet; more receipts can follow later
+  const batch = state.ready.filter(r => !r.sent);
+  batch.forEach(r => { r.sent = true; });
+  state.sent = { count: batch.length, amount: batch.reduce((a, r) => a + r.total, 0), ms: state.startedAt ? Date.now() - state.startedAt : null };
+  state.newId = null; state.sheet = null; state.view = 'done';
   render(); scrollerTop(); focusHeading(); announce(t('doneTitle'));
   if (state.celebrations && !reduceMotion()) burst();
 }
@@ -1592,26 +1715,23 @@ document.addEventListener('click', e => {
     case 'guide-toggle': state.guideOpen = !state.guideOpen; renderGuide(); { const b = document.querySelector('[data-action="guide-toggle"]'); if (b) b.focus(); } break;
     case 'lang': {
       const inPanel = !!el.closest('#intro');
-      state.lang = state.lang === 'en' ? 'pt' : 'en'; state.shownTotal = null; render();
-      replay($('.page'), 'relang');
-      const b =document.querySelector(inPanel ? '#intro [data-action="lang"]' : '#guide [data-action="lang"]'); if (b) b.focus();
+      state.lang = state.lang === 'en' ? 'pt' : 'en'; state.shownTotal = null;
+      // an open receipt keeps its total, written the new language's way
+      if (state.review) { const v = state.review.values, n = parseMoney(v.totalText); if (n > 0) v.totalText = numText(n); }
+      if (typing) typing.finish();
+      render();
+      const b = document.querySelector(inPanel ? '#intro [data-action="lang"]' : '#guide [data-action="lang"]'); if (b) b.focus();
+      if (!reduceMotion()) { document.querySelectorAll('.lang-btn').forEach(btn => replay(btn, 'is-flipping')); typeIn(); }
       break;
     }
     case 'restart': state = newState(state); render(); scrollerTop(); break;
     case 'hint': lastActivity = performance.now() - HINT_DELAY; hintScrollAt = 0; replay($('.phone-fit'), 'look'); break;
     case 'edit': openEdit(el.dataset.id); break;
     case 'scan': startClock(); state.view = 'camera'; render(); focusHeading(); break;
-    case 'close-camera': state.view = 'home'; state.shownTotal = null; render(); focusHeading(); break;
+    case 'close-camera': state.view = 'home'; state.reading = null; state.shownTotal = null; render(); focusHeading(); break;
     case 'shutter': shutter(); break;
     case 'discard': state.review = null; state.view = 'home'; state.shownTotal = null; render(); scrollerTop(); focusHeading(); break;
-    case 'toggle-photo': {
-      const r = state.review; if (!r) break;
-      r.showWhole = !r.showWhole;
-      document.querySelector('.photo').classList.toggle('whole', r.showWhole);
-      el.setAttribute('aria-expanded', String(r.showWhole));
-      el.innerHTML = icon(r.showWhole ? 'collapse' : 'expand') + (r.showWhole ? t('showLess') : t('showWhole'));
-      break;
-    }
+    case 'photo': openSheet('photo', el); break;
     case 'pick-total': resolveTotal(Number(el.dataset.value), Number(el.dataset.value)); break;
     case 'use-receipt': useReceipt(el.dataset.key, el.dataset.value); break;
     case 'policy': state.policyTopic = el.dataset.topic || null; openSheet('policy', el); break;
@@ -1664,7 +1784,7 @@ document.addEventListener('keydown', e => {
   if (state.sheet) {
     if (e.key === 'Escape') { e.preventDefault(); closeSheet(); }
     if (e.key === 'Tab') {
-      const items = [...document.querySelectorAll('#sheet-layer .sheet button')];
+      const items = [...document.querySelectorAll('#sheet-layer [role="dialog"] button')];
       if (!items.length) return;
       const first = items[0], last = items[items.length - 1];
       if (!items.includes(document.activeElement)) { e.preventDefault(); first.focus(); }

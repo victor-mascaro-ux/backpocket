@@ -21,10 +21,10 @@ The bar above the phone walks you through 7 short tasks: scan Alex's 4 receipts 
 
 ## Design decisions
 
-- **One photo per receipt.** The AI fills in the merchant, date, total and category, so a clear receipt needs no typing.
-- **It asks only when it has to.** A smudged total, or something the policy needs that no receipt shows, like who was at a client dinner.
-- **Every question works the same way.** The field, a short note on why it's asking, and answers to pick. You can always type your own.
-- **Progress you can see.** The amount coming back grows with each receipt. It motivates without blocking anything: you can send the report at any time.
+- **Snap, and it's filled in.** One photo gives you the merchant, date, total and category.
+- **Blurry? It asks.** When a receipt is hard to read, it shows what it sees and you pick the right one.
+- **The policy is built in.** Over a limit, or different from the receipt? Add a quick reason for your manager, right there.
+- **Send whenever you like.** One receipt or all of them, the report is ready when you are.
 
 ## What's real
 
