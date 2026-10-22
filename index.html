@@ -101,18 +101,18 @@ body{overflow:auto;background:var(--navy)}
 .concept a.g-btn{color:var(--neon-ink)}
 .concept a.g-btn.ghost{color:var(--ice)}
 .c-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 20px}
-.c-eyebrow,.c-label,.concept h3{margin:0;font:600 .72rem/1.4 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ice-muted)}
+.c-eyebrow,.c-label,.c-dec-h{margin:0;font:600 .72rem/1.4 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ice-muted)}
 .c-eyebrow{display:inline-flex;align-items:center;gap:10px}
 /* rotated, the diamond is wider than its box; the 2px keeps its left tip inside the scrolling panel */
-.c-eyebrow::before,.dia::before{content:"";width:8px;height:8px;margin-left:2px;border-radius:2px;background:var(--gold);transform:rotate(45deg);flex:none}
-.dia{display:flex;align-items:center;gap:10px}
+.c-eyebrow::before{content:"";width:8px;height:8px;margin-left:2px;border-radius:2px;background:var(--gold);transform:rotate(45deg);flex:none}
 /* the title is the headline; the medium comes second, in the accent with the portfolio's gold underline */
 .c-title{margin:0 0 44px;font:700 clamp(40px,1.5rem + 2.7vw,66px)/.98 var(--f-display);letter-spacing:-.03em;font-variation-settings:"opsz" 96;text-wrap:balance}
 .c-title .w{display:inline-block}
 .c-title em{font-style:normal;color:var(--neon);padding-bottom:.08em;background-image:linear-gradient(var(--gold),var(--gold)),repeating-linear-gradient(90deg,var(--navy-line-2) 0 calc(10% - 3px),transparent calc(10% - 3px) 10%);background-repeat:no-repeat;background-position:0 96%,0 96%;background-size:0% .09em,100% .09em;-webkit-box-decoration-break:clone;box-decoration-break:clone;animation:xpfill 1.4s var(--ease-out) 1.1s forwards}
 @keyframes xpfill{to{background-size:100% .09em,100% .09em}}
 /* the problem: a gold card next to the blue solution card; one number, then what it means */
-.c-problem{margin:0 0 14px;padding:24px 24px 22px;border-radius:22px;background:linear-gradient(160deg,#2A2511,var(--navy-2) 62%);border:1px solid #5A4A1D;box-shadow:0 0 44px -12px rgba(255,200,61,.3)}
+.c-problem{margin:0 0 14px;padding:24px 24px 22px;border-radius:22px;background:linear-gradient(160deg,#3B3216,#211C0F);border:1px solid #6B5820;box-shadow:0 0 44px -12px rgba(255,200,61,.3)}
+.c-problem.c-spot{--spot:var(--gold);--spot-glow:rgba(255,200,61,.12)}
 .c-problem .c-label{display:flex;align-items:center;gap:8px;margin:0 0 14px;color:var(--gold)}
 .c-problem .c-label svg.i{width:16px;height:16px}
 .c-stat{display:flex;align-items:flex-start;gap:18px}
@@ -122,13 +122,13 @@ body{overflow:auto;background:var(--navy)}
 .c-stat-sub{display:block;margin-top:8px;font:400 16px/1.5 var(--f-body);letter-spacing:0;color:var(--ice-2)}
 .c-source{margin:16px 0 0;font-size:13px;color:var(--ice-muted)}
 /* cards with the portfolio's spotlight and border light that follow the pointer */
-.c-spot{position:relative;isolation:isolate;--sx:50%;--sy:50%}
+.c-spot{position:relative;isolation:isolate;--sx:50%;--sy:50%;--spot:var(--neon);--spot-glow:var(--glow)}
 .c-spot::before,.c-spot::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .35s}
-.c-spot::before{z-index:-1;background:radial-gradient(420px circle at var(--sx) var(--sy),var(--glow),transparent 60%)}
-.c-spot::after{z-index:1;padding:1.5px;background:radial-gradient(260px circle at var(--sx) var(--sy),var(--neon),transparent 70%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.c-spot::before{z-index:-1;background:radial-gradient(420px circle at var(--sx) var(--sy),var(--spot-glow),transparent 60%)}
+.c-spot::after{z-index:1;padding:1.5px;background:radial-gradient(260px circle at var(--sx) var(--sy),var(--spot),transparent 70%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
 .c-spot:hover::before,.c-spot:hover::after{opacity:1}
 /* the solution is the highlight of the page */
-.c-solution{margin:0 0 44px;padding:24px 24px 26px;border-radius:22px;background:linear-gradient(160deg,#15295F,var(--navy-2) 62%);border:1px solid #2B4887;box-shadow:0 0 44px -10px rgba(79,195,247,.4)}
+.c-solution{margin:0 0 14px;padding:24px 24px 26px;border-radius:22px;background:linear-gradient(160deg,#193476,#0F1C46);border:1px solid #2B4887;box-shadow:0 0 44px -10px rgba(79,195,247,.4)}
 .c-solution .c-label{display:flex;align-items:center;gap:8px;margin:0 0 12px;color:var(--neon)}
 .c-solution .c-label svg.i{width:16px;height:16px}
 .c-why{margin:0;font:600 clamp(20px,1rem + .6vw,25px)/1.36 var(--f-display);letter-spacing:-.015em;color:var(--ice-2)}
@@ -146,12 +146,15 @@ body{overflow:auto;background:var(--navy)}
 .c-try-go svg.i{width:22px;height:22px;stroke-width:2.2}
 .c-try:hover .c-try-go{animation:nudge 1.1s var(--ease) infinite}
 @keyframes nudge{50%{transform:translateX(6px)}}
-.concept h3{margin:0 0 14px}
+.c-dec-h{display:flex;align-items:center;gap:8px;margin:0 0 14px;color:var(--ice-2)}
+.c-dec-h svg.i{width:16px;height:16px}
 .c-list{display:grid;gap:10px;margin:0 0 44px;padding:0;list-style:none}
-.c-list li{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:14px;background:var(--navy-2);border:1px solid var(--navy-line);font-size:15px;line-height:1.5;color:var(--ice-2);transition:transform .18s var(--ease),border-color .18s}
-.c-list li:hover{transform:translateY(-2px);border-color:var(--navy-line-2)}
+/* design decisions are silver, so they read apart from the gold problem, the blue solution and the contact card */
+.c-list li{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:14px;background:linear-gradient(150deg,#3A4360,#262D47 45%,#1C2238);border:1px solid #4D5878;font-size:15px;line-height:1.5;color:#D3DAE9;transition:transform .18s var(--ease),border-color .18s}
+.c-list li.c-spot{--spot:#D5DCEB;--spot-glow:rgba(213,220,235,.1)}
+.c-list li:hover{transform:translateY(-2px);border-color:#7A86A8}
 .c-list b{display:block;margin-bottom:3px;font:650 17px/1.3 var(--f-display);letter-spacing:-.01em;color:var(--ice)}
-.c-n{flex:none;display:inline-grid;place-items:center;min-width:30px;height:24px;margin-top:-1px;border-radius:7px;background:var(--neon-soft);border:1px solid rgba(79,195,247,.45);color:var(--neon);font:700 12px/1 var(--f-mono)}
+.c-n{flex:none;display:inline-grid;place-items:center;min-width:30px;height:24px;margin-top:-1px;border-radius:7px;background:rgba(213,220,235,.12);border:1px solid rgba(213,220,235,.45);color:#E2E7F2;font:700 12px/1 var(--f-mono)}
 .c-cta{padding:22px;border-radius:22px;background:var(--navy-2);border:1px solid var(--navy-line)}
 .c-cta p{margin:0 0 14px;font:650 21px/1.25 var(--f-display);letter-spacing:-.015em}
 .c-cta-q{display:flex;align-items:center;gap:10px}
@@ -210,12 +213,13 @@ body{overflow:auto;background:var(--navy)}
 .g-about summary::-webkit-details-marker{display:none}
 .g-about summary svg{transition:transform .35s var(--ease-pop)}
 .g-about[open] summary svg{transform:rotate(180deg)}
-.g-about .in{padding:0 14px 14px;font-size:14px;line-height:1.55;color:var(--ice-2)}
-.g-about h3{margin:14px 0 6px;font:600 .72rem/1.3 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ice-muted)}
-.g-about p{margin:0 0 8px}
+/* the drawer shows the same cards as the left panel, a little tighter */
+.g-about .in{padding:0 12px 12px;color:var(--ice-2)}
 .g-about a{color:var(--neon)}
-.g-about ol{margin:0;padding-left:18px}
-.g-about li{margin-bottom:6px}
+.g-about .c-problem,.g-about .c-solution{padding:18px}
+.g-about .c-solution{margin-bottom:24px}
+.g-about .c-why{font-size:19px}
+.g-about .c-list{margin-bottom:4px}
 .g-foot{margin-top:auto;display:flex;flex-direction:column;gap:12px;padding-top:4px}
 .g-cta{padding:14px;border-radius:14px;background:var(--navy-3)}
 .g-cta p{margin:0 0 10px;font-size:14px;font-weight:600}
@@ -702,10 +706,7 @@ const STR = {
     doneDNoTime: 'Alex gets {amount} back once Jordan approves it.',
     about: 'About this concept',
     aProblemH: 'The problem',
-    aProblem: "Half of workers don't file expense reports for money they're owed. The top complaint is the paperwork.",
     aSource: 'WalkMe and Propeller Insights survey of 2,400+ workers in 5 countries, Nov 2023.', aSourceLink: 'Read it',
-    aWhyH: 'The idea',
-    aWhy: "Why not have an expense report that fills itself in from a photo, highlights anything it isn't sure about, and checks every receipt against the expense policy?",
     aDecH: 'Design decisions',
     d1: '<b>One photo fills it all in.</b> Snap the receipt and every detail is filled in for you.',
     d2: '<b>Hard to read? It takes a guess.</b> Pick the right one, or type it in yourself.',
@@ -788,10 +789,7 @@ const STR = {
     doneDNoTime: 'Alex recebe {amount} de volta assim que o Jordan aprovar.',
     about: 'Sobre este conceito',
     aProblemH: 'O problema',
-    aProblem: 'Metade dos profissionais não pede o reembolso de despesas que a empresa deve a eles. A maior reclamação é a papelada.',
     aSource: 'Pesquisa WalkMe e Propeller Insights com mais de 2.400 profissionais em 5 países, nov 2023.', aSourceLink: 'Ler a pesquisa',
-    aWhyH: 'A ideia',
-    aWhy: 'Por que não ter um relatório de despesas que se preenche a partir de uma foto, destaca o que não conseguiu ler com certeza e confere cada recibo com a política de despesas?',
     aDecH: 'Decisões de design',
     d1: '<b>Uma foto preenche tudo.</b> Fotografe o recibo e todos os dados são preenchidos para você.',
     d2: '<b>Difícil de ler? O app dá um palpite.</b> Escolha o certo ou digite você mesmo.',
@@ -913,6 +911,7 @@ const ICON = {
   approver: '<circle cx="10" cy="8" r="3.5"/><path d="M3.5 20a6.5 6.5 0 0 1 10.6-5"/><path d="M15 18.5l2 2 4.5-4.5"/>',
   arrow: '<path d="M4 12h15M13 6l6 6-6 6"/>',
   next: '<path d="M9 6l6 6-6 6"/>',
+  grid: '<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>',
   chat: '<path d="M5 4.5h14A1.5 1.5 0 0 1 20.5 6v9a1.5 1.5 0 0 1-1.5 1.5h-9l-5 4v-4A1.5 1.5 0 0 1 3.5 15V6A1.5 1.5 0 0 1 5 4.5z"/><path d="M8 9h8M8 12.5h5"/>',
   clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
   zoom: '<path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/>',
@@ -1078,6 +1077,30 @@ function typeIn() {
   typing = job;
   raf = requestAnimationFrame(frame);
 }
+/* the concept's parts, shared by the left panel and the mobile "About this concept" drawer */
+function problemCard() {
+  return `
+    <section class="c-problem c-spot">
+      <p class="c-label">${icon('alert')}${t('aProblemH')}</p>
+      <div class="c-stat">
+        <p class="c-num">${t('statNum')}</p>
+        <p class="c-stat-txt">${t('statText')}<span class="c-stat-sub">${t('statSub')}</span></p>
+      </div>
+      <p class="c-source">${t('aSourceLabel')} ${t('aSource')} <a href="${LINKS.source}" target="_blank" rel="noopener">${t('aSourceLink')}</a></p>
+    </section>`;
+}
+function solutionCard() {
+  return `
+    <section class="c-solution c-spot">
+      <p class="c-label">${icon('spark')}${t('cSolH')}</p>
+      <p class="c-why">${t('cWhy')}</p>
+    </section>`;
+}
+function decisions() {
+  return `
+    <h3 class="c-dec-h">${icon('grid')}${t('aDecH')}</h3>
+    <ol class="c-list">${['d1', 'd2', 'd3', 'd4'].map((k, i) => `<li class="c-spot"><span class="c-n" aria-hidden="true">0${i + 1}</span><span>${t(k)}</span></li>`).join('')}</ol>`;
+}
 function renderIntro() {
   const a = t('cTitleA').split(' '), b = t('cTitleB').split(' ');
   const words = (list, from) => list.map((w, i) => `<span class="w" style="--wi:${from + i}">${w}</span>`).join(' ');
@@ -1087,24 +1110,13 @@ function renderIntro() {
       ${langButton()}
     </div>
     <h2 class="c-title" id="intro-title">${words(a, 0)} <em>${words(b, a.length)}</em></h2>
-    <section class="c-problem c-spot">
-      <p class="c-label">${icon('alert')}${t('aProblemH')}</p>
-      <div class="c-stat">
-        <p class="c-num">${t('statNum')}</p>
-        <p class="c-stat-txt">${t('statText')}<span class="c-stat-sub">${t('statSub')}</span></p>
-      </div>
-      <p class="c-source">${t('aSourceLabel')} ${t('aSource')} <a href="${LINKS.source}" target="_blank" rel="noopener">${t('aSourceLink')}</a></p>
-    </section>
-    <section class="c-solution c-spot">
-      <p class="c-label">${icon('spark')}${t('cSolH')}</p>
-      <p class="c-why">${t('cWhy')}</p>
-    </section>
+    ${problemCard()}
+    ${solutionCard()}
     <button class="c-try" type="button" data-action="hint">
       <span class="c-try-txt"><strong>${t('cTryH')}</strong>${t('cTry')}</span>
       <span class="c-try-go" aria-hidden="true">${icon('arrow')}</span>
     </button>
-    <h3 class="dia">${t('aDecH')}</h3>
-    <ol class="c-list">${['d1', 'd2', 'd3', 'd4'].map((k, i) => `<li class="c-spot"><span class="c-n" aria-hidden="true">0${i + 1}</span><span>${t(k)}</span></li>`).join('')}</ol>
+    ${decisions()}
     <div class="c-cta c-spot">
       <p class="c-cta-q">${icon('chat')}<span>${t('ctaAsk')}</span></p>
       <div class="row">
@@ -1156,15 +1168,7 @@ function renderGuide() {
   const about = `
     <details class="g-about" ${state.aboutOpen ? 'open' : ''}>
       <summary>${t('about')}${icon('expand')}</summary>
-      <div class="in">
-        <h3>${t('aProblemH')}</h3>
-        <p>${t('aProblem')}</p>
-        <p style="font-size:13px;color:var(--ice-muted)">${t('aSource')} <a href="${LINKS.source}" target="_blank" rel="noopener">${t('aSourceLink')}</a></p>
-        <h3>${t('aWhyH')}</h3>
-        <p>${t('aWhy')}</p>
-        <h3>${t('aDecH')}</h3>
-        <ol><li>${t('d1')}</li><li>${t('d2')}</li><li>${t('d3')}</li><li>${t('d4')}</li></ol>
-      </div>
+      <div class="in">${problemCard()}${solutionCard()}${decisions()}</div>
     </details>`;
   const foot = `
     <div class="g-foot">
