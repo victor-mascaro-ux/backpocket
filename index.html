@@ -413,11 +413,15 @@ button.li-row:active{transform:scale(.985)}
 .checked .input{border-color:var(--brand);background:var(--surface)}
 .flag-box p{margin:0 0 10px;font-size:15px}
 .note-box .input{margin:0 0 10px;background:var(--surface)}
-.guest-fields{margin-top:10px}
-#h-guests{margin-top:0}
+/* questions the AI asks: the label, the box with suggestions, then your answer */
+.guest-fields,.answer-field{margin-top:10px}
+#h-guests,#h-reason{margin-top:0}
 .note-box:not([hidden]){animation:rise .25s ease-out}
 .field-note{display:flex;align-items:flex-start;gap:6px;margin:8px 0 0;color:var(--brand-ink);font-size:14px;font-weight:600}
 .field-note svg.i{width:16px;height:16px;margin-top:3px}
+.field-note.over{color:var(--flag-ink)}
+.detect-pill{display:inline-flex;align-items:center;gap:5px;margin:0 0 6px;padding:3px 10px;border-radius:999px;background:#E7E8E4;color:var(--ink);font-size:13px;font-weight:600;white-space:nowrap}
+.detect-pill svg.i{width:15px;height:15px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 16px;border:1.5px solid var(--line-strong);border-radius:999px;background:var(--surface);font-weight:600;font-size:15px;cursor:pointer;transition:background-color .15s,border-color .15s,color .15s,transform .12s}
 .chip:hover{border-color:var(--ink)}
@@ -625,8 +629,8 @@ const LINKS = {
   source: 'https://ir.walkme.com/news-releases/news-release-details/walkme-survey-shows-half-workers-dont-file-expense-reports'
 };
 const MANAGER = 'Jordan Lee';
-const POLICY = { hotelNight: 180, clientMealPerPerson: 75, mealsDay: 60 };
-const POLICY_RULES = [['other', 'receipts'], ['lodging', 'hotel', POLICY.hotelNight], ['client', 'client', POLICY.clientMealPerPerson], ['meals', 'meals', POLICY.mealsDay], ['transport', 'transport']];
+const POLICY = { hotelNight: 180, clientMealPerPerson: 75, mealsDay: 60, officeReceipt: 100 };
+const POLICY_RULES = [['other', 'receipts'], ['lodging', 'hotel', POLICY.hotelNight], ['client', 'client', POLICY.clientMealPerPerson], ['meals', 'meals', POLICY.mealsDay], ['transport', 'transport'], ['office', 'office', POLICY.officeReceipt]];
 const CAL_NAMES = ['Dana Reyes', 'Sam Okafor'];
 const HINT_DELAY = 4000;
 const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -683,10 +687,12 @@ const STR = {
     fuelHelp: 'The total is hard to read on this receipt. Pick the right amount or type it.',
     pickTotal: 'Pick the right total',
     guestsLabel: 'Who else was there?', guestN: 'Guest {n}', fromCal: 'From your calendar',
-    guestsHelp: "Client meals need the guests' names.<br>From your Calendar (“{event}”):",
+    guestsHelp: "Client meals need the guests' names.<br>From your Calendar (“{event}”):", guestsDetected: '{n} guests detected',
     calEvent: 'Dinner with the Bluefin team',
-    policyOk: 'Within policy: {per} per person (limit {limit}).',
-    hotelPolicy: '{rate} a night is over the {limit} limit, so {manager} needs a reason. Pick one or type it.',
+    polClient: "Within policy: {per} per person (limit {limit}), with everyone's names.", polMeals: 'Within policy: meals up to {limit} a day.',
+    polOffice: 'Within policy: office supplies up to {limit} per receipt.', polTransport: 'Within policy: transport on work trips is covered.',
+    polHotel: 'Over policy: {rate} a night (limit {limit}).',
+    hotelPolicy: '{manager} needs a reason for the higher rate. Pick one or type it.',
     reasonLabel: 'Why the higher rate?', reason_conf: 'It was the conference hotel', reason_none: 'No rooms under the limit nearby',
     reasonPh: 'Reason for {manager}',
     errGuests: "Add each guest's name.", errReason: 'Add a reason for the higher rate.',
@@ -697,6 +703,7 @@ const STR = {
     p_hotel_t: 'Hotels', p_hotel: 'Up to {limit} a night. Paid more? Add a quick note saying why.',
     p_client_t: 'Client meals', p_client: 'Up to {limit} per person. List everyone who was there.',
     p_meals_t: 'Meals on work trips', p_meals: 'Up to {limit} a day.',
+    p_office_t: 'Office supplies', p_office: 'Up to {limit} per receipt.',
     p_transport_t: 'Transport', p_transport: 'Fuel, trains, taxis and parking on work trips.',
     errTotal: 'Pick the right total, or type it.', errMerchant: 'Add the merchant name.', errAmount: 'Enter the total, like 12.50.', errDate: 'Pick the date on the receipt.',
     left1: '1 thing left to check', leftN: '{n} things left to check', leftNone: 'All set',
@@ -756,10 +763,12 @@ const STR = {
     fuelHelp: 'O total está difícil de ler neste recibo. Escolha o valor certo ou digite.',
     pickTotal: 'Escolha o total certo',
     guestsLabel: 'Quem mais estava lá?', guestN: 'Convidado {n}', fromCal: 'Da sua agenda',
-    guestsHelp: 'Refeições com clientes precisam do nome dos convidados.<br>Da sua Agenda (“{event}”):',
+    guestsHelp: 'Refeições com clientes precisam do nome dos convidados.<br>Da sua Agenda (“{event}”):', guestsDetected: '{n} convidados detectados',
     calEvent: 'Jantar com o time da Bluefin',
-    policyOk: 'Dentro da política: {per} por pessoa (limite {limit}).',
-    hotelPolicy: '{rate} por noite passa do limite de {limit}, então {manager} precisa de um motivo. Escolha um ou digite.',
+    polClient: 'Dentro da política: {per} por pessoa (limite {limit}), com o nome de todos.', polMeals: 'Dentro da política: refeições até {limit} por dia.',
+    polOffice: 'Dentro da política: material de escritório até {limit} por recibo.', polTransport: 'Dentro da política: transporte em viagens de trabalho é coberto.',
+    polHotel: 'Fora da política: {rate} por noite (limite {limit}).',
+    hotelPolicy: '{manager} precisa de um motivo para a diária mais alta. Escolha um ou digite.',
     reasonLabel: 'Por que a diária mais alta?', reason_conf: 'Era o hotel do evento', reason_none: 'Nenhum quarto dentro do limite por perto',
     reasonPh: 'Motivo para {manager}',
     errGuests: 'Adicione o nome de cada convidado.', errReason: 'Adicione um motivo para a diária mais alta.',
@@ -770,6 +779,7 @@ const STR = {
     p_hotel_t: 'Hotéis', p_hotel: 'Até {limit} por noite. Pagou mais? Deixe uma nota rápida dizendo o porquê.',
     p_client_t: 'Refeições com clientes', p_client: 'Até {limit} por pessoa. Informe todos que estavam lá.',
     p_meals_t: 'Refeições em viagem', p_meals: 'Até {limit} por dia.',
+    p_office_t: 'Material de escritório', p_office: 'Até {limit} por recibo.',
     p_transport_t: 'Transporte', p_transport: 'Combustível, trem, táxi e estacionamento em viagens de trabalho.',
     errTotal: 'Escolha o total certo ou digite.', errMerchant: 'Adicione o nome do estabelecimento.', errAmount: 'Digite o total, por exemplo 12,50.', errDate: 'Escolha a data do recibo.',
     left1: 'Falta 1 item para conferir', leftN: 'Faltam {n} itens para conferir', leftNone: 'Tudo certo',
@@ -1250,7 +1260,6 @@ async function demo() {
 function render() {
   document.documentElement.lang = state.lang === 'pt' ? 'pt-BR' : 'en';
   $('#toast').classList.remove('show');
-  renderIntro();
   renderGuide();
   $('#screen').classList.toggle('dark', state.view === 'camera');
   if (state.view === 'home') renderHome();
@@ -1460,6 +1469,15 @@ function errHTML(key) {
 }
 const checkNoteText = n => (n === 0 ? t('leftNone') : n === 1 ? t('left1') : t('leftN', { n }));
 function checkNoteHTML(n) { return `${icon(n ? 'look' : 'check')}<span>${checkNoteText(n)}</span>`; }
+function policyLine(s, v) {
+  switch (s.category) {
+    case 'client': return { topic: 'client', text: t('polClient', { per: money(v.total / s.guests), limit: moneyShort(POLICY.clientMealPerPerson) }) };
+    case 'lodging': return { topic: 'hotel', over: s.nightly > POLICY.hotelNight, text: t('polHotel', { rate: moneyShort(s.nightly), limit: moneyShort(POLICY.hotelNight) }) };
+    case 'meals': return { topic: 'meals', text: t('polMeals', { limit: moneyShort(POLICY.mealsDay) }) };
+    case 'office': return { topic: 'office', text: t('polOffice', { limit: moneyShort(POLICY.officeReceipt) }) };
+    default: return { topic: 'transport', text: t('polTransport') };
+  }
+}
 function askBox(id, text, label, chips, hidden = false) {
   return `<div class="flag-box" id="h-${id}" ${hidden ? 'hidden' : ''}><p>${text}</p><div class="chips" role="group" aria-label="${label}">${chips}</div></div>`;
 }
@@ -1472,12 +1490,14 @@ function renderReview() {
   const totalBox = flag ? askBox('total', t('fuelHelp'), t('pickTotal'),
     [s.total, s.alt].map(val => `<button class="chip" type="button" data-action="pick-total" data-value="${val}" aria-pressed="${r.picked === val}">${money(val)}</button>`).join(''), off) : '';
   const seePolicy = topic => `<button class="link-btn" type="button" data-action="policy" data-topic="${topic}">${t('seePolicy')}</button>`;
-  const totalNote = s.needs === 'guests' ? `<p class="field-note">${icon('check')}<span>${t('policyOk', { per: money(v.total / s.guests), limit: moneyShort(POLICY.clientMealPerPerson) })} ${seePolicy('client')}</span></p>` : '';
+  // every receipt gets the same policy line under the total: within (green) or over (amber)
+  const pol = policyLine(s, v);
+  const totalNote = `<p class="field-note${pol.over ? ' over' : ''}">${icon(pol.over ? 'alert' : 'check')}<span>${pol.text} ${seePolicy(pol.topic)}</span></p>`;
   let extra = '';
   if (s.needs === 'guests') {
     extra = `
       <div class="field ${guestsDone() ? 'checked' : 'flagged'}${r.errors.guests ? ' has-error' : ''}" id="fw-guests">
-        <span class="lbl" id="l-guests">${t('guestsLabel')}</span>
+        <div class="field-top"><span class="lbl" id="l-guests">${t('guestsLabel')}</span><span class="detect-pill">${icon('client')}${t('guestsDetected', { n: s.guests })}</span></div>
         ${askBox('guests', t('guestsHelp', { event: t('calEvent') }), t('fromCal'),
           CAL_NAMES.map(n => `<button class="chip" type="button" data-action="pick-guest" data-name="${esc(n)}" aria-pressed="${v.guests.includes(n)}">${icon('calendar')}${esc(n)}</button>`).join(''))}
         <div class="stack guest-fields" role="group" aria-labelledby="l-guests">
@@ -1491,9 +1511,9 @@ function renderReview() {
     extra = `
       <div class="field ${reasonDone() ? 'checked' : 'flagged'}${r.errors.reason ? ' has-error' : ''}" id="fw-reason">
         <label class="lbl" for="f-reason">${t('reasonLabel')}</label>
-        <input class="input" id="f-reason" name="reason" autocomplete="off" placeholder="${t('reasonPh', { manager: MANAGER })}" value="${esc(reason)}" aria-describedby="h-reason e-reason">
-        ${askBox('reason', `${t('hotelPolicy', { rate: moneyShort(s.nightly), limit: moneyShort(POLICY.hotelNight), manager: MANAGER })} ${seePolicy('hotel')}`, t('reasonLabel'),
+        ${askBox('reason', t('hotelPolicy', { manager: MANAGER }), t('reasonLabel'),
           ['conf', 'none'].map(k => `<button class="chip" type="button" data-action="pick-reason" data-key="${k}" aria-pressed="${v.reasonKey === k}">${t('reason_' + k)}</button>`).join(''))}
+        <input class="input answer-field" id="f-reason" name="reason" autocomplete="off" placeholder="${t('reasonPh', { manager: MANAGER })}" value="${esc(reason)}" aria-describedby="h-reason e-reason">
         ${errHTML('reason')}
       </div>`;
   }
@@ -1725,7 +1745,7 @@ document.addEventListener('click', e => {
       // an open receipt keeps its total, written the new language's way
       if (state.review) { const v = state.review.values, n = parseMoney(v.totalText); if (n > 0) v.totalText = numText(n); }
       if (typing) typing.finish();
-      render();
+      renderIntro(); render();
       const b = document.querySelector(inPanel ? '#intro [data-action="lang"]' : '#guide [data-action="lang"]'); if (b) b.focus();
       if (!reduceMotion()) { document.querySelectorAll('.lang-btn').forEach(btn => replay(btn, 'is-flipping')); typeIn(); }
       break;
@@ -1827,6 +1847,8 @@ document.addEventListener('pointermove', e => {
   });
 });
 
+// the left panel is drawn once (and again only for a new language), so its entrance never replays on a tap
+renderIntro();
 render();
 fit();
 ringLoop();
