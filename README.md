@@ -21,8 +21,8 @@ The bar above the phone walks you through 7 short tasks: scan Alex's 4 receipts 
 
 ## Design decisions
 
-- **Snap, and it's filled in.** One photo gives you the merchant, date, total and category.
-- **Blurry? It asks.** When a receipt is hard to read, it shows what it sees and you pick the right one.
+- **One photo fills it all in.** Snap the receipt and every detail is filled in for you.
+- **Hard to read? It takes a guess.** Pick the right one, or type it in yourself.
 - **The policy is built in.** Over a limit, or different from the receipt? Add a quick reason for your manager, right there.
 - **Send whenever you like.** One receipt or all of them, the report is ready when you are.
 

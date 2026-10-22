@@ -77,7 +77,8 @@ body{overflow:auto;background:var(--navy)}
 .phone::before,.phone::after{content:"";position:absolute;width:4px;border-radius:2px;background:#22252C}
 .phone::before{left:-4px;top:180px;height:64px;box-shadow:0 84px 0 #22252C}
 .phone::after{right:-4px;top:230px;height:100px}
-.screen{position:relative;width:390px;height:844px;border-radius:50px;overflow:hidden;background:var(--bg);color:var(--ink);font:16px/1.5 var(--font)}
+/* clipped in one pass, so the light background never shows at the corners under a dark layer */
+.screen{position:relative;width:390px;height:844px;overflow:hidden;clip-path:inset(0 round 50px);background:var(--bg);color:var(--ink);font:16px/1.5 var(--font)}
 .island{position:absolute;z-index:40;top:11px;left:50%;width:124px;height:36px;margin-left:-62px;border-radius:20px;background:#000;pointer-events:none}
 .statusbar{position:absolute;z-index:30;top:0;left:0;right:0;height:54px;display:flex;align-items:center;justify-content:space-between;padding:4px 30px 0 46px;font-size:16px;font-weight:600;letter-spacing:-.01em;color:#000;pointer-events:none;background:var(--bg)}
 .statusbar .icons{display:flex;align-items:center;gap:6px}
@@ -295,6 +296,8 @@ h2.h2{display:flex;align-items:center;gap:8px;margin:26px 0 4px;font-size:18px;l
 @keyframes plus{0%{opacity:0;transform:translate(150px,10px)}20%{opacity:1}100%{opacity:0;transform:translate(150px,-26px)}}
 .status-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:var(--brand-soft);color:var(--brand-ink);font-size:14px;font-weight:600}
 .status-pill svg.i{width:16px;height:16px}
+.pending-pill{position:absolute;top:14px;right:14px;display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:var(--flag-bg);border:1px solid #EBCB85;color:var(--flag-ink);font-size:13px;font-weight:600}
+.pending-pill svg.i{width:15px;height:15px}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border:0;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;text-align:center;line-height:1.2;text-decoration:none;transition:background-color .15s,border-color .15s,transform .12s}
 .btn:active{transform:scale(.98)}
@@ -378,11 +381,13 @@ button.li-row:active{transform:scale(.985)}
 .photo-open:hover .photo-zoom{transform:scale(1.1)}
 /* lightbox, as in the portfolio: dark blurred backdrop, the receipt centered with a soft glow */
 .lightbox{position:absolute;inset:0;display:grid;place-items:center;padding:110px 16px 60px;overflow-y:auto;background:rgba(2,6,18,.68);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);cursor:zoom-out;animation:fade .25s cubic-bezier(.16,1,.3,1)}
-.lb-photo{transform:scale(1.18);filter:drop-shadow(0 0 34px rgba(79,195,247,.55));animation:lbZoom .3s cubic-bezier(.16,1,.3,1)}
+/* the photo exactly as it was taken: the receipt on the table, nothing drawn over it */
+.lb-photo{padding:26px 20px 30px;border-radius:14px;background:linear-gradient(160deg,#9C7A57,#6E5136);transform:scale(1.12);filter:drop-shadow(0 0 34px rgba(79,195,247,.55));animation:lbZoom .3s cubic-bezier(.16,1,.3,1)}
+.lb-photo .receipt{transform:rotate(var(--tilt,-1.5deg))}
 .lb-close{position:absolute;top:62px;right:16px;width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:var(--surface);color:var(--ink);cursor:pointer}
 .lb-close svg.i{width:18px;height:18px}
 .sheet-layer.closing .lightbox{animation:fadeout .2s ease-in forwards}
-@keyframes lbZoom{from{opacity:0;transform:scale(1.1)}}
+@keyframes lbZoom{from{opacity:0;transform:scale(1.05)}}
 /* what's left to check, under the photo */
 .check-note{display:flex;align-items:center;gap:8px;margin:14px 0 6px;font-size:15px;font-weight:600}
 .check-note.todo{color:var(--flag-ink)}
@@ -561,7 +566,7 @@ button.li-row:active{transform:scale(.985)}
   .phone-fit{flex:1;width:100%;height:auto;min-height:0;animation:none}
   .phone{position:absolute;inset:0;width:auto;height:auto;transform:none;border-radius:0;padding:0;background:none;box-shadow:none}
   .phone::before,.phone::after,.island,.statusbar,.home-ind{display:none}
-  .screen{width:100%;height:100%;border-radius:0}
+  .screen{width:100%;height:100%;clip-path:none}
   .scroller{top:0}
   .app-bar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
   .sheet{padding-bottom:calc(20px + env(safe-area-inset-bottom))}
@@ -658,8 +663,8 @@ const STR = {
     aWhyH: 'The idea',
     aWhy: "Why not have an expense report that fills itself in from a photo, highlights anything it isn't sure about, and checks every receipt against the expense policy?",
     aDecH: 'Design decisions',
-    d1: "<b>Snap, and it's filled in.</b> One photo gives you the merchant, date, total and category.",
-    d2: '<b>Blurry? It asks.</b> When a receipt is hard to read, it shows what it sees and you pick the right one.',
+    d1: '<b>One photo fills it all in.</b> Snap the receipt and every detail is filled in for you.',
+    d2: '<b>Hard to read? It takes a guess.</b> Pick the right one, or type it in yourself.',
     d3: '<b>The policy is built in.</b> Over a limit, or different from the receipt? Add a quick reason for your manager, right there.',
     d4: '<b>Send whenever you like.</b> One receipt or all of them, the report is ready when you are.',
     ctaAsk: 'Want something like this for your product?', ctaLinkedIn: 'Message me on LinkedIn', ctaPortfolio: 'See my portfolio', restart: 'Start over',
@@ -668,7 +673,7 @@ const STR = {
     reportTitle: 'October report', due: 'Due Oct 31', approver: 'Approver: {manager} (manager)',
     toGetBack: "You'll get back", count1: '1 receipt', countN: '{n} receipts',
     sendReport: 'Send report', scan: 'Scan receipt', receipts: 'Receipts', ready: 'Ready',
-    sentPill: 'Sent · Waiting for {manager}',
+    sentPill: 'Sent', pendingPill: 'Pending approval',
     closeCam: 'Close camera', found: 'Receipt found', noReceipt: 'Point the camera at a receipt', shutter: 'Take photo',
     discard: 'Discard and go back', reviewTitle: 'Check the details', editTitle: 'Edit receipt', back: 'Back',
     reading: 'Reading the receipt…',
@@ -731,8 +736,8 @@ const STR = {
     aWhyH: 'A ideia',
     aWhy: 'Por que não ter um relatório de despesas que se preenche a partir de uma foto, destaca o que não conseguiu ler com certeza e confere cada recibo com a política de despesas?',
     aDecH: 'Decisões de design',
-    d1: '<b>Tirou a foto, preencheu.</b> Uma foto já traz estabelecimento, data, total e categoria.',
-    d2: '<b>Borrado? O app pergunta.</b> Quando o recibo está difícil de ler, ele mostra o que viu e você escolhe o valor certo.',
+    d1: '<b>Uma foto preenche tudo.</b> Fotografe o recibo e todos os dados são preenchidos para você.',
+    d2: '<b>Difícil de ler? O app dá um palpite.</b> Escolha o certo ou digite você mesmo.',
     d3: '<b>A política já vem junto.</b> Passou do limite ou ficou diferente do recibo? Escreva um motivo rápido para o seu gestor, ali mesmo.',
     d4: '<b>Envie quando quiser.</b> Com um recibo ou com todos, o relatório fica pronto quando você estiver.',
     ctaAsk: 'Quer algo assim no seu produto?', ctaLinkedIn: 'Falar comigo no LinkedIn', ctaPortfolio: 'Ver meu portfólio', restart: 'Começar de novo',
@@ -741,7 +746,7 @@ const STR = {
     reportTitle: 'Relatório de outubro', due: 'Prazo: 31 out', approver: 'Aprovador: {manager} (gestor)',
     toGetBack: 'Você vai receber de volta', count1: '1 recibo', countN: '{n} recibos',
     sendReport: 'Enviar relatório', scan: 'Escanear recibo', receipts: 'Recibos', ready: 'Pronto',
-    sentPill: 'Enviado · Aguardando {manager}',
+    sentPill: 'Enviado', pendingPill: 'Aguardando aprovação',
     closeCam: 'Fechar câmera', found: 'Recibo encontrado', noReceipt: 'Aponte a câmera para um recibo', shutter: 'Tirar foto',
     discard: 'Descartar e voltar', reviewTitle: 'Confira os dados', editTitle: 'Editar recibo', back: 'Voltar',
     reading: 'Lendo o recibo…',
@@ -838,6 +843,7 @@ const ICON = {
   approver: '<circle cx="10" cy="8" r="3.5"/><path d="M3.5 20a6.5 6.5 0 0 1 10.6-5"/><path d="M15 18.5l2 2 4.5-4.5"/>',
   arrow: '<path d="M4 12h15M13 6l6 6-6 6"/>',
   next: '<path d="M9 6l6 6-6 6"/>',
+  clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
   zoom: '<path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/>',
   policy: '<path d="M6.5 3.5h7.5l4 4v13h-11.5z"/><path d="M14 3.5v4h4"/><path d="M9.5 12.5l1.8 1.8 3.4-3.4M9.5 17h5"/>',
   spark: '<path d="M12 3.5l1.9 5.1 5.1 1.9-5.1 1.9L12 17.5l-1.9-5.1L5 10.5l5.1-1.9z"/><path d="M18.5 16l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/>'
@@ -1296,7 +1302,7 @@ function renderHome() {
           <span class="plus tnum" id="plus" aria-hidden="true"></span>
           <p class="mc-meta">${n === 1 ? t('count1') : t('countN', { n })}</p>
           ${toSend.length ? `<button class="btn btn-secondary" type="button" data-action="send">${icon('send')}${sendLabel}</button>`
-                          : `<span class="status-pill">${icon('check')}${t('sentPill', { manager: MANAGER })}</span>`}
+                          : `<span class="status-pill">${icon('check')}${t('sentPill')}</span><span class="pending-pill">${icon('clock')}${t('pendingPill')}</span>`}
         </section>
         ${toSend.length ? `<h2 class="h2">${t('receipts')} <span class="count">${toSend.length}</span></h2><ul class="list">${rows(toSend)}</ul>` : ''}
         ${sentList.length ? `<h2 class="h2">${t('sentTo', { manager: MANAGER })} <span class="count">${sentList.length}</span></h2><ul class="list sent-list">${rows(sentList)}</ul>` : ''}
@@ -1631,7 +1637,7 @@ function renderSheet() {
     layer.innerHTML = `
       <div class="lightbox" data-action="close-sheet" role="dialog" aria-modal="true" aria-label="${t('photoLabel')}">
         <button class="lb-close" type="button" data-action="close-sheet" aria-label="${t('close')}">${icon('close')}</button>
-        <div class="lb-photo">${receiptHTML(s, { mark: s.flag && !state.review.resolved.total })}</div>
+        <div class="lb-photo">${receiptHTML(s)}</div>
       </div>`;
     layer.classList.remove('closing'); layer.classList.add('open');
     return;
