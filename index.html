@@ -51,6 +51,9 @@ a{color:inherit}
 ::selection{background:#FFD84D;color:#382800}
 .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 svg.i{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+/* design system rule: an icon next to text sits on the text's first line, never centered on the whole block.
+   Align the row to the top (align-items:flex-start) and nudge the icon down by half the difference
+   between the line height and the icon size: margin-top:calc((line-height - icon size) / 2). */
 .tnum{font-variant-numeric:tabular-nums}
 
 /* ================= Page layout ================= */
@@ -158,8 +161,11 @@ body{overflow:auto;background:var(--navy)}
 .c-n{flex:none;display:inline-grid;place-items:center;min-width:30px;height:24px;margin-top:-1px;border-radius:7px;background:rgba(213,220,235,.12);border:1px solid rgba(213,220,235,.45);color:#E2E7F2;font:700 12px/1 var(--f-mono)}
 .c-cta{padding:22px;border-radius:22px;background:var(--navy-2);border:1px solid var(--navy-line)}
 .c-cta p{margin:0 0 14px;font:650 21px/1.25 var(--f-display);letter-spacing:-.015em}
-.c-cta-q{display:flex;align-items:center;gap:10px}
-.c-cta-q svg.i{width:24px;height:24px;color:var(--neon)}
+.c-cta-q{display:flex;align-items:flex-start;gap:10px;--ic:24px}
+.c-cta-q svg.i{width:var(--ic);height:var(--ic);margin-top:calc((1.25em - var(--ic)) / 2);color:var(--neon)}
+/* in the steps panel the question takes the panel cards' text size; the layout stays the same */
+.g-full .c-cta p{font-size:19px}
+.g-full .c-cta-q{--ic:22px}
 .c-cta .row{display:flex;flex-wrap:wrap;gap:10px}
 .c-cta .g-btn{width:auto;flex:1 1 180px}
 @media (min-width:1240px){
@@ -369,9 +375,9 @@ button.li-row:active{transform:scale(.985)}
 .bar-row{display:flex;gap:8px}
 .bar-row .btn{width:auto;flex:1;padding:0 12px;font-size:15px;white-space:nowrap}
 
-.toast{position:absolute;z-index:32;left:16px;right:16px;bottom:118px;display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;background:var(--ink);color:#fff;font-size:15px;box-shadow:0 8px 24px rgba(0,0,0,.18);opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;pointer-events:none}
+.toast{position:absolute;z-index:32;left:16px;right:16px;bottom:118px;display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:12px;background:var(--ink);color:#fff;font-size:15px;box-shadow:0 8px 24px rgba(0,0,0,.18);opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;pointer-events:none}
 .toast.show{opacity:1;transform:none}
-.toast svg.i{color:#7FE0B5}
+.toast svg.i{margin-top:calc((1.5em - 20px) / 2);color:#7FE0B5}
 
 /* camera */
 .camera{position:relative;height:100%;min-height:100%;background:#000;color:#fff}
