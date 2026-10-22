@@ -65,6 +65,12 @@ body{overflow:auto;background:var(--navy)}
 /* the phone is dealt in once, like the portfolio's player card, then stays still */
 .phone-fit{position:relative;width:calc(418px * var(--s));height:calc(872px * var(--s));flex:none;animation:deal 1.15s var(--ease-out) .25s backwards}
 .phone{position:absolute;left:0;top:0;width:418px;height:872px;transform:scale(var(--s));transform-origin:top left;border-radius:64px;padding:14px;background:#0B0B0D;box-shadow:inset 0 0 0 2px #2A2D35,inset 0 0 0 6px #111318,0 0 0 1px #2B3557,0 40px 90px rgba(0,0,0,.55),var(--card-glow)}
+/* Try it: the frame lights up twice to say "over here" */
+.phone-fit.look .phone{animation:look 1.8s var(--ease-out)}
+@keyframes look{
+  20%,65%{box-shadow:inset 0 0 0 2px #2A2D35,inset 0 0 0 6px #111318,0 0 0 3px var(--neon),0 40px 90px rgba(0,0,0,.55),0 0 70px 6px rgba(79,195,247,.8),0 0 170px 12px rgba(79,195,247,.5)}
+  42%{box-shadow:inset 0 0 0 2px #2A2D35,inset 0 0 0 6px #111318,0 0 0 1px #2B3557,0 40px 90px rgba(0,0,0,.55),0 0 48px -4px rgba(79,195,247,.5),0 0 130px -16px rgba(79,195,247,.38)}
+}
 .phone::before,.phone::after{content:"";position:absolute;width:4px;border-radius:2px;background:#22252C}
 .phone::before{left:-4px;top:180px;height:64px;box-shadow:0 84px 0 #22252C}
 .phone::after{right:-4px;top:230px;height:100px}
@@ -1592,7 +1598,7 @@ document.addEventListener('click', e => {
       break;
     }
     case 'restart': state = newState(state); render(); scrollerTop(); break;
-    case 'hint': lastActivity = performance.now() - HINT_DELAY; hintScrollAt = 0; break;
+    case 'hint': lastActivity = performance.now() - HINT_DELAY; hintScrollAt = 0; replay($('.phone-fit'), 'look'); break;
     case 'edit': openEdit(el.dataset.id); break;
     case 'scan': startClock(); state.view = 'camera'; render(); focusHeading(); break;
     case 'close-camera': state.view = 'home'; state.shownTotal = null; render(); focusHeading(); break;
