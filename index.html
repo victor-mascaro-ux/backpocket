@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>try{var m=localStorage.getItem('vm-theme');if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Backpocket · Prototype 01 · Victor Mascaro</title>
 <meta name="description" content="A prototype you can try: an expense report that fills itself in from a photo of the receipt and highlights anything it isn't sure about. By Victor Mascaro, UX/AI designer.">
@@ -39,8 +40,37 @@
   --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
   --ease:cubic-bezier(.2,.8,.2,1); --ease-out:cubic-bezier(.16,1,.3,1); --ease-pop:cubic-bezier(.34,1.56,.64,1);
   --card-gap:32px; /* one gap between every block in the concept */
+  --gold-text:#FFC83D; --neon-line:rgba(79,195,247,.35); --track:#24325E; --ok-bg:#103B33; --ok-ink:#7FE0B5; --try-glow:rgba(79,195,247,.6); --ghost-line:rgba(197,208,234,.5);
+  --pop-shadow:0 2px 6px rgba(0,0,0,.4),0 36px 72px -18px rgba(0,0,0,.75);
+  --frame-line:#2B3557; --frame-shade:rgba(0,0,0,.5);
   --s:1;
 }
+/* light theme: the portfolio's light tokens under the same names (the names come from the dark theme).
+   It follows the system unless the sun/moon button made a choice */
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --navy:#EEF3FA; --navy-2:#F8FAFD; --navy-3:#E7EEF8; --navy-line:#D2DCEB; --navy-line-2:#B8C6DC;
+    --ice:#0B1530; --ice-2:#26345A; --ice-muted:#4F5F82;
+    --neon:#0B63C9; --neon-ink:#FFFFFF; --neon-soft:#DCE9FB; --neon-line:rgba(11,99,201,.28);
+    --gold:#F2B705; --gold-text:#7E5600; --dot:rgba(11,21,48,.12); --glow:rgba(11,99,201,.10);
+    --card-glow:0 0 44px -6px rgba(11,99,201,.3),0 0 110px -20px rgba(11,99,201,.22);
+    --track:#D2DCEB; --ok-bg:#DDF3E8; --ok-ink:#0B6B4A; --try-glow:rgba(11,99,201,.35); --ghost-line:#8FA0BF;
+    --pop-shadow:0 2px 6px rgba(11,21,48,.08),0 32px 64px -16px rgba(11,21,48,.3);
+    --frame-line:#C3CEE0; --frame-shade:rgba(11,21,48,.22);
+  }
+}
+:root[data-theme="light"]{
+    --navy:#EEF3FA; --navy-2:#F8FAFD; --navy-3:#E7EEF8; --navy-line:#D2DCEB; --navy-line-2:#B8C6DC;
+    --ice:#0B1530; --ice-2:#26345A; --ice-muted:#4F5F82;
+    --neon:#0B63C9; --neon-ink:#FFFFFF; --neon-soft:#DCE9FB; --neon-line:rgba(11,99,201,.28);
+    --gold:#F2B705; --gold-text:#7E5600; --dot:rgba(11,21,48,.12); --glow:rgba(11,99,201,.10);
+    --card-glow:0 0 44px -6px rgba(11,99,201,.3),0 0 110px -20px rgba(11,99,201,.22);
+    --track:#D2DCEB; --ok-bg:#DDF3E8; --ok-ink:#0B6B4A; --try-glow:rgba(11,99,201,.35); --ghost-line:#8FA0BF;
+    --pop-shadow:0 2px 6px rgba(11,21,48,.08),0 32px 64px -16px rgba(11,21,48,.3);
+    --frame-line:#C3CEE0; --frame-shade:rgba(11,21,48,.22);
+}
+/* the switch reveals the new theme in a circle from the button, as in the portfolio */
+::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
 *{box-sizing:border-box}
 html,body{height:100%}
 body{margin:0;background:var(--navy);color:var(--ice);font:17px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
@@ -68,15 +98,27 @@ body{overflow:auto;background:var(--navy)}
 .lang-flag{width:20px;height:14px;object-fit:cover;object-position:left center;border-radius:3px;box-shadow:0 0 0 1px var(--navy-line);flex:none}
 .lang-code{font-family:var(--f-mono);font-size:.74rem;font-weight:700;letter-spacing:.04em}
 .flag-br:not(:lang(pt-BR)),.flag-us:lang(pt-BR){display:none}
+/* theme button, as in the portfolio: a sun in light, a moon in dark */
+.c-tools{display:flex;gap:8px}
+.tool.icon{width:38px;padding:0;justify-content:center}
+.tool.icon svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;animation:iconIn .5s var(--ease-pop)}
+.i-moon{display:none}
+:root[data-theme="dark"] .i-sun{display:none}
+:root[data-theme="dark"] .i-moon{display:block}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .i-sun{display:none}
+  :root:not([data-theme="light"]) .i-moon{display:block}
+}
+@keyframes iconIn{from{opacity:0;transform:rotate(-90deg) scale(.5)}}
 .stage{grid-area:stage;position:relative;display:flex;flex-direction:column;gap:12px;width:calc(418px * var(--s));min-height:0}
 .mini-av{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#DDE7E2;color:var(--brand-ink);font-size:10px;font-weight:700}
 /* the phone is dealt in once, like the portfolio's player card, then stays still */
 .phone-fit{position:relative;width:calc(418px * var(--s));height:calc(872px * var(--s));flex:none;animation:deal 1.15s var(--ease-out) .25s backwards}
-.phone{position:absolute;left:0;top:0;width:418px;height:872px;transform:scale(var(--s));transform-origin:top left;border-radius:64px;padding:14px;background:#0B0B0D;box-shadow:inset 0 0 0 2px #2A2D35,inset 0 0 0 6px #111318,0 0 0 1px #2B3557,0 40px 90px rgba(0,0,0,.55),var(--card-glow)}
+.phone{position:absolute;left:0;top:0;width:418px;height:872px;transform:scale(var(--s));transform-origin:top left;border-radius:64px;padding:14px;background:#0B0B0D;box-shadow:inset 0 0 0 2px #2A2D35,inset 0 0 0 6px #111318,0 0 0 1px var(--frame-line),0 40px 90px var(--frame-shade),var(--card-glow)}
 /* Try it: the frame's glow swells once and settles, to say "over here" */
 .phone-fit.look .phone{animation:look 1.3s ease-in-out}
 @keyframes look{
-  35%{box-shadow:inset 0 0 0 2px #2A2D35,inset 0 0 0 6px #111318,0 0 0 2px var(--neon),0 40px 90px rgba(0,0,0,.55),0 0 64px 4px rgba(79,195,247,.75),0 0 160px 10px rgba(79,195,247,.45)}
+  35%{box-shadow:inset 0 0 0 2px #2A2D35,inset 0 0 0 6px #111318,0 0 0 2px var(--neon),0 40px 90px var(--frame-shade),0 0 64px 4px rgba(79,195,247,.75),0 0 160px 10px rgba(79,195,247,.45)}
 }
 .phone::before,.phone::after{content:"";position:absolute;width:4px;border-radius:2px;background:#22252C}
 .phone::before{left:-4px;top:180px;height:64px;box-shadow:0 84px 0 #22252C}
@@ -117,7 +159,7 @@ body{overflow:auto;background:var(--navy)}
 /* the problem sits on the page, no box: the gold label, one number, then what it means.
    Only the solution is a card, so it's the one thing that stands out */
 .c-problem{margin:0 0 var(--card-gap)}
-.c-problem .c-label{display:flex;align-items:center;gap:8px;margin:0 0 14px;color:var(--gold)}
+.c-problem .c-label{display:flex;align-items:center;gap:8px;margin:0 0 14px;color:var(--gold-text)}
 .c-problem .c-label svg.i{width:16px;height:16px}
 /* every prototype's problem has a number: it leads, large and gold, beside the sentence it counts;
    what it means and the source run full width below, from the number's left edge */
@@ -125,7 +167,7 @@ body{overflow:auto;background:var(--navy)}
    In Bricolage, digits and ascenders are .70 of the font size, so the number is (1.28 + .70) / .70 = 2.83 × the sentence's size,
    and its margin lines its top up with the first line's ascenders */
 .c-stat{--p-fs:clamp(19px,.95rem + .5vw,23px);display:flex;align-items:flex-start;gap:18px}
-.c-num{flex:none;margin:calc(2px - var(--p-fs) * .1) 0 0;font:650 calc(var(--p-fs) * 2.83)/1 var(--f-display);letter-spacing:-.035em;color:var(--gold);font-variation-settings:"opsz" 96}
+.c-num{flex:none;margin:calc(2px - var(--p-fs) * .1) 0 0;font:650 calc(var(--p-fs) * 2.83)/1 var(--f-display);letter-spacing:-.035em;color:var(--gold-text);font-variation-settings:"opsz" 96}
 .c-problem-txt{margin:2px 0 0;font:650 var(--p-fs)/1.28 var(--f-display);letter-spacing:-.015em;color:var(--ice)}
 .c-problem-sub{margin:10px 0 0;font:400 16px/1.5 var(--f-body);color:var(--ice-2)}
 /* the source belongs to the claim, so it sits right under it */
@@ -137,7 +179,7 @@ body{overflow:auto;background:var(--navy)}
 .c-spot::after{z-index:1;padding:1.5px;background:radial-gradient(260px circle at var(--sx) var(--sy),var(--spot),transparent 70%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
 .c-spot:hover::before,.c-spot:hover::after{opacity:1}
 /* the solution is the highlight of the page: the only card, flat blue with a thin blue border */
-.c-solution{margin:0 0 var(--card-gap);padding:24px 24px 26px;border-radius:22px;background:var(--neon-soft);border:1px solid rgba(79,195,247,.35)}
+.c-solution{margin:0 0 var(--card-gap);padding:24px 24px 26px;border-radius:22px;background:var(--neon-soft);border:1px solid var(--neon-line)}
 .c-solution .c-label{display:flex;align-items:center;gap:8px;margin:0 0 12px;color:var(--neon)}
 .c-solution .c-label svg.i{width:16px;height:16px}
 .c-why{margin:0;font:600 clamp(20px,1rem + .6vw,25px)/1.36 var(--f-display);letter-spacing:-.015em;color:var(--ice-2)}
@@ -145,7 +187,7 @@ body{overflow:auto;background:var(--navy)}
 .c-why b{font-weight:700;color:var(--neon)}
 /* try it: points at the phone; a tap shows the next step there right away */
 .c-try{display:flex;align-items:center;gap:16px;width:100%;margin:0 0 var(--card-gap);padding:16px 16px 16px 20px;border:0;border-radius:14px;background:var(--neon);color:var(--neon-ink);text-align:left;cursor:pointer;box-shadow:inset 0 -2px 0 rgba(0,0,0,.18);transition:transform .18s var(--ease),box-shadow .18s}
-.c-try:hover{transform:translateY(-2px);box-shadow:inset 0 -2px 0 rgba(0,0,0,.18),0 12px 30px -10px rgba(79,195,247,.6)}
+.c-try:hover{transform:translateY(-2px);box-shadow:inset 0 -2px 0 rgba(0,0,0,.18),0 12px 30px -10px var(--try-glow)}
 .c-try:active{transform:scale(.98);transition-duration:.08s}
 .c-try-txt{flex:1;font-size:15px;line-height:1.45;font-weight:500}
 .c-try strong{display:block;margin-bottom:2px;font:700 20px/1.2 var(--f-display);letter-spacing:-.01em}
@@ -169,7 +211,7 @@ body{overflow:auto;background:var(--navy)}
 .g-full .c-cta p{font-size:19px}
 .g-full .c-cta-q{--ic:22px}
 .c-cta .row{display:flex;flex-wrap:wrap;gap:10px}
-.c-cta .g-btn{width:auto;flex:1 1 180px;padding:10px 18px;line-height:1.25;text-align:center}
+.c-cta .g-btn{width:auto;flex:1 1 auto;padding:10px 18px;line-height:1.25;text-align:center;white-space:nowrap}
 /* the icon sits inline at the start of the label, so a label that wraps keeps it on the first line */
 .c-cta .g-btn svg.i{display:inline-block;width:18px;height:18px;margin-right:8px;vertical-align:middle;fill:none;stroke-width:2}
 @media (min-width:1240px){
@@ -182,7 +224,7 @@ body{overflow:auto;background:var(--navy)}
 .g-compact{display:flex;align-items:center;gap:10px;min-height:56px;padding:6px 8px 6px 12px;background:var(--navy-2);border:1px solid var(--navy-line);border-radius:14px;transition:border-radius .15s}
 /* open, the bar and the panel are one card: the bar squares off at the bottom and the panel grows out of it */
 .guide.open .g-compact{border-radius:14px 14px 0 0}
-.g-step{flex:none;padding:3px 8px;border-radius:7px;background:var(--neon-soft);border:1px solid rgba(79,195,247,.45);color:var(--neon);font:700 12px/1.4 var(--f-mono)}
+.g-step{flex:none;padding:3px 8px;border-radius:7px;background:var(--neon-soft);border:1px solid var(--neon-line);color:var(--neon);font:700 12px/1.4 var(--f-mono)}
 .g-ctitle{flex:1;min-width:0;margin:0;font:650 16px/1.3 var(--f-display);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .g-show-sm{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border:0;border-radius:10px;background:var(--neon);color:var(--neon-ink);font-size:14px;font-weight:600;cursor:pointer;box-shadow:inset 0 -2px 0 rgba(0,0,0,.18)}
 .g-show-sm svg.i{display:none}
@@ -192,7 +234,7 @@ body{overflow:auto;background:var(--navy)}
 .guide.open .g-expand svg{transform:rotate(180deg)}
 .guide.opening .g-expand svg{animation:turn .35s var(--ease-pop)}
 @keyframes turn{from{transform:none}}
-.g-full{display:none;position:absolute;top:100%;left:0;right:0;max-height:calc(100dvh - 140px);overflow-y:auto;flex-direction:column;gap:16px;padding:16px 18px;background:var(--navy-2);border:1px solid var(--navy-line);border-top:0;border-radius:0 0 14px 14px;box-shadow:0 2px 6px rgba(0,0,0,.4),0 36px 72px -18px rgba(0,0,0,.75);scrollbar-width:none}
+.g-full{display:none;position:absolute;top:100%;left:0;right:0;max-height:calc(100dvh - 140px);overflow-y:auto;flex-direction:column;gap:16px;padding:16px 18px;background:var(--navy-2);border:1px solid var(--navy-line);border-top:0;border-radius:0 0 14px 14px;box-shadow:var(--pop-shadow);scrollbar-width:none}
 .g-full .g-card{padding:0;background:none;border:0;border-radius:0}
 .g-full::-webkit-scrollbar{display:none}
 /* the panel unfolds from the bar and folds back up; while it's open the bar is just its header */
@@ -213,13 +255,13 @@ body{overflow:auto;background:var(--navy)}
 .g-by{display:inline-block;margin-top:2px;font-size:13px;color:var(--ice-muted);text-decoration:none}
 .g-by:hover{color:var(--ice);text-decoration:underline}
 .g-dashes{display:flex;gap:5px}
-.g-dashes i{flex:1;height:4px;border-radius:2px;background:#24325E}
+.g-dashes i{flex:1;height:4px;border-radius:2px;background:var(--track)}
 .g-dashes i.done{background:var(--neon)}
-.g-dashes i.now{background:linear-gradient(90deg,var(--neon) 50%,#24325E 50%)}
+.g-dashes i.now{background:linear-gradient(90deg,var(--neon) 50%,var(--track) 50%)}
 .g-label{margin:0;font:600 .72rem/1.3 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ice-muted)}
 .g-card{padding:18px;border-radius:14px;background:var(--navy-2);border:1px solid var(--navy-line)}
 .g-chip{display:inline-flex;align-items:center;gap:6px;padding:3px 10px 3px 4px;border-radius:999px;background:var(--navy-3);font-size:12.5px;font-weight:600;color:var(--ice)}
-.g-chip.ok{padding-left:10px;background:#103B33;color:#7FE0B5}
+.g-chip.ok{padding-left:10px;background:var(--ok-bg);color:var(--ok-ink)}
 .g-chip svg.i{width:16px;height:16px}
 .g-title{margin:12px 0 8px;font:700 23px/1.15 var(--f-display);letter-spacing:-.02em}
 .g-desc{margin:0 0 16px;font-size:15px;line-height:1.55;color:var(--ice-2)}
@@ -231,7 +273,7 @@ body{overflow:auto;background:var(--navy)}
 .g-btn:not(.ghost)::after,.g-show-sm::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.28) 50%,transparent 65%);transform:translateX(-110%)}
 .g-btn:not(.ghost):hover::after,.g-show-sm:hover::after{transform:translateX(110%);transition:transform .75s var(--ease-out)}
 .g-btn svg.i{width:16px;height:16px;fill:currentColor}
-.g-btn.ghost{background:transparent;color:var(--ice);border-color:var(--navy-line-2);box-shadow:none}
+.g-btn.ghost{background:transparent;color:var(--ice);border-color:var(--ghost-line);box-shadow:none}
 .g-btn.ghost:hover{border-color:var(--ice);background:var(--navy-2)}
 .g-btn[aria-disabled="true"],.g-show-sm[aria-disabled="true"]{opacity:.75;cursor:progress;transform:none;background-image:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);background-size:200% 100%;animation:shimmer 1.1s linear infinite}
 .g-help{margin:10px 0 0;font-size:13px;line-height:1.45;color:var(--ice-muted);text-align:center}
@@ -734,7 +776,7 @@ const STR = {
     cTryH: 'Try it', cTry: 'Add the 4 receipts in the app and send the October report.', cSolH: 'The solution',
     problemNum: '50%', problemText: "of workers don't file expense reports for money they're owed.", problemSub: 'The top complaint is the paperwork.',
     protoName: 'Backpocket', by: 'Prototype by Victor Mascaro',
-    langCode: 'EN', langLabel: 'EN, switch to Portuguese',
+    langCode: 'EN', langLabel: 'EN, switch to Portuguese', themeDark: 'Switch to dark theme', themeLight: 'Switch to light theme',
     taskOf: 'Task {n} of {total}', onPhone: "On Alex's phone", deviceLabel: "Alex's phone",
     showMe: 'Show me', showing: 'Showing…',
     helpRing: 'or do it yourself on the phone: tap the pulsing ring.',
@@ -817,7 +859,7 @@ const STR = {
     cTryH: 'Teste', cTry: 'Adicione os 4 recibos no app e envie o relatório de outubro.', cSolH: 'A solução',
     problemNum: '50%', problemText: 'dos profissionais não pedem o reembolso de despesas que a empresa deve a eles.', problemSub: 'A maior reclamação é a papelada.',
     protoName: 'Backpocket', by: 'Protótipo de Victor Mascaro',
-    langCode: 'PT', langLabel: 'PT, mudar para inglês',
+    langCode: 'PT', langLabel: 'PT, mudar para inglês', themeDark: 'Ativar tema escuro', themeLight: 'Ativar tema claro',
     taskOf: 'Tarefa {n} de {total}', onPhone: 'No celular do Alex', deviceLabel: 'Celular do Alex',
     showMe: 'Mostrar', showing: 'Mostrando…',
     helpRing: 'ou faça você mesmo no celular: toque onde aparecer o contorno azul.',
@@ -1051,6 +1093,30 @@ function langButton() {
   return `<button class="tool lang-btn" type="button" data-action="lang" aria-label="${t('langLabel')}">
     <img class="lang-flag flag-br" src="flags/br.webp" alt="" width="20" height="14"><img class="lang-flag flag-us" src="flags/us.svg" alt="" width="20" height="14"><span class="lang-code">${t('langCode')}</span></button>`;
 }
+/* theme, as in the portfolio: follows the system until the button picks one, and the pick is remembered */
+const currentTheme = () => document.documentElement.getAttribute('data-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+function themeButton() {
+  return `<button class="tool icon" type="button" data-action="theme" aria-label="${t(currentTheme() === 'dark' ? 'themeLight' : 'themeDark')}">
+    <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+    <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.6A8.2 8.2 0 0 1 9.4 4a8.2 8.2 0 1 0 10.6 10.6Z"/></svg></button>`;
+}
+function setTheme(next, btn) {
+  const root = document.documentElement;
+  const apply = () => {
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('vm-theme', next); } catch (e) {}
+    document.querySelectorAll('[data-action="theme"]').forEach(b => b.setAttribute('aria-label', t(next === 'dark' ? 'themeLight' : 'themeDark')));
+    const mc = document.querySelector('meta[name="theme-color"]'); if (mc) mc.content = next === 'dark' ? '#0A1430' : '#EEF3FA';
+  };
+  // the new theme opens in a circle from the button
+  const r = btn.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+  if (document.startViewTransition && !reduceMotion()) {
+    const vt = document.startViewTransition(apply);
+    const rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    vt.ready.then(() => root.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${rad}px at ${x}px ${y}px)`] },
+      { duration: 700, easing: 'cubic-bezier(.16, 1, .3, 1)', pseudoElement: '::view-transition-new(root)' })).catch(() => {});
+  } else apply();
+}
 /* Language switch, as in the portfolio: the text on screen types itself in again, top to bottom. Each block
    types as one stream; while a piece types it's a wrapper of the typed part and a hidden rest that keeps its
    space, so nothing reflows, and when done it goes back to plain text. Headings type slower and carry a caret. */
@@ -1170,7 +1236,7 @@ function renderIntro() {
   $('#intro').innerHTML = `
     <div class="c-top">
       <p class="c-eyebrow">${t('cEyebrow')}</p>
-      ${langButton()}
+      <div class="c-tools">${themeButton()}${langButton()}</div>
     </div>
     <h2 class="c-title" id="intro-title">${words(a, 0)} <em>${words(b, a.length)}</em></h2>
     ${problemCard()}
@@ -1270,7 +1336,7 @@ function renderGuide() {
     <div class="g-full" id="g-full">
       <div class="g-head">
         <p class="g-name">${t('protoName')}</p>
-        ${langButton()}
+        <div class="c-tools">${themeButton()}${langButton()}</div>
       </div>
       <div class="g-dashes" aria-hidden="true">${dashes}</div>
       <p class="g-label">${task === 'done' ? t('doneChip') : t('taskOf', { n: idx + 1, total: TASKS.length })}</p>
@@ -2084,6 +2150,7 @@ document.addEventListener('click', e => {
       if (!reduceMotion()) { document.querySelectorAll('.lang-btn').forEach(btn => replay(btn, 'is-flipping')); typeIn(); }
       break;
     }
+    case 'theme': setTheme(currentTheme() === 'dark' ? 'light' : 'dark', el); break;
     case 'restart': {
       const go = () => { state = newState(state); hideNotif(); render(); scrollerTop(); };
       if (state.guideOpen) closeGuide(go); else go();
